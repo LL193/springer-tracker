@@ -483,11 +483,16 @@ select option { background: var(--bg); }
 
 <script>
 // ══ CONFIG ══
-let SUPABASE_URL = '', SUPABASE_KEY = '', ADMIN_PIN = '';
+const HARDCODED_URL = 'https://uijcgrgjskpdtktoarsw.supabase.co';
+const HARDCODED_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpamNncmdqc2twZHRrdG9hcnN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NTU2NTQsImV4cCI6MjA5MDUzMTY1NH0.j6KAGfjMGlqeTGldrJRYxAR5trXwIGVMoQOdaOBQLyU';
+
+let SUPABASE_URL = HARDCODED_URL;
+let SUPABASE_KEY = HARDCODED_KEY;
+let ADMIN_PIN = '';
 
 function loadConfig() {
-  SUPABASE_URL = localStorage.getItem('sb_url') || '';
-  SUPABASE_KEY = localStorage.getItem('sb_key') || '';
+  SUPABASE_URL = HARDCODED_URL;
+  SUPABASE_KEY = HARDCODED_KEY;
   ADMIN_PIN    = localStorage.getItem('sb_pin') || '';
 }
 
@@ -1034,13 +1039,7 @@ function saveEinstellungen() {
 }
 
 // ══ INIT ══
-// Zugangsdaten fest hinterlegt – kein Setup nötig
-SUPABASE_URL = 'https://uijcgrgjskpdtktoarsw.supabase.co';
-SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpamNncmdqc2twZHRrdG9hcnN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NTU2NTQsImV4cCI6MjA5MDUzMTY1NH0.j6KAGfjMGlqeTGldrJRYxAR5trXwIGVMoQOdaOBQLyU';
-// Admin-PIN aus localStorage laden (wird über Einstellungen gesetzt)
 loadConfig();
-if (!ADMIN_PIN) ADMIN_PIN = localStorage.getItem('sb_pin') || '';
-
 document.getElementById('einsatzDate').valueAsDate = new Date();
 showView('springer');
 
