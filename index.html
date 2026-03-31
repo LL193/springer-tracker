@@ -601,9 +601,11 @@ function showView(v) {
   document.getElementById('setupScreen').style.display  = 'none';
   document.getElementById('springerView').style.display = 'none';
   document.getElementById('adminView').style.display    = 'none';
-  if (v === 'setup')    document.getElementById('setupScreen').style.display  = 'flex';
-  if (v === 'springer') { document.getElementById('springerView').style.display = 'flex'; initCalendar(); }
-  if (v === 'admin')    { document.getElementById('adminView').style.display = 'block'; loadData(); }
+  // Setup nur zeigen wenn explizit kein Key vorhanden
+  if (v === 'setup' && !SUPABASE_KEY) document.getElementById('setupScreen').style.display = 'flex';
+  else if (v === 'setup') { document.getElementById('springerView').style.display = 'flex'; initCalendar(); }
+  else if (v === 'springer') { document.getElementById('springerView').style.display = 'flex'; initCalendar(); }
+  else if (v === 'admin')    { document.getElementById('adminView').style.display = 'block'; loadData(); }
 }
 function logout() { showView('springer'); }
 
