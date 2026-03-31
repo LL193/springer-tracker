@@ -20,18 +20,18 @@
   --muted: #7a7670;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monospace; font-size: 13px; min-height: 100vh; }
+body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monospace; font-size: 16px; min-height: 100vh; }
 
 /* ── SETUP ── */
 #setupScreen { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 24px; }
 .setup-box { background: var(--surface); border: 1px solid var(--border); padding: 40px; width: 100%; max-width: 500px; }
 .setup-title { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--gold); margin-bottom: 6px; }
-.setup-sub { color: var(--muted); font-size: 11px; margin-bottom: 28px; line-height: 1.6; }
+.setup-sub { color: var(--muted); font-size: 14px; margin-bottom: 28px; line-height: 1.6; }
 .setup-field { margin-bottom: 16px; }
-.setup-label { font-size: 10px; letter-spacing: 1.5px; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; display: block; }
-.setup-input { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 12px; padding: 10px 12px; outline: none; }
+.setup-label { font-size: 16px; letter-spacing: 1.5px; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; display: block; }
+.setup-input { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 15px; padding: 10px 12px; outline: none; }
 .setup-input:focus { border-color: var(--gold); }
-.setup-note { font-size: 10px; color: var(--muted); margin-top: 5px; line-height: 1.5; }
+.setup-note { font-size: 16px; color: var(--muted); margin-top: 5px; line-height: 1.5; }
 .setup-actions { display: flex; gap: 10px; margin-top: 24px; }
 
 /* ── SPRINGER VIEW ── */
@@ -41,10 +41,10 @@ body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monosp
   padding: 24px 16px;
 }
 .springer-wrap { max-width: 420px; margin: 0 auto; }
-.springer-logo { font-family: 'DM Serif Display', serif; font-size: 12px; color: var(--muted); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; text-align: center; padding-top: 16px; }
+.springer-logo { font-family: 'DM Serif Display', serif; font-size: 15px; color: var(--muted); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; text-align: center; padding-top: 16px; }
 .springer-card { background: var(--surface); border: 1px solid var(--border); padding: 28px 24px; margin-bottom: 16px; }
 .springer-title { font-family: 'DM Serif Display', serif; font-size: 24px; color: var(--gold); margin-bottom: 4px; }
-.springer-sub { font-size: 11px; color: var(--muted); margin-bottom: 24px; }
+.springer-sub { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
 
 /* Kürzel Input */
 .kuerzel-row { display: flex; gap: 10px; align-items: flex-end; margin-bottom: 20px; }
@@ -57,7 +57,7 @@ body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monosp
 }
 .kuerzel-circle.filled { border-color: var(--gold); background: rgba(201,168,76,0.08); }
 .kuerzel-field { flex: 1; }
-.kuerzel-label { font-size: 10px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; display: block; }
+.kuerzel-label { font-size: 16px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; display: block; }
 .kuerzel-input {
   width: 100%; background: var(--bg); border: 1px solid var(--border);
   color: var(--text); font-family: 'DM Mono', monospace;
@@ -67,7 +67,7 @@ body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monosp
 .kuerzel-input:focus { border-color: var(--gold); }
 
 /* 2-Wochen Kalender */
-.cal-header { font-size: 10px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 10px; }
+.cal-header { font-size: 16px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 10px; }
 .cal-grid {
   display: grid; grid-template-columns: repeat(7, 1fr);
   gap: 6px; margin-bottom: 20px;
@@ -89,14 +89,14 @@ body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monosp
 .cal-day.selected .cal-day-name { color: var(--gold); opacity: 0.7; }
 .cal-week-label { grid-column: 1 / -1; font-size: 9px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; padding: 4px 0 2px; border-top: 1px solid var(--border); margin-top: 2px; }
 
-.cal-hint { font-size: 11px; color: var(--muted); text-align: center; margin-bottom: 16px; }
+.cal-hint { font-size: 14px; color: var(--muted); text-align: center; margin-bottom: 16px; }
 .cal-hint strong { color: var(--gold); }
 
 .btn-big { width: 100%; padding: 16px; font-size: 14px; background: var(--gold); color: var(--bg); border: none; cursor: pointer; font-family: 'DM Mono', monospace; font-weight: 500; transition: all 0.15s; letter-spacing: 0.5px; }
 .btn-big:hover { background: var(--gold-light); }
 .btn-big:disabled { opacity: 0.4; cursor: default; }
 
-.status-msg { padding: 14px 16px; margin-bottom: 16px; font-size: 12px; text-align: center; border: 1px solid; }
+.status-msg { padding: 14px 16px; margin-bottom: 16px; font-size: 15px; text-align: center; border: 1px solid; }
 .status-msg.success { background: rgba(76,175,125,0.1); border-color: rgba(76,175,125,0.3); color: var(--green); }
 .status-msg.error { background: rgba(224,112,96,0.1); border-color: rgba(224,112,96,0.3); color: var(--red); }
 .status-msg.info { background: rgba(201,168,76,0.08); border-color: rgba(201,168,76,0.2); color: var(--gold); }
@@ -104,68 +104,68 @@ body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monosp
 .confirm-box { text-align: center; padding: 32px 0; }
 .confirm-icon { font-size: 48px; margin-bottom: 12px; }
 .confirm-title { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--green); margin-bottom: 8px; }
-.confirm-days { background: var(--surface2); border: 1px solid var(--border); padding: 12px; margin: 16px 0; font-size: 12px; color: var(--muted); line-height: 1.9; text-align: left; }
-.confirm-days strong { color: var(--gold); display: block; margin-bottom: 4px; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
+.confirm-days { background: var(--surface2); border: 1px solid var(--border); padding: 12px; margin: 16px 0; font-size: 15px; color: var(--muted); line-height: 1.9; text-align: left; }
+.confirm-days strong { color: var(--gold); display: block; margin-bottom: 4px; font-size: 16px; letter-spacing: 1px; text-transform: uppercase; }
 
 /* ── ADMIN VIEW ── */
 #adminView { display: none; }
 header { border-bottom: 1px solid var(--border); padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: var(--bg); z-index: 100; }
 .header-logo { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--gold); }
-.header-logo span { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); display: block; letter-spacing: 1px; margin-bottom: 1px; }
+.header-logo span { font-family: 'DM Mono', monospace; font-size: 16px; color: var(--muted); display: block; letter-spacing: 1px; margin-bottom: 1px; }
 .header-actions { display: flex; gap: 8px; align-items: center; }
 .main { display: grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 65px); }
 .sidebar { border-right: 1px solid var(--border); padding: 18px 0; }
 .sidebar-section { padding: 0 14px 14px; border-bottom: 1px solid var(--border); margin-bottom: 14px; }
-.sidebar-label { font-size: 10px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
+.sidebar-label { font-size: 16px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
 .helper-list { display: flex; flex-direction: column; gap: 3px; }
 .helper-item { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border: 1px solid transparent; transition: all 0.15s; }
-.helper-avatar { width: 28px; height: 28px; background: var(--surface2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--gold); flex-shrink: 0; font-family: 'DM Serif Display', serif; }
-.helper-name { font-size: 12px; flex: 1; }
-.helper-pts { font-size: 10px; color: var(--gold); }
-.add-btn { width: 100%; padding: 8px; background: transparent; border: 1px dashed var(--border); color: var(--muted); cursor: pointer; font-family: 'DM Mono', monospace; font-size: 11px; transition: all 0.15s; margin-top: 6px; }
+.helper-avatar { width: 28px; height: 28px; background: var(--surface2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--gold); flex-shrink: 0; font-family: 'DM Serif Display', serif; }
+.helper-name { font-size: 15px; flex: 1; }
+.helper-pts { font-size: 16px; color: var(--gold); }
+.add-btn { width: 100%; padding: 8px; background: transparent; border: 1px dashed var(--border); color: var(--muted); cursor: pointer; font-family: 'DM Mono', monospace; font-size: 14px; transition: all 0.15s; margin-top: 6px; }
 .add-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--surface); }
 .content { padding: 22px 26px; }
 .tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 22px; }
-.tab { padding: 9px 16px; cursor: pointer; font-size: 11px; color: var(--muted); border-bottom: 2px solid transparent; transition: all 0.15s; }
+.tab { padding: 9px 16px; cursor: pointer; font-size: 14px; color: var(--muted); border-bottom: 2px solid transparent; transition: all 0.15s; }
 .tab.active { color: var(--gold); border-bottom-color: var(--gold); }
 .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 20px; }
 .stat-card { background: var(--surface); border: 1px solid var(--border); padding: 14px; }
-.stat-label { font-size: 10px; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+.stat-label { font-size: 16px; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
 .stat-value { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--gold); line-height: 1; }
-.stat-sub { font-size: 10px; color: var(--muted); margin-top: 3px; }
+.stat-sub { font-size: 16px; color: var(--muted); margin-top: 3px; }
 .card { background: var(--surface); border: 1px solid var(--border); padding: 16px; margin-bottom: 16px; }
-.card-title { font-size: 10px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+.card-title { font-size: 16px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
 .pending-grid { display: flex; flex-direction: column; gap: 6px; }
 .pending-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: var(--surface2); border: 1px solid var(--border); }
-.pending-kuerzel { width: 34px; height: 34px; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3); display: flex; align-items: center; justify-content: center; font-family: 'DM Serif Display', serif; font-size: 13px; color: var(--gold); flex-shrink: 0; }
+.pending-kuerzel { width: 34px; height: 34px; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3); display: flex; align-items: center; justify-content: center; font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--gold); flex-shrink: 0; }
 .pending-info { flex: 1; }
-.pending-name { font-size: 13px; color: var(--text); }
-.pending-time { font-size: 10px; color: var(--muted); margin-top: 2px; }
+.pending-name { font-size: 16px; color: var(--text); }
+.pending-time { font-size: 16px; color: var(--muted); margin-top: 2px; }
 .pending-actions { display: flex; gap: 6px; }
-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+table { width: 100%; border-collapse: collapse; font-size: 15px; }
 thead tr { border-bottom: 1px solid var(--border); }
-th { font-size: 10px; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; padding: 7px 10px; text-align: left; font-weight: 400; }
+th { font-size: 16px; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; padding: 7px 10px; text-align: left; font-weight: 400; }
 td { padding: 8px 10px; border-bottom: 1px solid rgba(46,44,40,0.5); vertical-align: middle; }
 tr:hover td { background: var(--surface2); }
-.badge { display: inline-block; padding: 2px 8px; font-size: 10px; }
+.badge { display: inline-block; padding: 2px 8px; font-size: 16px; }
 .badge-einsatz { background: rgba(76,175,125,0.15); color: var(--green); border: 1px solid rgba(76,175,125,0.3); }
 .badge-frei { background: rgba(122,118,112,0.15); color: var(--muted); border: 1px solid var(--border); }
 .badge-bereit { background: rgba(201,168,76,0.12); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
 .badge-verfuegbar { background: rgba(106,163,200,0.12); color: var(--blue); border: 1px solid rgba(106,163,200,0.3); }
-.btn { padding: 7px 16px; border: none; cursor: pointer; font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; transition: all 0.15s; }
+.btn { padding: 7px 16px; border: none; cursor: pointer; font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; transition: all 0.15s; }
 .btn-primary { background: var(--gold); color: var(--bg); }
 .btn-primary:hover { background: var(--gold-light); }
-.btn-success { background: var(--green); color: var(--bg); font-size: 11px; padding: 5px 12px; }
+.btn-success { background: var(--green); color: var(--bg); font-size: 14px; padding: 5px 12px; }
 .btn-success:hover { opacity: 0.85; }
-.btn-danger-sm { background: transparent; border: 1px solid var(--border); color: var(--red); font-size: 10px; padding: 4px 10px; cursor: pointer; font-family: 'DM Mono', monospace; transition: all 0.15s; }
+.btn-danger-sm { background: transparent; border: 1px solid var(--border); color: var(--red); font-size: 16px; padding: 4px 10px; cursor: pointer; font-family: 'DM Mono', monospace; transition: all 0.15s; }
 .btn-danger-sm:hover { border-color: var(--red); background: rgba(224,112,96,0.08); }
 .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
 .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
-.btn-sm { padding: 5px 12px; font-size: 10px; }
+.btn-sm { padding: 5px 12px; font-size: 16px; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 8px; align-items: end; }
 .form-group { display: flex; flex-direction: column; gap: 5px; }
-.form-label { font-size: 10px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
-input, select { background: var(--bg); border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 12px; padding: 7px 10px; outline: none; transition: border-color 0.15s; }
+.form-label { font-size: 16px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+input, select { background: var(--bg); border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 15px; padding: 7px 10px; outline: none; transition: border-color 0.15s; }
 input:focus, select:focus { border-color: var(--gold); }
 select option { background: var(--bg); }
 .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; }
@@ -174,12 +174,12 @@ select option { background: var(--bg); }
 .modal-title { font-family: 'DM Serif Display', serif; font-size: 20px; margin-bottom: 16px; color: var(--gold); }
 .modal-actions { display: flex; gap: 8px; margin-top: 16px; justify-content: flex-end; }
 .period-tabs { display: flex; gap: 4px; margin-bottom: 18px; flex-wrap: wrap; }
-.period-tab { padding: 5px 12px; background: transparent; border: 1px solid var(--border); color: var(--muted); cursor: pointer; font-family: 'DM Mono', monospace; font-size: 11px; transition: all 0.15s; }
+.period-tab { padding: 5px 12px; background: transparent; border: 1px solid var(--border); color: var(--muted); cursor: pointer; font-family: 'DM Mono', monospace; font-size: 14px; transition: all 0.15s; }
 .period-tab.active { background: var(--surface2); border-color: var(--gold); color: var(--gold); }
 
 /* URLAUBSBALKEN */
 .urlaub-bar-wrap { margin-bottom: 6px; }
-.urlaub-bar-top { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px; }
+.urlaub-bar-top { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 4px; }
 .urlaub-bar-name { color: var(--text); }
 .urlaub-bar-val { color: var(--gold); }
 .urlaub-bar-bg { height: 6px; background: var(--surface2); border: 1px solid var(--border); }
@@ -189,20 +189,20 @@ select option { background: var(--bg); }
 .verfueg-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; margin-bottom: 10px; }
 .verfueg-day { background: var(--surface2); border: 1px solid var(--border); padding: 4px; text-align: center; }
 .verfueg-day-name { font-size: 8px; color: var(--muted); text-transform: uppercase; }
-.verfueg-day-date { font-family: 'DM Serif Display', serif; font-size: 13px; color: var(--text); }
-.verfueg-day-count { font-size: 10px; color: var(--green); margin-top: 2px; }
+.verfueg-day-date { font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--text); }
+.verfueg-day-count { font-size: 16px; color: var(--green); margin-top: 2px; }
 .verfueg-day.has-entries { border-color: rgba(76,175,125,0.3); background: rgba(76,175,125,0.05); }
 
 .auswertung-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 12px; }
 .auswert-item { }
 .auswert-name { color: var(--gold); font-family: 'DM Serif Display', serif; font-size: 15px; margin-bottom: 8px; }
-.auswert-row { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); padding: 3px 0; border-bottom: 1px dotted var(--border); }
+.auswert-row { display: flex; justify-content: space-between; font-size: 14px; color: var(--muted); padding: 3px 0; border-bottom: 1px dotted var(--border); }
 .auswert-row span:last-child { color: var(--gold); }
-.auswert-total { display: flex; justify-content: space-between; font-size: 12px; margin-top: 6px; }
+.auswert-total { display: flex; justify-content: space-between; font-size: 15px; margin-top: 6px; }
 .auswert-total span:last-child { color: var(--green); font-weight: 500; }
-.empty-state { text-align: center; padding: 32px; color: var(--muted); font-size: 12px; }
+.empty-state { text-align: center; padding: 32px; color: var(--muted); font-size: 15px; }
 .divider { height: 1px; background: var(--border); margin: 12px 0; }
-.info-note { font-size: 10px; color: var(--muted); font-style: italic; margin-top: 6px; }
+.info-note { font-size: 16px; color: var(--muted); font-style: italic; margin-top: 6px; }
 .loader { display: inline-block; width: 12px; height: 12px; border: 2px solid var(--border); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.6s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 @media(max-width:800px) {
@@ -252,7 +252,7 @@ select option { background: var(--bg); }
     <!-- SCHRITT 1: Kürzel -->
     <div class="springer-card" id="step1">
       <div class="springer-title">Hallo! 👋</div>
-      <div class="springer-sub">Wann kannst du in den nächsten 2 Wochen einspringen?</div>
+      <div class="springer-sub">Wann kannst du einspringen – oder war heute ein Einsatz?</div>
 
       <div class="kuerzel-row">
         <div class="kuerzel-circle" id="kuerzelCircle">–</div>
@@ -264,9 +264,10 @@ select option { background: var(--bg); }
 
       <div id="step1Status" style="display:none;" class="status-msg"></div>
 
-      <button class="btn-big" id="step1Btn" onclick="goToStep2()">Weiter →</button>
+      <button class="btn-big" id="step1Btn" onclick="goToStep2()" style="margin-bottom:10px;">📅 Verfügbarkeit melden</button>
+      <button class="btn-big" onclick="goToEinsatzBestaetigen()" style="background:var(--green);margin-bottom:10px;">✅ Heutigen Einsatz bestätigen</button>
 
-      <div style="margin-top:10px;">
+      <div style="margin-top:4px;">
         <button class="btn btn-outline btn-sm" style="width:100%;" onclick="showAdminLogin()">Admin →</button>
       </div>
     </div>
@@ -304,6 +305,33 @@ select option { background: var(--bg); }
           Bis <strong style="color:var(--gold)">09:00 Uhr</strong> des jeweiligen Tages erfährst du Bescheid.
         </div>
         <button class="btn btn-outline btn-sm" style="margin-top:20px;width:100%;" onclick="springerReset()">Neue Meldung</button>
+      </div>
+    </div>
+
+    <!-- EINSATZ BESTÄTIGEN -->
+    <div class="springer-card" id="stepEinsatz" style="display:none;">
+      <div class="springer-title">Einsatz bestätigen</div>
+      <div class="springer-sub" id="einsatzSub"></div>
+
+      <div id="einsatzStatus" style="display:none;" class="status-msg"></div>
+
+      <div id="einsatzForm">
+        <div style="background:var(--surface2);border:1px solid var(--border);padding:16px;margin-bottom:20px;font-size:15px;line-height:2;">
+          <div>📅 <strong style="color:var(--gold)">Datum:</strong> <span id="einsatzDatumAnzeige"></span></div>
+          <div>👤 <strong style="color:var(--gold)">Kürzel:</strong> <span id="einsatzKuerzelAnzeige"></span></div>
+          <div>⏰ <strong style="color:var(--gold)">Status:</strong> Einsatz durchgeführt</div>
+        </div>
+
+        <button class="btn-big" onclick="submitEinsatzBestaetigen()" style="background:var(--green);margin-bottom:10px;">✅ Ja, Einsatz war heute</button>
+        <button class="btn-big" onclick="submitEinsatzFrei()" style="background:var(--surface2);border:1px solid var(--border);color:var(--muted);margin-bottom:10px;">❌ Kein Einsatz heute</button>
+        <button class="btn btn-outline btn-sm" style="width:100%;" onclick="springerReset()">← Zurück</button>
+      </div>
+
+      <div id="einsatzConfirm" style="display:none;text-align:center;padding:20px 0;">
+        <div style="font-size:48px;margin-bottom:12px;">✅</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--green);margin-bottom:8px;">Gespeichert!</div>
+        <div id="einsatzConfirmText" style="font-size:14px;color:var(--muted);line-height:1.7;"></div>
+        <button class="btn btn-outline btn-sm" style="margin-top:20px;width:100%;" onclick="springerReset()">Zurück zum Start</button>
       </div>
     </div>
 
@@ -741,6 +769,7 @@ function springerReset() {
   document.getElementById('step1').style.display = '';
   document.getElementById('step2').style.display = 'none';
   document.getElementById('stepConfirm').style.display = 'none';
+  document.getElementById('stepEinsatz').style.display = 'none';
   document.getElementById('step2Btn').disabled = false;
   document.getElementById('step2Btn').textContent = 'Verfügbarkeit speichern ✓';
   selectedDays = new Set();
@@ -930,6 +959,70 @@ async function addEinsatzManual() {
   if (einsaetze.find(e => e.kuerzel === kuerzel && e.datum === datum)) { alert('Bereits eingetragen.'); return; }
   await sbPost('einsaetze', { kuerzel, datum, status });
   await loadData();
+}
+
+// ══ EINSATZ SELBST BESTÄTIGEN (HELFER) ══
+async function goToEinsatzBestaetigen() {
+  const k = document.getElementById('springerKuerzel').value.trim().toUpperCase();
+  const st = document.getElementById('step1Status');
+  if (!k) { showMsg(st,'error','Bitte zuerst dein Kürzel eingeben.'); return; }
+
+  try { helpers = await sbGet('helfer'); } catch(e) {}
+  if (!helpers.find(h => h.kuerzel === k)) {
+    showMsg(st,'error',`Kürzel „${k}" nicht gefunden. Bitte Admin kontaktieren.`); return;
+  }
+
+  currentKuerzel = k;
+  const today = todayStr();
+  const dt = new Date(today + 'T00:00:00');
+  const opts = { weekday:'long', day:'2-digit', month:'long' };
+
+  document.getElementById('einsatzSub').textContent = `Kürzel: ${k}`;
+  document.getElementById('einsatzDatumAnzeige').textContent = dt.toLocaleDateString('de-DE', opts);
+  document.getElementById('einsatzKuerzelAnzeige').textContent = k;
+  document.getElementById('einsatzStatus').style.display = 'none';
+  document.getElementById('einsatzForm').style.display = '';
+  document.getElementById('einsatzConfirm').style.display = 'none';
+
+  document.getElementById('step1').style.display = 'none';
+  document.getElementById('stepEinsatz').style.display = '';
+  st.style.display = 'none';
+}
+
+async function submitEinsatzBestaetigen() {
+  const datum = todayStr();
+  const st = document.getElementById('einsatzStatus');
+  try {
+    const existing = await sbGet('einsaetze', `kuerzel=eq.${currentKuerzel}&datum=eq.${datum}`);
+    if (existing && existing.length > 0) {
+      await sbPatch('einsaetze', `id=eq.${existing[0].id}`, { status: 'einsatz' });
+    } else {
+      await sbPost('einsaetze', { kuerzel: currentKuerzel, datum, status: 'einsatz' });
+    }
+    document.getElementById('einsatzForm').style.display = 'none';
+    document.getElementById('einsatzConfirmText').innerHTML = `<strong style="color:var(--green)">${currentKuerzel}</strong> – Einsatz heute wurde gespeichert.<br>+5 Value-Punkte & 1/52 Urlaubstag gutgeschrieben. 🎉`;
+    document.getElementById('einsatzConfirm').style.display = '';
+  } catch(e) {
+    showMsg(st,'error','Fehler beim Speichern. Bitte erneut versuchen.');
+  }
+}
+
+async function submitEinsatzFrei() {
+  const datum = todayStr();
+  const st = document.getElementById('einsatzStatus');
+  try {
+    const existing = await sbGet('einsaetze', `kuerzel=eq.${currentKuerzel}&datum=eq.${datum}`);
+    if (existing && existing.length > 0) {
+      await sbPatch('einsaetze', `id=eq.${existing[0].id}`, { status: 'frei' });
+    } else {
+      await sbPost('einsaetze', { kuerzel: currentKuerzel, datum, status: 'frei' });
+    }
+    document.getElementById('einsatzForm').style.display = 'none';
+    document.getElementById('einsatzConfirmText').innerHTML = `Verstanden – kein Einsatz heute für <strong style="color:var(--gold)">${currentKuerzel}</strong>.`;
+    document.getElementById('einsatzConfirm').style.display = '';
+  } catch(e) {
+    showMsg(st,'error','Fehler beim Speichern.');
+  }
 }
 
 // ══ SPONTAN-EINSATZ ══
