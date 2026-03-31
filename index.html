@@ -169,7 +169,7 @@ input, select { background: var(--bg); border: 1px solid var(--border); color: v
 input:focus, select:focus { border-color: var(--gold); }
 select option { background: var(--bg); }
 .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; }
-.modal-overlay.open { display: flex; }
+.modal-overlay.open { display: flex !important; }
 .modal { background: var(--surface); border: 1px solid var(--border); padding: 26px; width: 360px; }
 .modal-title { font-family: 'DM Serif Display', serif; font-size: 20px; margin-bottom: 16px; color: var(--gold); }
 .modal-actions { display: flex; gap: 8px; margin-top: 16px; justify-content: flex-end; }
@@ -981,7 +981,11 @@ function renderAuswertung() {
 function switchHJ(hj) { activeHJ = hj; renderAuswertung(); }
 
 // ══ HELFER ══
-function openAddHelper() { document.getElementById('addHelperModal').classList.add('open'); }
+function openAddHelper() { 
+  var m = document.getElementById('addHelperModal'); 
+  if(m) { m.classList.add('open'); document.getElementById('newHelperKuerzel').value=''; document.getElementById('newHelperKuerzel').focus(); }
+  else { alert('Modal nicht gefunden'); }
+}
 function closeModal(id)  { document.getElementById(id).classList.remove('open'); }
 async function saveHelper() {
   const k = document.getElementById('newHelperKuerzel').value.trim().toUpperCase();
