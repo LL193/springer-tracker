@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Springer-Tracker · HOMECARE</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f0e0c;
+  --surface: #1a1916;
+  --surface2: #242220;
+  --border: #2e2c28;
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+  --green: #4caf7d;
+  --red: #e07060;
+  --blue: #6aa3c8;
+  --text: #e8e4dc;
+  --muted: #7a7670;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monospace; font-size: 13px; min-height: 100vh; }
+
+/* ── SETUP ── */
+#setupScreen { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 24px; }
+.setup-box { background: var(--surface); border: 1px solid var(--border); padding: 40px; width: 100%; max-width: 500px; }
+.setup-title { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--gold); margin-bottom: 6px; }
+.setup-sub { color: var(--muted); font-size: 11px; margin-bottom: 28px; line-height: 1.6; }
+.setup-field { margin-bottom: 16px; }
+.setup-label { font-size: 10px; letter-spacing: 1.5px; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; display: block; }
+.setup-input { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 12px; padding: 10px 12px; outline: none; }
+.setup-input:focus { border-color: var(--gold); }
+.setup-note { font-size: 10px; color: var(--muted); margin-top: 5px; line-height: 1.5; }
+.setup-actions { display: flex; gap: 10px; margin-top: 24px; }
+
+/* ── SPRINGER VIEW ── */
+#springerView {
+  display: none; min-height: 100vh;
+  background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.05) 0%, transparent 60%), var(--bg);
+  padding: 24px 16px;
+}
+.springer-wrap { max-width: 420px; margin: 0 auto; }
+.springer-logo { font-family: 'DM Serif Display', serif; font-size: 12px; color: var(--muted); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; text-align: center; padding-top: 16px; }
+.springer-card { background: var(--surface); border: 1px solid var(--border); padding: 28px 24px; margin-bottom: 16px; }
+.springer-title { font-family: 'DM Serif Display', serif; font-size: 24px; color: var(--gold); margin-bottom: 4px; }
+.springer-sub { font-size: 11px; color: var(--muted); margin-bottom: 24px; }
+
+/* Kürzel Input */
+.kuerzel-row { display: flex; gap: 10px; align-items: flex-end; margin-bottom: 20px; }
+.kuerzel-circle {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--surface2); border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--gold);
+  flex-shrink: 0; transition: all 0.2s;
+}
+.kuerzel-circle.filled { border-color: var(--gold); background: rgba(201,168,76,0.08); }
+.kuerzel-field { flex: 1; }
+.kuerzel-label { font-size: 10px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; display: block; }
+.kuerzel-input {
+  width: 100%; background: var(--bg); border: 1px solid var(--border);
+  color: var(--text); font-family: 'DM Mono', monospace;
+  font-size: 20px; font-weight: 500; padding: 12px 14px;
+  outline: none; letter-spacing: 3px; text-transform: uppercase;
+}
+.kuerzel-input:focus { border-color: var(--gold); }
+
+/* 2-Wochen Kalender */
+.cal-header { font-size: 10px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 10px; }
+.cal-grid {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  gap: 6px; margin-bottom: 20px;
+}
+.cal-day {
+  aspect-ratio: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: var(--surface2); border: 1px solid var(--border);
+  cursor: pointer; transition: all 0.15s; user-select: none;
+  border-radius: 2px;
+}
+.cal-day:hover { border-color: var(--muted); }
+.cal-day.selected { background: rgba(201,168,76,0.15); border-color: var(--gold); }
+.cal-day.today { border-color: var(--blue); }
+.cal-day.past { opacity: 0.3; cursor: default; pointer-events: none; }
+.cal-day-name { font-size: 8px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.cal-day-num { font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--text); line-height: 1; }
+.cal-day.selected .cal-day-num { color: var(--gold); }
+.cal-day.selected .cal-day-name { color: var(--gold); opacity: 0.7; }
+.cal-week-label { grid-column: 1 / -1; font-size: 9px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; padding: 4px 0 2px; border-top: 1px solid var(--border); margin-top: 2px; }
+
+.cal-hint { font-size: 11px; color: var(--muted); text-align: center; margin-bottom: 16px; }
+.cal-hint strong { color: var(--gold); }
+
+.btn-big { width: 100%; padding: 16px; font-size: 14px; background: var(--gold); color: var(--bg); border: none; cursor: pointer; font-family: 'DM Mono', monospace; font-weight: 500; transition: all 0.15s; letter-spacing: 0.5px; }
+.btn-big:hover { background: var(--gold-light); }
+.btn-big:disabled { opacity: 0.4; cursor: default; }
+
+.status-msg { padding: 14px 16px; margin-bottom: 16px; font-size: 12px; text-align: center; border: 1px solid; }
+.status-msg.success { background: rgba(76,175,125,0.1); border-color: rgba(76,175,125,0.3); color: var(--green); }
+.status-msg.error { background: rgba(224,112,96,0.1); border-color: rgba(224,112,96,0.3); color: var(--red); }
+.status-msg.info { background: rgba(201,168,76,0.08); border-color: rgba(201,168,76,0.2); color: var(--gold); }
+
+.confirm-box { text-align: center; padding: 32px 0; }
+.confirm-icon { font-size: 48px; margin-bottom: 12px; }
+.confirm-title { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--green); margin-bottom: 8px; }
+.confirm-days { background: var(--surface2); border: 1px solid var(--border); padding: 12px; margin: 16px 0; font-size: 12px; color: var(--muted); line-height: 1.9; text-align: left; }
+.confirm-days strong { color: var(--gold); display: block; margin-bottom: 4px; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
+
+/* ── ADMIN VIEW ── */
+#adminView { display: none; }
+header { border-bottom: 1px solid var(--border); padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: var(--bg); z-index: 100; }
+.header-logo { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--gold); }
+.header-logo span { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); display: block; letter-spacing: 1px; margin-bottom: 1px; }
+.header-actions { display: flex; gap: 8px; align-items: center; }
+.main { display: grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 65px); }
+.sidebar { border-right: 1px solid var(--border); padding: 18px 0; }
+.sidebar-section { padding: 0 14px 14px; border-bottom: 1px solid var(--border); margin-bottom: 14px; }
+.sidebar-label { font-size: 10px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
+.helper-list { display: flex; flex-direction: column; gap: 3px; }
+.helper-item { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border: 1px solid transparent; transition: all 0.15s; }
+.helper-avatar { width: 28px; height: 28px; background: var(--surface2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--gold); flex-shrink: 0; font-family: 'DM Serif Display', serif; }
+.helper-name { font-size: 12px; flex: 1; }
+.helper-pts { font-size: 10px; color: var(--gold); }
+.add-btn { width: 100%; padding: 8px; background: transparent; border: 1px dashed var(--border); color: var(--muted); cursor: pointer; font-family: 'DM Mono', monospace; font-size: 11px; transition: all 0.15s; margin-top: 6px; }
+.add-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--surface); }
+.content { padding: 22px 26px; }
+.tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 22px; }
+.tab { padding: 9px 16px; cursor: pointer; font-size: 11px; color: var(--muted); border-bottom: 2px solid transparent; transition: all 0.15s; }
+.tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+.stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 20px; }
+.stat-card { background: var(--surface); border: 1px solid var(--border); padding: 14px; }
+.stat-label { font-size: 10px; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+.stat-value { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--gold); line-height: 1; }
+.stat-sub { font-size: 10px; color: var(--muted); margin-top: 3px; }
+.card { background: var(--surface); border: 1px solid var(--border); padding: 16px; margin-bottom: 16px; }
+.card-title { font-size: 10px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+.pending-grid { display: flex; flex-direction: column; gap: 6px; }
+.pending-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: var(--surface2); border: 1px solid var(--border); }
+.pending-kuerzel { width: 34px; height: 34px; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3); display: flex; align-items: center; justify-content: center; font-family: 'DM Serif Display', serif; font-size: 13px; color: var(--gold); flex-shrink: 0; }
+.pending-info { flex: 1; }
+.pending-name { font-size: 13px; color: var(--text); }
+.pending-time { font-size: 10px; color: var(--muted); margin-top: 2px; }
+.pending-actions { display: flex; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+thead tr { border-bottom: 1px solid var(--border); }
+th { font-size: 10px; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; padding: 7px 10px; text-align: left; font-weight: 400; }
+td { padding: 8px 10px; border-bottom: 1px solid rgba(46,44,40,0.5); vertical-align: middle; }
+tr:hover td { background: var(--surface2); }
+.badge { display: inline-block; padding: 2px 8px; font-size: 10px; }
+.badge-einsatz { background: rgba(76,175,125,0.15); color: var(--green); border: 1px solid rgba(76,175,125,0.3); }
+.badge-frei { background: rgba(122,118,112,0.15); color: var(--muted); border: 1px solid var(--border); }
+.badge-bereit { background: rgba(201,168,76,0.12); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+.badge-verfuegbar { background: rgba(106,163,200,0.12); color: var(--blue); border: 1px solid rgba(106,163,200,0.3); }
+.btn { padding: 7px 16px; border: none; cursor: pointer; font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; transition: all 0.15s; }
+.btn-primary { background: var(--gold); color: var(--bg); }
+.btn-primary:hover { background: var(--gold-light); }
+.btn-success { background: var(--green); color: var(--bg); font-size: 11px; padding: 5px 12px; }
+.btn-success:hover { opacity: 0.85; }
+.btn-danger-sm { background: transparent; border: 1px solid var(--border); color: var(--red); font-size: 10px; padding: 4px 10px; cursor: pointer; font-family: 'DM Mono', monospace; transition: all 0.15s; }
+.btn-danger-sm:hover { border-color: var(--red); background: rgba(224,112,96,0.08); }
+.btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+.btn-sm { padding: 5px 12px; font-size: 10px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 8px; align-items: end; }
+.form-group { display: flex; flex-direction: column; gap: 5px; }
+.form-label { font-size: 10px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+input, select { background: var(--bg); border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 12px; padding: 7px 10px; outline: none; transition: border-color 0.15s; }
+input:focus, select:focus { border-color: var(--gold); }
+select option { background: var(--bg); }
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; }
+.modal-overlay.open { display: flex; }
+.modal { background: var(--surface); border: 1px solid var(--border); padding: 26px; width: 360px; }
+.modal-title { font-family: 'DM Serif Display', serif; font-size: 20px; margin-bottom: 16px; color: var(--gold); }
+.modal-actions { display: flex; gap: 8px; margin-top: 16px; justify-content: flex-end; }
+.period-tabs { display: flex; gap: 4px; margin-bottom: 18px; flex-wrap: wrap; }
+.period-tab { padding: 5px 12px; background: transparent; border: 1px solid var(--border); color: var(--muted); cursor: pointer; font-family: 'DM Mono', monospace; font-size: 11px; transition: all 0.15s; }
+.period-tab.active { background: var(--surface2); border-color: var(--gold); color: var(--gold); }
+
+/* URLAUBSBALKEN */
+.urlaub-bar-wrap { margin-bottom: 6px; }
+.urlaub-bar-top { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px; }
+.urlaub-bar-name { color: var(--text); }
+.urlaub-bar-val { color: var(--gold); }
+.urlaub-bar-bg { height: 6px; background: var(--surface2); border: 1px solid var(--border); }
+.urlaub-bar-fill { height: 100%; background: var(--gold); transition: width 0.4s; }
+
+/* VERFÜGBARKEITS-ÜBERSICHT */
+.verfueg-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; margin-bottom: 10px; }
+.verfueg-day { background: var(--surface2); border: 1px solid var(--border); padding: 4px; text-align: center; }
+.verfueg-day-name { font-size: 8px; color: var(--muted); text-transform: uppercase; }
+.verfueg-day-date { font-family: 'DM Serif Display', serif; font-size: 13px; color: var(--text); }
+.verfueg-day-count { font-size: 10px; color: var(--green); margin-top: 2px; }
+.verfueg-day.has-entries { border-color: rgba(76,175,125,0.3); background: rgba(76,175,125,0.05); }
+
+.auswertung-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 12px; }
+.auswert-item { }
+.auswert-name { color: var(--gold); font-family: 'DM Serif Display', serif; font-size: 15px; margin-bottom: 8px; }
+.auswert-row { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); padding: 3px 0; border-bottom: 1px dotted var(--border); }
+.auswert-row span:last-child { color: var(--gold); }
+.auswert-total { display: flex; justify-content: space-between; font-size: 12px; margin-top: 6px; }
+.auswert-total span:last-child { color: var(--green); font-weight: 500; }
+.empty-state { text-align: center; padding: 32px; color: var(--muted); font-size: 12px; }
+.divider { height: 1px; background: var(--border); margin: 12px 0; }
+.info-note { font-size: 10px; color: var(--muted); font-style: italic; margin-top: 6px; }
+.loader { display: inline-block; width: 12px; height: 12px; border: 2px solid var(--border); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.6s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media(max-width:800px) {
+  .main { grid-template-columns: 1fr; }
+  .sidebar { border-right: none; border-bottom: 1px solid var(--border); }
+  .stats-row { grid-template-columns: repeat(2,1fr); }
+  .form-row { grid-template-columns: 1fr 1fr; }
+  .auswertung-grid { grid-template-columns: 1fr 1fr; }
+  .verfueg-grid { grid-template-columns: repeat(7,1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ SETUP ══ -->
+<div id="setupScreen">
+  <div class="setup-box">
+    <div class="setup-title">Einrichtung</div>
+    <div class="setup-sub">Einmalig deine Supabase-Zugangsdaten eintragen.<br>Werden nur lokal in deinem Browser gespeichert.</div>
+    <div class="setup-field">
+      <label class="setup-label">Supabase URL</label>
+      <input class="setup-input" id="cfgUrl" placeholder="https://xxxxxxxxxxxx.supabase.co">
+      <div class="setup-note">Supabase → Project Settings → API → Project URL</div>
+    </div>
+    <div class="setup-field">
+      <label class="setup-label">Supabase Anon Key</label>
+      <input class="setup-input" id="cfgKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6...">
+      <div class="setup-note">Supabase → Project Settings → API → anon / public</div>
+    </div>
+    <div class="setup-field">
+      <label class="setup-label">Admin-PIN (4-stellig)</label>
+      <input class="setup-input" id="cfgPin" placeholder="z.B. 1234" maxlength="4" type="password">
+    </div>
+    <div class="setup-actions">
+      <button class="btn btn-primary" onclick="saveConfig()">Speichern & starten</button>
+      <button class="btn btn-outline" onclick="showView('springer')" style="font-size:11px;">Nur Springer-Ansicht</button>
+    </div>
+    <div id="setupError" style="color:var(--red);font-size:11px;margin-top:10px;display:none;"></div>
+  </div>
+</div>
+
+<!-- ══ SPRINGER VIEW ══ -->
+<div id="springerView">
+  <div class="springer-wrap">
+    <div class="springer-logo">HOMECARE · Alltagshelfer</div>
+
+    <!-- SCHRITT 1: Kürzel -->
+    <div class="springer-card" id="step1">
+      <div class="springer-title">Hallo! 👋</div>
+      <div class="springer-sub">Wann kannst du in den nächsten 2 Wochen einspringen?</div>
+
+      <div class="kuerzel-row">
+        <div class="kuerzel-circle" id="kuerzelCircle">–</div>
+        <div class="kuerzel-field">
+          <label class="kuerzel-label">Dein Kürzel</label>
+          <input class="kuerzel-input" id="springerKuerzel" maxlength="5" placeholder="z.B. KM" autocomplete="off" oninput="onKuerzelInput(this)">
+        </div>
+      </div>
+
+      <div id="step1Status" style="display:none;" class="status-msg"></div>
+
+      <button class="btn-big" id="step1Btn" onclick="goToStep2()">Weiter →</button>
+
+      <div style="margin-top:10px;">
+        <button class="btn btn-outline btn-sm" style="width:100%;" onclick="showAdminLogin()">Admin →</button>
+      </div>
+    </div>
+
+    <!-- SCHRITT 2: Kalender -->
+    <div class="springer-card" id="step2" style="display:none;">
+      <div class="springer-title">Verfügbarkeit</div>
+      <div class="springer-sub" id="step2Sub"></div>
+
+      <div class="cal-hint">Tippe auf die Tage an denen du <strong>einspringen kannst</strong></div>
+
+      <div class="cal-header">Nächste 2 Wochen</div>
+      <div class="cal-grid" id="calGrid"></div>
+
+      <div id="selectedCount" style="font-size:11px;color:var(--gold);text-align:center;margin-bottom:16px;min-height:18px;"></div>
+
+      <div id="step2Status" style="display:none;" class="status-msg"></div>
+
+      <button class="btn-big" id="step2Btn" onclick="submitVerfuegbarkeit()">Verfügbarkeit speichern ✓</button>
+      <button class="btn btn-outline btn-sm" style="width:100%;margin-top:8px;" onclick="backToStep1()">← Zurück</button>
+    </div>
+
+    <!-- BESTÄTIGUNG -->
+    <div class="springer-card" id="stepConfirm" style="display:none;">
+      <div class="confirm-box">
+        <div class="confirm-icon">✅</div>
+        <div class="confirm-title">Danke, <span id="confirmKuerzel"></span>!</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:12px;">Deine Verfügbarkeit wurde gespeichert.</div>
+        <div class="confirm-days">
+          <strong>Deine gemeldeten Tage</strong>
+          <div id="confirmDaysList"></div>
+        </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:12px;line-height:1.7;">
+          Du wirst rechtzeitig informiert ob ein Einsatz kommt.<br>
+          Bis <strong style="color:var(--gold)">09:00 Uhr</strong> des jeweiligen Tages erfährst du Bescheid.
+        </div>
+        <button class="btn btn-outline btn-sm" style="margin-top:20px;width:100%;" onclick="springerReset()">Neue Meldung</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ ADMIN VIEW ══ -->
+<div id="adminView">
+  <header>
+    <div class="header-logo">
+      <span>HOMECARE · Verwaltung</span>
+      Springer-Tracker
+    </div>
+    <div class="header-actions">
+      <span id="adminHJBadge" style="font-size:10px;color:var(--gold);border:1px solid var(--border);padding:4px 10px;letter-spacing:1px;"></span>
+      <button class="btn btn-outline btn-sm" onclick="openEinstellungen()" style="border-color:var(--gold);color:var(--gold);">⚙ Einstellungen</button>
+      <button class="btn btn-outline btn-sm" onclick="showView('springer')">Springer-Ansicht</button>
+      <button class="btn btn-outline btn-sm" onclick="logout()">Abmelden</button>
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Helfer</div>
+        <div class="helper-list" id="helperList"></div>
+        <button class="add-btn" onclick="openAddHelper()">+ Kürzel anlegen</button>
+      </div>
+      <div style="padding:0 14px;">
+        <div class="sidebar-label">Legende</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:10px;">
+          <div style="display:flex;gap:6px;align-items:center;"><span class="badge badge-verfuegbar">Verfügbar</span><span style="color:var(--muted)">Selbst gemeldet</span></div>
+          <div style="display:flex;gap:6px;align-items:center;"><span class="badge badge-bereit">Bereit</span><span style="color:var(--muted)">Tagesbereitschaft</span></div>
+          <div style="display:flex;gap:6px;align-items:center;"><span class="badge badge-einsatz">Einsatz</span><span style="color:var(--muted)">+5P + 1/52 Urlaub</span></div>
+          <div style="display:flex;gap:6px;align-items:center;"><span class="badge badge-frei">Frei</span><span style="color:var(--muted)">Kein Einsatz</span></div>
+        </div>
+        <div class="divider"></div>
+        <div class="sidebar-label">Urlaubs-Übersicht</div>
+        <div id="urlaubsBars" style="display:flex;flex-direction:column;gap:8px;"></div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab('heute',this)">Heute</div>
+        <div class="tab" onclick="switchTab('verfuegbar',this)">Verfügbarkeit</div>
+        <div class="tab" onclick="switchTab('erfassung',this)">Erfassung</div>
+        <div class="tab" onclick="switchTab('auswertung',this)">Auswertung</div>
+      </div>
+
+      <!-- HEUTE -->
+      <div id="tab-heute">
+        <div class="stats-row" id="statsRow"></div>
+        <div class="card">
+          <div class="card-title" style="display:flex;justify-content:space-between;align-items:center;border:none;padding:0;margin-bottom:12px;">
+            <span style="font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;">Bereitschaftsmeldungen heute</span>
+            <button class="btn btn-outline btn-sm" onclick="loadData()">↻ Aktualisieren</button>
+          </div>
+          <div id="pendingList"><div class="empty-state"><div class="loader"></div></div></div>
+        </div>
+      </div>
+
+      <!-- VERFÜGBARKEIT -->
+      <div id="tab-verfuegbar" style="display:none;">
+        <div class="card">
+          <div class="card-title">Verfügbarkeiten nächste 2 Wochen</div>
+          <div class="verfueg-grid" id="verfuegGrid"></div>
+          <div id="verfuegDetail" style="margin-top:16px;"></div>
+        </div>
+      </div>
+
+      <!-- ERFASSUNG -->
+      <div id="tab-erfassung" style="display:none;">
+        <div class="card">
+          <div class="card-title">Springertag manuell erfassen</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Helfer</label>
+              <select id="einsatzHelper"><option value="">— Auswählen —</option></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Datum</label>
+              <input type="date" id="einsatzDate">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Status</label>
+              <select id="einsatzStatus">
+                <option value="einsatz">Einsatz</option>
+                <option value="frei">Frei (kein Einsatz)</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" onclick="addEinsatzManual()">Eintragen</button>
+          </div>
+          <div class="info-note">* Einsatz = +5 Value-Punkte + 1/52 Urlaubstag automatisch.</div>
+        </div>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <div style="font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;">Alle Einträge</div>
+            <div style="display:flex;gap:6px;">
+              <select id="filterHelper" onchange="renderTable()" style="font-size:10px;padding:4px 8px;"><option value="">Alle</option></select>
+              <select id="filterHJ" onchange="renderTable()" style="font-size:10px;padding:4px 8px;">
+                <option value="">Alle Zeiträume</option>
+                <option value="HJ1-2025">HJ 1 · 2025</option>
+                <option value="HJ2-2025">HJ 2 · 2025</option>
+                <option value="HJ1-2026">HJ 1 · 2026</option>
+                <option value="HJ2-2026">HJ 2 · 2026</option>
+              </select>
+            </div>
+          </div>
+          <div style="overflow-x:auto;">
+            <table>
+              <thead><tr><th>Datum</th><th>Helfer</th><th>Status</th><th>Punkte</th><th>Urlaub</th><th>HJ</th><th></th></tr></thead>
+              <tbody id="einsatzTable"></tbody>
+            </table>
+            <div id="emptyTable" class="empty-state" style="display:none;">Keine Einträge</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AUSWERTUNG -->
+      <div id="tab-auswertung" style="display:none;">
+        <div class="period-tabs" id="hjTabs"></div>
+
+        <!-- URLAUBS-DASHBOARD -->
+        <div class="card">
+          <div class="card-title">Urlaubsanspruch Dashboard</div>
+          <div id="urlaubsDashboard"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Halbjahres-Auswertung</div>
+          <div class="auswertung-grid" id="auswertungGrid"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Ranking</div>
+          <table>
+            <thead><tr><th>#</th><th>Helfer</th><th>Einsätze</th><th>Punkte</th><th>Urlaubstage</th><th>Quote</th></tr></thead>
+            <tbody id="rankingTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Helfer -->
+<div class="modal-overlay" id="addHelperModal">
+  <div class="modal">
+    <div class="modal-title">Kürzel anlegen</div>
+    <div class="form-group" style="margin-bottom:6px;">
+      <label class="form-label">Handzeichen</label>
+      <input type="text" id="newHelperKuerzel" placeholder="z.B. KM" maxlength="5" style="text-transform:uppercase;font-size:18px;letter-spacing:3px;text-align:center;">
+    </div>
+    <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">Max. 5 Zeichen · automatisch Großbuchstaben</div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('addHelperModal')">Abbrechen</button>
+      <button class="btn btn-primary" onclick="saveHelper()">Speichern</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Admin Login -->
+<div class="modal-overlay" id="adminLoginModal">
+  <div class="modal">
+    <div class="modal-title">Admin-PIN</div>
+    <div class="form-group">
+      <label class="form-label">PIN eingeben</label>
+      <input type="password" id="adminPinInput" maxlength="4" placeholder="••••" style="text-align:center;font-size:20px;letter-spacing:4px;" onkeydown="if(event.key==='Enter')checkAdminPin()">
+    </div>
+    <div id="pinError" style="color:var(--red);font-size:11px;margin-top:8px;display:none;">Falscher PIN.</div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('adminLoginModal')">Abbrechen</button>
+      <button class="btn btn-primary" onclick="checkAdminPin()">Weiter</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══ CONFIG ══
+let SUPABASE_URL = '', SUPABASE_KEY = '', ADMIN_PIN = '';
+
+function loadConfig() {
+  SUPABASE_URL = localStorage.getItem('sb_url') || '';
+  SUPABASE_KEY = localStorage.getItem('sb_key') || '';
+  ADMIN_PIN    = localStorage.getItem('sb_pin') || '';
+}
+
+function saveConfig() {
+  const url = document.getElementById('cfgUrl').value.trim().replace(/\/$/, '');
+  const key = document.getElementById('cfgKey').value.trim();
+  const pin = document.getElementById('cfgPin').value.trim();
+  const err = document.getElementById('setupError');
+  if (!url || !key) { err.textContent = 'URL und Key sind Pflichtfelder.'; err.style.display=''; return; }
+  if (pin && (pin.length !== 4 || isNaN(pin))) { err.textContent = 'PIN muss 4 Ziffern haben.'; err.style.display=''; return; }
+  localStorage.setItem('sb_url', url); localStorage.setItem('sb_key', key); localStorage.setItem('sb_pin', pin);
+  SUPABASE_URL = url; SUPABASE_KEY = key; ADMIN_PIN = pin;
+  err.style.display = 'none';
+  showView('springer');
+}
+
+// ══ SUPABASE ══
+async function sbGet(table, filter='') {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${filter}&order=created_at.desc`, {
+    headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` }
+  });
+  return r.json();
+}
+async function sbPost(table, body) {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+    method: 'POST',
+    headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', Prefer: 'return=representation' },
+    body: JSON.stringify(body)
+  });
+  return r.json();
+}
+async function sbPatch(table, filter, body) {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${filter}`, {
+    method: 'PATCH',
+    headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', Prefer: 'return=representation' },
+    body: JSON.stringify(body)
+  });
+  return r.json();
+}
+async function sbDelete(table, filter) {
+  await fetch(`${SUPABASE_URL}/rest/v1/${table}?${filter}`, {
+    method: 'DELETE', headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` }
+  });
+}
+
+// ══ STATE ══
+let helpers = [], einsaetze = [], verfuegbarkeiten = [];
+
+function todayStr() { return new Date().toISOString().split('T')[0]; }
+function getHJ(d) { const dt = new Date(d); return dt.getMonth() < 6 ? `HJ1-${dt.getFullYear()}` : `HJ2-${dt.getFullYear()}`; }
+function hjLabel(hj) { const [p,y] = hj.split('-'); return `${p==='HJ1'?'HJ 1':'HJ 2'} · ${y}`; }
+function getCurrentHJ() { const n = new Date(); return n.getMonth() < 6 ? `HJ1-${n.getFullYear()}` : `HJ2-${n.getFullYear()}`; }
+function getHJList() { const a = new Set(einsaetze.map(e => getHJ(e.datum))); a.add(getCurrentHJ()); return [...a].sort(); }
+function formatDate(s) { const [y,m,d] = s.split('-'); return `${d}.${m}.${y}`; }
+const WEEKDAYS = ['So','Mo','Di','Mi','Do','Fr','Sa'];
+const WEEKDAYS_LONG = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+
+// ══ VIEWS ══
+function showView(v) {
+  document.getElementById('setupScreen').style.display  = 'none';
+  document.getElementById('springerView').style.display = 'none';
+  document.getElementById('adminView').style.display    = 'none';
+  if (v === 'setup')    document.getElementById('setupScreen').style.display  = 'flex';
+  if (v === 'springer') { document.getElementById('springerView').style.display = 'flex'; initCalendar(); }
+  if (v === 'admin')    { document.getElementById('adminView').style.display = 'block'; loadData(); }
+}
+function logout() { showView('springer'); }
+
+function showAdminLogin() {
+  if (!SUPABASE_URL) { showView('setup'); return; }
+  if (!ADMIN_PIN) { showView('admin'); return; }
+  document.getElementById('adminPinInput').value = '';
+  document.getElementById('pinError').style.display = 'none';
+  document.getElementById('adminLoginModal').classList.add('open');
+}
+function checkAdminPin() {
+  if (document.getElementById('adminPinInput').value === ADMIN_PIN) { closeModal('adminLoginModal'); showView('admin'); }
+  else document.getElementById('pinError').style.display = '';
+}
+
+// ══ SPRINGER – SCHRITT 1 ══
+let currentKuerzel = '';
+
+function onKuerzelInput(inp) {
+  const v = inp.value.toUpperCase(); inp.value = v;
+  const c = document.getElementById('kuerzelCircle');
+  c.textContent = v || '–'; c.classList.toggle('filled', v.length > 0);
+}
+
+async function goToStep2() {
+  const k = document.getElementById('springerKuerzel').value.trim().toUpperCase();
+  const st = document.getElementById('step1Status');
+  if (!k) { showMsg(st,'error','Bitte dein Kürzel eingeben.'); return; }
+  if (!SUPABASE_URL) { showMsg(st,'error','Keine Verbindung. Bitte Admin kontaktieren.'); return; }
+
+  try { helpers = await sbGet('helfer'); } catch(e) {}
+  if (!helpers.find(h => h.kuerzel === k)) {
+    showMsg(st,'error',`Kürzel „${k}" nicht gefunden. Bitte Admin kontaktieren.`); return;
+  }
+  currentKuerzel = k;
+  st.style.display = 'none';
+  document.getElementById('step2Sub').textContent = `Hallo ${k} 👋 — wähle deine verfügbaren Tage`;
+  document.getElementById('step1').style.display = 'none';
+  document.getElementById('step2').style.display = '';
+}
+
+function backToStep1() {
+  document.getElementById('step1').style.display = '';
+  document.getElementById('step2').style.display = 'none';
+}
+
+function showMsg(el, type, text) {
+  el.className = `status-msg ${type}`; el.textContent = text; el.style.display = '';
+}
+
+// ══ KALENDER ══
+let selectedDays = new Set();
+
+function initCalendar() {
+  selectedDays = new Set();
+  const grid = document.getElementById('calGrid');
+  grid.innerHTML = '';
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  // Wochentag-Header
+  ['Mo','Di','Mi','Do','Fr','Sa','So'].forEach(d => {
+    const h = document.createElement('div');
+    h.style.cssText = 'text-align:center;font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;padding:2px 0;';
+    h.textContent = d; grid.appendChild(h);
+  });
+
+  // Fülle bis Montag auf
+  const startDay = new Date(today);
+  const dow = startDay.getDay(); // 0=So
+  const daysToMon = dow === 0 ? 1 : (dow === 1 ? 0 : -(dow - 1));
+  startDay.setDate(startDay.getDate() + daysToMon);
+
+  // 14 Tage ab heute, aber im Mo-So-Raster
+  const endDate = new Date(today); endDate.setDate(endDate.getDate() + 14);
+
+  // Leere Felder vor Start
+  const startDow = startDay.getDay(); // sollte 1 (Mo) sein
+  // Offset: Mo=1 → 0 leere, Di=2 → 1 leer usw.
+  const offset = startDow === 0 ? 6 : startDow - 1;
+
+  // Berechne alle Tage im Raster (3 Wochen abdecken für sauberes Grid)
+  let gridStart = new Date(startDay);
+  for (let i = 0; i < offset; i++) {
+    const ph = document.createElement('div'); ph.style.visibility='hidden'; grid.appendChild(ph);
+  }
+
+  for (let i = 0; i < 14; i++) {
+    const d = new Date(today); d.setDate(today.getDate() + i);
+    const dateStr = d.toISOString().split('T')[0];
+    const isPast = d < today;
+    const isToday = d.getTime() === today.getTime();
+    const dow2 = d.getDay();
+    const isWeekend = dow2 === 0 || dow2 === 6;
+
+    const el = document.createElement('div');
+    el.className = 'cal-day' + (isPast ? ' past' : '') + (isToday ? ' today' : '');
+    el.innerHTML = `<div class="cal-day-name">${WEEKDAYS[dow2]}</div><div class="cal-day-num">${d.getDate()}</div>`;
+    if (!isPast) {
+      el.onclick = () => toggleDay(dateStr, el);
+    }
+    el.dataset.date = dateStr;
+    grid.appendChild(el);
+  }
+  updateSelectedCount();
+}
+
+function toggleDay(dateStr, el) {
+  if (selectedDays.has(dateStr)) { selectedDays.delete(dateStr); el.classList.remove('selected'); }
+  else { selectedDays.add(dateStr); el.classList.add('selected'); }
+  updateSelectedCount();
+}
+
+function updateSelectedCount() {
+  const c = document.getElementById('selectedCount');
+  const n = selectedDays.size;
+  c.textContent = n === 0 ? '' : `${n} Tag${n>1?'e':''} ausgewählt ✓`;
+}
+
+async function submitVerfuegbarkeit() {
+  const st = document.getElementById('step2Status');
+  if (selectedDays.size === 0) { showMsg(st,'error','Bitte mindestens einen Tag auswählen.'); return; }
+
+  document.getElementById('step2Btn').disabled = true;
+  document.getElementById('step2Btn').textContent = 'Speichere…';
+
+  try {
+    // Bestehende Verfügbarkeiten für diesen Helfer in den nächsten 14 Tagen löschen
+    const today = todayStr();
+    const future = new Date(); future.setDate(future.getDate() + 14);
+    const futureStr = future.toISOString().split('T')[0];
+
+    // Neue Einträge einfügen
+    for (const datum of [...selectedDays].sort()) {
+      // Prüfe ob bereits ein Eintrag existiert
+      const existing = await sbGet('einsaetze', `kuerzel=eq.${currentKuerzel}&datum=eq.${datum}`);
+      if (!existing || existing.length === 0) {
+        await sbPost('einsaetze', { kuerzel: currentKuerzel, datum, status: 'verfuegbar' });
+      }
+    }
+
+    // Bestätigung zeigen
+    document.getElementById('confirmKuerzel').textContent = currentKuerzel;
+    const sorted = [...selectedDays].sort();
+    document.getElementById('confirmDaysList').innerHTML = sorted.map(d => {
+      const dt = new Date(d + 'T00:00:00');
+      return `<div>${WEEKDAYS_LONG[dt.getDay()]}, ${formatDate(d)}</div>`;
+    }).join('');
+    document.getElementById('step2').style.display = 'none';
+    document.getElementById('stepConfirm').style.display = '';
+  } catch(e) {
+    showMsg(st,'error','Fehler beim Speichern. Bitte erneut versuchen.');
+    document.getElementById('step2Btn').disabled = false;
+    document.getElementById('step2Btn').textContent = 'Verfügbarkeit speichern ✓';
+  }
+}
+
+function springerReset() {
+  document.getElementById('springerKuerzel').value = '';
+  document.getElementById('kuerzelCircle').textContent = '–';
+  document.getElementById('kuerzelCircle').classList.remove('filled');
+  document.getElementById('step1Status').style.display = 'none';
+  document.getElementById('step1').style.display = '';
+  document.getElementById('step2').style.display = 'none';
+  document.getElementById('stepConfirm').style.display = 'none';
+  document.getElementById('step2Btn').disabled = false;
+  document.getElementById('step2Btn').textContent = 'Verfügbarkeit speichern ✓';
+  selectedDays = new Set();
+  initCalendar();
+}
+
+// ══ ADMIN LADEN ══
+async function loadData() {
+  try {
+    helpers        = await sbGet('helfer');
+    einsaetze      = await sbGet('einsaetze');
+    renderAll();
+  } catch(e) { console.error(e); }
+}
+
+// ══ ADMIN RENDER ══
+function renderAll() {
+  renderSidebar();
+  renderHeute();
+  renderTable();
+  renderVerfuegbarkeit();
+  renderUrlaubsBars();
+  const curTab = document.querySelector('.tab.active')?.textContent?.trim();
+  if (curTab === 'Auswertung') renderAuswertung();
+}
+
+function renderSidebar() {
+  const list = document.getElementById('helperList');
+  list.innerHTML = helpers.map(h => {
+    const pts = einsaetze.filter(e => e.kuerzel === h.kuerzel && e.status === 'einsatz').length * 5;
+    return `<div class="helper-item">
+      <div class="helper-avatar">${h.kuerzel}</div>
+      <div class="helper-name">${h.kuerzel}</div>
+      <div class="helper-pts">${pts}P</div>
+    </div>`;
+  }).join('') || '<div style="font-size:11px;color:var(--muted);padding:8px 10px;">Keine Helfer.</div>';
+
+  ['einsatzHelper','filterHelper'].forEach(id => {
+    const sel = document.getElementById(id); const cur = sel.value;
+    sel.innerHTML = id === 'filterHelper' ? '<option value="">Alle</option>' : '<option value="">— Auswählen —</option>';
+    helpers.forEach(h => { const o = document.createElement('option'); o.value = h.kuerzel; o.textContent = h.kuerzel; sel.appendChild(o); });
+    sel.value = cur;
+  });
+}
+
+function renderUrlaubsBars() {
+  const hj = getCurrentHJ();
+  const container = document.getElementById('urlaubsBars');
+  const JAHRESURLAUB = 30; // Angenommener Jahresurlaub in Tagen
+  container.innerHTML = helpers.map(h => {
+    const anz = einsaetze.filter(e => e.kuerzel === h.kuerzel && e.status === 'einsatz').length;
+    const tage = anz / 52;
+    const pct = Math.min((tage / JAHRESURLAUB) * 100, 100);
+    return `<div class="urlaub-bar-wrap">
+      <div class="urlaub-bar-top">
+        <span class="urlaub-bar-name">${h.kuerzel}</span>
+        <span class="urlaub-bar-val">${tage.toFixed(2)}d</span>
+      </div>
+      <div class="urlaub-bar-bg"><div class="urlaub-bar-fill" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join('') || '<div style="font-size:10px;color:var(--muted);">Keine Daten.</div>';
+}
+
+function renderHeute() {
+  const today = todayStr();
+  const todayE = einsaetze.filter(e => e.datum === today);
+  const pending = todayE.filter(e => e.status === 'bereit' || e.status === 'verfuegbar');
+  const confirmed = todayE.filter(e => e.status === 'einsatz' || e.status === 'frei');
+
+  const hj = getCurrentHJ();
+  const hjE = einsaetze.filter(e => getHJ(e.datum) === hj && e.status === 'einsatz');
+  document.getElementById('statsRow').innerHTML = `
+    <div class="stat-card"><div class="stat-label">Verfügbar heute</div><div class="stat-value">${pending.length}</div><div class="stat-sub">Warten auf Bestätigung</div></div>
+    <div class="stat-card"><div class="stat-label">Einsätze ${hjLabel(hj)}</div><div class="stat-value">${hjE.length}</div><div class="stat-sub">Bestätigt</div></div>
+    <div class="stat-card"><div class="stat-label">Value-Punkte</div><div class="stat-value">${hjE.length*5}</div><div class="stat-sub">Gesamt HJ</div></div>
+    <div class="stat-card"><div class="stat-label">Urlaubstage</div><div class="stat-value">${(hjE.length/52).toFixed(2)}</div><div class="stat-sub">Angesammelt HJ</div></div>`;
+
+  const list = document.getElementById('pendingList');
+  if (todayE.length === 0) { list.innerHTML = '<div class="empty-state">📋 Noch keine Meldungen heute.</div>'; return; }
+
+  let html = '';
+  if (pending.length > 0) {
+    html += `<div style="font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;">Warten auf Bestätigung (${pending.length})</div><div class="pending-grid" style="margin-bottom:14px;">`;
+    pending.forEach(e => {
+      const zeit = new Date(e.created_at).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
+      html += `<div class="pending-item">
+        <div class="pending-kuerzel">${e.kuerzel}</div>
+        <div class="pending-info"><div class="pending-name">${e.kuerzel}</div><div class="pending-time">Gemeldet: ${zeit} Uhr</div></div>
+        <div class="pending-actions">
+          <button class="btn btn-success btn-sm" onclick="confirmEinsatz(${e.id},'einsatz')">✓ Einsatz</button>
+          <button class="btn btn-outline btn-sm" onclick="confirmEinsatz(${e.id},'frei')" style="font-size:10px;">× Frei</button>
+        </div>
+      </div>`;
+    });
+    html += '</div>';
+  }
+  if (confirmed.length > 0) {
+    html += `<div style="font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;">Bestätigt (${confirmed.length})</div><div class="pending-grid">`;
+    confirmed.forEach(e => {
+      const badge = e.status==='einsatz' ? '<span class="badge badge-einsatz">Einsatz +5P</span>' : '<span class="badge badge-frei">Frei</span>';
+      html += `<div class="pending-item">
+        <div class="pending-kuerzel" style="${e.status==='frei'?'opacity:0.4':''}">${e.kuerzel}</div>
+        <div class="pending-info"><div class="pending-name">${e.kuerzel}</div><div class="pending-time">${badge}</div></div>
+        <button class="btn-danger-sm" onclick="deleteEinsatz(${e.id})">×</button>
+      </div>`;
+    });
+    html += '</div>';
+  }
+  list.innerHTML = html;
+}
+
+function renderVerfuegbarkeit() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const grid = document.getElementById('verfuegGrid');
+  const detail = document.getElementById('verfuegDetail');
+
+  // Wochentag-Header
+  let html = '';
+  ['Mo','Di','Mi','Do','Fr','Sa','So'].forEach(d => {
+    html += `<div style="text-align:center;font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;padding:2px 0;">${d}</div>`;
+  });
+
+  // Offset bis Montag
+  const dow = today.getDay();
+  const offset = dow === 0 ? 6 : dow - 1;
+  for (let i = 0; i < offset; i++) html += '<div></div>';
+
+  let detailHtml = '<div style="display:flex;flex-direction:column;gap:8px;">';
+
+  for (let i = 0; i < 14; i++) {
+    const d = new Date(today); d.setDate(today.getDate() + i);
+    const dateStr = d.toISOString().split('T')[0];
+    const entries = einsaetze.filter(e => e.datum === dateStr && (e.status === 'verfuegbar' || e.status === 'bereit'));
+    const isToday = i === 0;
+    html += `<div class="verfueg-day ${entries.length>0?'has-entries':''} ${isToday?'today':''}">
+      <div class="verfueg-day-name">${WEEKDAYS[d.getDay()]}</div>
+      <div class="verfueg-day-date">${d.getDate()}</div>
+      <div class="verfueg-day-count">${entries.length>0?entries.length+'×':''}</div>
+    </div>`;
+
+    if (entries.length > 0) {
+      detailHtml += `<div style="display:flex;gap:8px;align-items:center;">
+        <div style="font-size:11px;color:var(--muted);width:80px;flex-shrink:0;">${WEEKDAYS_LONG[d.getDay()]}<br>${formatDate(dateStr)}</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;">
+          ${entries.map(e => `<span class="badge badge-verfuegbar">${e.kuerzel}</span>`).join('')}
+        </div>
+      </div>`;
+    }
+  }
+  detailHtml += '</div>';
+  grid.innerHTML = html;
+  detail.innerHTML = detailHtml;
+}
+
+async function confirmEinsatz(id, status) { await sbPatch('einsaetze',`id=eq.${id}`,{status}); await loadData(); }
+async function deleteEinsatz(id) { await sbDelete('einsaetze',`id=eq.${id}`); await loadData(); }
+
+function renderTable() {
+  const fH = document.getElementById('filterHelper').value;
+  const fP = document.getElementById('filterHJ').value;
+  let rows = [...einsaetze].sort((a,b) => b.datum.localeCompare(a.datum));
+  if (fH) rows = rows.filter(e => e.kuerzel === fH);
+  if (fP) rows = rows.filter(e => getHJ(e.datum) === fP);
+
+  const tbody = document.getElementById('einsatzTable');
+  const empty = document.getElementById('emptyTable');
+  if (rows.length === 0) { tbody.innerHTML = ''; empty.style.display = ''; return; }
+  empty.style.display = 'none';
+  tbody.innerHTML = rows.map(e => {
+    const badge = e.status==='einsatz' ? '<span class="badge badge-einsatz">Einsatz</span>'
+      : e.status==='frei' ? '<span class="badge badge-frei">Frei</span>'
+      : e.status==='verfuegbar' ? '<span class="badge badge-verfuegbar">Verfügbar</span>'
+      : '<span class="badge badge-bereit">Bereit</span>';
+    return `<tr><td>${formatDate(e.datum)}</td><td>${e.kuerzel}</td><td>${badge}</td>
+      <td style="color:var(--gold)">${e.status==='einsatz'?'+5':'—'}</td>
+      <td style="color:var(--muted)">${e.status==='einsatz'?'1/52':'—'}</td>
+      <td style="color:var(--muted);font-size:10px;">${hjLabel(getHJ(e.datum))}</td>
+      <td><button class="btn-danger-sm" onclick="deleteEinsatz(${e.id})">×</button></td></tr>`;
+  }).join('');
+}
+
+async function addEinsatzManual() {
+  const kuerzel = document.getElementById('einsatzHelper').value;
+  const datum   = document.getElementById('einsatzDate').value;
+  const status  = document.getElementById('einsatzStatus').value;
+  if (!kuerzel || !datum) { alert('Bitte Helfer und Datum auswählen.'); return; }
+  if (einsaetze.find(e => e.kuerzel === kuerzel && e.datum === datum)) { alert('Bereits eingetragen.'); return; }
+  await sbPost('einsaetze', { kuerzel, datum, status });
+  await loadData();
+}
+
+// ══ AUSWERTUNG MIT URLAUBS-DASHBOARD ══
+let activeHJ = null;
+
+function renderAuswertung() {
+  const hjs = getHJList();
+  if (!activeHJ || !hjs.includes(activeHJ)) activeHJ = hjs[hjs.length-1];
+  document.getElementById('adminHJBadge').textContent = hjLabel(activeHJ);
+  document.getElementById('hjTabs').innerHTML = hjs.map(hj =>
+    `<button class="period-tab ${hj===activeHJ?'active':''}" onclick="switchHJ('${hj}')">${hjLabel(hj)}</button>`
+  ).join('');
+
+  const entries = einsaetze.filter(e => getHJ(e.datum) === activeHJ);
+  const JAHRESURLAUB = 30;
+
+  // Urlaubs-Dashboard
+  const dash = document.getElementById('urlaubsDashboard');
+  dash.innerHTML = `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;">` +
+    helpers.map(h => {
+      const anz = entries.filter(e => e.kuerzel===h.kuerzel && e.status==='einsatz').length;
+      const tage = anz / 52;
+      const pct = Math.min((tage / JAHRESURLAUB) * 100, 100);
+      const color = pct > 10 ? 'var(--green)' : pct > 5 ? 'var(--gold)' : 'var(--muted)';
+      return `<div style="background:var(--surface2);border:1px solid var(--border);padding:14px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:10px;">
+          <span style="font-family:'DM Serif Display',serif;font-size:18px;color:var(--gold);">${h.kuerzel}</span>
+          <span style="font-size:22px;font-family:'DM Serif Display',serif;color:${color};">${pct.toFixed(1)}%</span>
+        </div>
+        <div style="height:8px;background:var(--bg);border:1px solid var(--border);margin-bottom:8px;">
+          <div style="height:100%;background:${color};width:${pct}%;transition:width 0.4s;"></div>
+        </div>
+        <div style="font-size:10px;color:var(--muted);">${tage.toFixed(3)} von ${JAHRESURLAUB} Tagen · ${anz} Einsätze</div>
+      </div>`;
+    }).join('') + '</div>';
+
+  // Halbjahres-Grid
+  document.getElementById('auswertungGrid').innerHTML = helpers.map(h => {
+    const hE = entries.filter(e => e.kuerzel===h.kuerzel);
+    const anz = hE.filter(e => e.status==='einsatz').length;
+    const frei = hE.filter(e => e.status==='frei').length;
+    const verf = hE.filter(e => e.status==='verfuegbar').length;
+    const total = hE.length;
+    const quote = total>0 ? Math.round(anz/total*100) : 0;
+    return `<div class="auswert-item">
+      <div class="auswert-name">${h.kuerzel}</div>
+      <div class="auswert-row"><span>Verfügbar gemeldet</span><span>${verf}</span></div>
+      <div class="auswert-row"><span>→ Einsatz</span><span>${anz}</span></div>
+      <div class="auswert-row"><span>→ Frei</span><span>${frei}</span></div>
+      <div class="auswert-row"><span>Value-Punkte</span><span>${anz*5}</span></div>
+      <div class="auswert-row"><span>Einsatzquote</span><span>${quote}%</span></div>
+      <div class="divider" style="margin:6px 0;"></div>
+      <div class="auswert-total"><span>Urlaubsanspruch</span><span>+${(anz/52).toFixed(3)} Tage</span></div>
+    </div>`;
+  }).join('');
+
+  // Ranking
+  const ranking = helpers.map(h => {
+    const hE = entries.filter(e => e.kuerzel===h.kuerzel);
+    const anz = hE.filter(e => e.status==='einsatz').length;
+    const total = hE.length;
+    return { h, anz, total, pts:anz*5, urlaub:anz/52, quote:total>0?Math.round(anz/total*100):0 };
+  }).sort((a,b) => b.anz-a.anz);
+  document.getElementById('rankingTable').innerHTML = ranking.map((r,i) =>
+    `<tr><td style="color:var(--muted)">${i+1}</td><td>${r.h.kuerzel}</td>
+    <td>${r.anz} / ${r.total}</td>
+    <td style="color:var(--gold)">${r.pts}</td>
+    <td style="color:var(--green)">${r.urlaub.toFixed(3)}</td>
+    <td>${r.quote}%</td></tr>`
+  ).join('');
+}
+
+function switchHJ(hj) { activeHJ = hj; renderAuswertung(); }
+
+// ══ HELFER ══
+function openAddHelper() { document.getElementById('addHelperModal').classList.add('open'); }
+function closeModal(id)  { document.getElementById(id).classList.remove('open'); }
+async function saveHelper() {
+  const k = document.getElementById('newHelperKuerzel').value.trim().toUpperCase();
+  if (!k) { alert('Bitte Kürzel eingeben.'); return; }
+  if (helpers.find(h => h.kuerzel === k)) { alert('Kürzel existiert bereits.'); return; }
+  await sbPost('helfer', { kuerzel: k });
+  document.getElementById('newHelperKuerzel').value = '';
+  closeModal('addHelperModal');
+  await loadData();
+}
+
+// ══ TABS ══
+function switchTab(name, el) {
+  ['heute','verfuegbar','erfassung','auswertung'].forEach(t => {
+    document.getElementById(`tab-${t}`).style.display = t===name ? '' : 'none';
+  });
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  if (name === 'auswertung') renderAuswertung();
+  if (name === 'verfuegbar') renderVerfuegbarkeit();
+}
+
+
+// ══ EINSTELLUNGEN ══
+function openEinstellungen() {
+  document.getElementById('editUrl').value = SUPABASE_URL || '';
+  document.getElementById('editKey').value = SUPABASE_KEY || '';
+  document.getElementById('editPin').value = '';
+  document.getElementById('editError').style.display = 'none';
+  document.getElementById('einstellungenModal').classList.add('open');
+}
+function saveEinstellungen() {
+  const url = document.getElementById('editUrl').value.trim().replace(/\/$/, '');
+  const key = document.getElementById('editKey').value.trim();
+  const pin = document.getElementById('editPin').value.trim();
+  const err = document.getElementById('editError');
+  if (!url || !key) { err.textContent = 'URL und Key sind Pflichtfelder.'; err.style.display=''; return; }
+  if (pin && (pin.length !== 4 || isNaN(pin))) { err.textContent = 'PIN muss 4 Ziffern haben.'; err.style.display=''; return; }
+  localStorage.setItem('sb_url', url);
+  localStorage.setItem('sb_key', key);
+  if (pin) localStorage.setItem('sb_pin', pin);
+  SUPABASE_URL = url; SUPABASE_KEY = key;
+  if (pin) ADMIN_PIN = pin;
+  closeModal('einstellungenModal');
+  loadData();
+}
+
+// ══ INIT ══
+// Zugangsdaten fest hinterlegt – kein Setup nötig
+SUPABASE_URL = 'https://uijcgrgjskpdtktoarsw.supabase.co';
+SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpamNncmdqc2twZHRrdG9hcnN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NTU2NTQsImV4cCI6MjA5MDUzMTY1NH0.j6KAGfjMGlqeTGldrJRYxAR5trXwIGVMoQOdaOBQLyU';
+// Admin-PIN aus localStorage laden (wird über Einstellungen gesetzt)
+loadConfig();
+if (!ADMIN_PIN) ADMIN_PIN = localStorage.getItem('sb_pin') || '';
+
+document.getElementById('einsatzDate').valueAsDate = new Date();
+showView('springer');
+
+/*
+═══════════════════════════════════════
+SUPABASE SQL – einmalig ausführen:
+
+CREATE TABLE helfer (
+  id bigserial PRIMARY KEY,
+  kuerzel text UNIQUE NOT NULL,
+  created_at timestamptz DEFAULT now()
+);
+
+CREATE TABLE einsaetze (
+  id bigserial PRIMARY KEY,
+  kuerzel text NOT NULL,
+  datum date NOT NULL,
+  status text NOT NULL DEFAULT 'verfuegbar',
+  created_at timestamptz DEFAULT now(),
+  UNIQUE(kuerzel, datum)
+);
+
+ALTER TABLE helfer    ENABLE ROW LEVEL SECURITY;
+ALTER TABLE einsaetze ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "read helfer"     ON helfer    FOR SELECT USING (true);
+CREATE POLICY "insert einsatz"  ON einsaetze FOR INSERT WITH CHECK (true);
+CREATE POLICY "read einsatz"    ON einsaetze FOR SELECT USING (true);
+CREATE POLICY "all einsatz"     ON einsaetze FOR ALL   USING (true);
+CREATE POLICY "all helfer"      ON helfer    FOR ALL   USING (true);
+═══════════════════════════════════════
+*/
+</script>
+
+<!-- MODAL: Einstellungen -->
+<div class="modal-overlay" id="einstellungenModal">
+  <div class="modal" style="width:420px;">
+    <div class="modal-title">⚙ Einstellungen</div>
+    <div class="setup-field">
+      <label class="setup-label">Supabase URL</label>
+      <input class="setup-input" id="editUrl" placeholder="https://xxxxxxxxxxxx.supabase.co">
+    </div>
+    <div class="setup-field">
+      <label class="setup-label">Supabase Anon Key</label>
+      <input class="setup-input" id="editKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6...">
+    </div>
+    <div class="setup-field">
+      <label class="setup-label">Admin-PIN (4-stellig)</label>
+      <input class="setup-input" id="editPin" placeholder="z.B. 1234" maxlength="4" type="password">
+    </div>
+    <div id="editError" style="color:var(--red);font-size:11px;margin-top:6px;display:none;"></div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('einstellungenModal')">Abbrechen</button>
+      <button class="btn btn-primary" onclick="saveEinstellungen()">Speichern</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>
