@@ -357,6 +357,24 @@ select option { background: var(--bg); }
       <!-- HEUTE -->
       <div id="tab-heute">
         <div class="stats-row" id="statsRow"></div>
+        <div class="card" style="border-color:rgba(201,168,76,0.3);">
+          <div class="card-title">📞 Spontan-Einsatz buchen (Anruf)</div>
+          <div style="display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;">
+            <div class="form-group">
+              <label class="form-label">Helfer</label>
+              <select id="spontanHelper"><option value="">— Auswählen —</option></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Status</label>
+              <select id="spontanStatus">
+                <option value="einsatz">Einsatz ✓ (+5P +1/52)</option>
+                <option value="frei">Frei (angerufen, kein Einsatz)</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" onclick="addSpontanEinsatz()">Heute buchen</button>
+          </div>
+          <div class="info-note">* Bucht direkt für heute – z.B. nach telefonischer Absprache.</div>
+        </div>
         <div class="card">
           <div class="card-title" style="display:flex;justify-content:space-between;align-items:center;border:none;padding:0;margin-bottom:12px;">
             <span style="font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;">Bereitschaftsmeldungen heute</span>
@@ -647,8 +665,9 @@ function initCalendar() {
   for (let i = 0; i < 14; i++) {
     const d = new Date(today); d.setDate(today.getDate() + i);
     const dateStr = d.toISOString().split('T')[0];
-    const isPast = d < today;
     const isToday = d.getTime() === today.getTime();
+    const isToday = d.getTime() === today.getTime();
+    const isPast = d < today && !isToday;
     const dow2 = d.getDay();
     const isWeekend = dow2 === 0 || dow2 === 6;
 
@@ -759,7 +778,7 @@ function renderSidebar() {
     </div>`;
   }).join('') || '<div style="font-size:11px;color:var(--muted);padding:8px 10px;">Keine Helfer.</div>';
 
-  ['einsatzHelper','filterHelper'].forEach(id => {
+  ['einsatzHelper','filterHelper','spontanHelper'].forEach(id => {
     const sel = document.getElementById(id); const cur = sel.value;
     sel.innerHTML = id === 'filterHelper' ? '<option value="">Alle</option>' : '<option value="">— Auswählen —</option>';
     helpers.forEach(h => { const o = document.createElement('option'); o.value = h.kuerzel; o.textContent = h.kuerzel; sel.appendChild(o); });
@@ -910,6 +929,22 @@ async function addEinsatzManual() {
   if (!kuerzel || !datum) { alert('Bitte Helfer und Datum auswählen.'); return; }
   if (einsaetze.find(e => e.kuerzel === kuerzel && e.datum === datum)) { alert('Bereits eingetragen.'); return; }
   await sbPost('einsaetze', { kuerzel, datum, status });
+  await loadData();
+}
+
+// ══ SPONTAN-EINSATZ ══
+async function addSpontanEinsatz() {
+  const kuerzel = document.getElementById('spontanHelper').value;
+  const status  = document.getElementById('spontanStatus').value;
+  const datum   = todayStr();
+  if (!kuerzel) { alert('Bitte Helfer auswählen.'); return; }
+  const existing = einsaetze.find(e => e.kuerzel === kuerzel && e.datum === datum);
+  if (existing) {
+    // Update existing entry
+    await sbPatch('einsaetze', `id=eq.${existing.id}`, { status });
+  } else {
+    await sbPost('einsaetze', { kuerzel, datum, status });
+  }
   await loadData();
 }
 
