@@ -1199,7 +1199,14 @@ function renderAuswertung() {
   }).join('');
 }
 
-function switchHJ(hj) { activeHJ = hj; renderAuswertung(); }
+function switchHJ(hj) { activeHJ = hj; renderAuswertung(); }  function exportExcel() {   const allEinsaetze = einsaetze.filter(e => e.status === 'einsatz');   const entries = einsaetze.filter(e => getHJ(e.datum) === activeHJ);    // Rangliste   let csv = 'RANGLISTE
+';   csv += 'Platz,Kürzel,Einsätze gesamt,Punkte gesamt,Status
+';   const ranking = helpers.map(h => {     const anz = allEinsaetze.filter(e => e.kuerzel === h.kuerzel).length;     const ms = getMilestone(anz);     return { h, anz, pts: anz * 5, ms };   }).sort((a,b) => b.pts !== a.pts ? b.pts - a.pts : a.h.kuerzel.localeCompare(b.h.kuerzel));   ranking.forEach((r,i) => {     csv += `${i+1},${r.h.kuerzel},${r.anz},${r.pts},${r.ms ? r.ms.label : '—'}
+`;   });    // Halbjahres-Auswertung   csv += `
+HALBJAHRES-AUSWERTUNG ${hjLabel(activeHJ)}
+`;   csv += 'Kürzel,Verfügbar gemeldet,Einsätze,Frei,Value-Punkte,Einsatzquote
+';   helpers.forEach(h => {     const hE = entries.filter(e => e.kuerzel === h.kuerzel);     const anz = hE.filter(e => e.status === 'einsatz').length;     const frei = hE.filter(e => e.status === 'frei').length;     const verf = hE.filter(e => e.status === 'verfuegbar').length;     const total = hE.length;     const quote = total > 0 ? Math.round(anz/total*100) : 0;     csv += `${h.kuerzel},${verf},${anz},${frei},${anz*5},${quote}%
+`;   });    // Download   const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });   const url = URL.createObjectURL(blob);   const a = document.createElement('a');   a.href = url;   a.download = `Springer-Auswertung-${activeHJ}.csv`;   a.click();   URL.revokeObjectURL(url); }
 
 // ══ HELFER ══
 function openAddHelper() { 
