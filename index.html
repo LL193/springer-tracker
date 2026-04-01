@@ -23,7 +23,7 @@
 body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monospace; font-size: 16px; min-height: 100vh; }
 
 /* ── SETUP ── */
-#setupScreen { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 24px; }
+#setupScreen { display: none; align-items: center; justify-content: center; min-height: 100vh; padding: 24px; }
 .setup-box { background: var(--surface); border: 1px solid var(--border); padding: 40px; width: 100%; max-width: 500px; }
 .setup-title { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--gold); margin-bottom: 6px; }
 .setup-sub { color: var(--muted); font-size: 14px; margin-bottom: 28px; line-height: 1.6; }
@@ -728,7 +728,6 @@ function initCalendar() {
   for (let i = 0; i < 14; i++) {
     const d = new Date(today); d.setDate(today.getDate() + i);
     const dateStr = d.toISOString().split('T')[0];
-    const isToday = d.getTime() === today.getTime();
     const isToday = d.getTime() === today.getTime();
     const isPast = d < today && !isToday;
     const dow2 = d.getDay();
