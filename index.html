@@ -635,7 +635,8 @@ function showView(v) {
   document.getElementById('setupScreen').style.display  = 'none';
   document.getElementById('springerView').style.display = 'none';
   document.getElementById('adminView').style.display    = 'none';
-  if (v === 'setup')    document.getElementById('setupScreen').style.display  = 'flex';
+  // Setup niemals zeigen – Zugangsdaten sind fest hinterlegt
+  if (v === 'setup')    { document.getElementById('springerView').style.display = 'flex'; initCalendar(); }
   if (v === 'springer') { document.getElementById('springerView').style.display = 'flex'; initCalendar(); }
   if (v === 'admin')    { document.getElementById('adminView').style.display = 'block'; loadData(); }
 }
