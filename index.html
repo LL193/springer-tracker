@@ -1201,7 +1201,7 @@ function renderAuswertung() {
   }).join('');
 }
 
-function switchHJ(hj) { activeHJ = hj; renderAuswertung(); }  function exportExcel() {   const allEinsaetze = einsaetze.filter(e => e.status === 'einsatz');   const entries = einsaetze.filter(e => getHJ(e.datum) === activeHJ);    // Rangliste   let csv = 'RANGLISTE
+function switchHJ(hj) { activeHJ = hj; renderAuswertung(); }function exportExcel() {   const allEinsaetze = einsaetze.filter(e => e.status === 'einsatz');   const entries = einsaetze.filter(e => getHJ(e.datum) === activeHJ);    // Rangliste   let csv = 'RANGLISTE
 ';   csv += 'Platz,Kürzel,Einsätze gesamt,Punkte gesamt,Status
 ';   const ranking = helpers.map(h => {     const anz = allEinsaetze.filter(e => e.kuerzel === h.kuerzel).length;     const ms = getMilestone(anz);     return { h, anz, pts: anz * 5, ms };   }).sort((a,b) => b.pts !== a.pts ? b.pts - a.pts : a.h.kuerzel.localeCompare(b.h.kuerzel));   ranking.forEach((r,i) => {     csv += `${i+1},${r.h.kuerzel},${r.anz},${r.pts},${r.ms ? r.ms.label : '—'}
 `;   });    // Halbjahres-Auswertung   csv += `
