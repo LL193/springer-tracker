@@ -7,17 +7,9 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #f5f0e8;
-  --surface: #ffffff;
-  --surface2: #f0ebe0;
-  --border: #d4c9b0;
-  --gold: #8a6a1f;
-  --gold-light: #b8960f;
-  --green: #2d7a4f;
-  --red: #c0392b;
-  --blue: #1a5a8a;
-  --text: #1a1610;
-  --muted: #6b5e45;
+  --bg: #f5f0e8; --surface: #ffffff; --surface2: #f0ebe0; --border: #d4c9b0;
+  --gold: #8a6a1f; --gold-light: #b8960f; --green: #2d7a4f; --red: #c0392b;
+  --blue: #1a5a8a; --text: #1a1610; --muted: #6b5e45;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monospace; font-size: 16px; min-height: 100vh; }
@@ -26,10 +18,9 @@ body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monosp
 .setup-title { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--gold); margin-bottom: 6px; }
 .setup-sub { color: var(--muted); font-size: 14px; margin-bottom: 28px; line-height: 1.6; }
 .setup-field { margin-bottom: 16px; }
-.setup-label { font-size: 16px; letter-spacing: 1.5px; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; display: block; }
-.setup-input { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 15px; padding: 10px 12px; outline: none; }
+.setup-label { font-size: 14px; letter-spacing: 1.5px; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; display: block; }
+.setup-input { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 14px; padding: 10px 12px; outline: none; }
 .setup-input:focus { border-color: var(--gold); }
-.setup-note { font-size: 11px; color: var(--muted); margin-top: 5px; line-height: 1.5; }
 .setup-actions { display: flex; gap: 10px; margin-top: 24px; }
 #springerView { display: none; min-height: 100vh; background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.05) 0%, transparent 60%), var(--bg); padding: 24px 16px; }
 .springer-wrap { max-width: 420px; margin: 0 auto; }
@@ -41,10 +32,10 @@ body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monosp
 .kuerzel-circle { width: 56px; height: 56px; border-radius: 50%; background: var(--surface2); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--gold); flex-shrink: 0; transition: all 0.2s; }
 .kuerzel-circle.filled { border-color: var(--gold); background: rgba(201,168,76,0.08); }
 .kuerzel-field { flex: 1; }
-.kuerzel-label { font-size: 16px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; display: block; }
+.kuerzel-label { font-size: 14px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; display: block; }
 .kuerzel-input { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 500; padding: 12px 14px; outline: none; letter-spacing: 3px; text-transform: uppercase; }
 .kuerzel-input:focus { border-color: var(--gold); }
-.cal-header { font-size: 16px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 10px; }
+.cal-header { font-size: 14px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 10px; }
 .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 20px; }
 .cal-day { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--surface2); border: 1px solid var(--border); cursor: pointer; transition: all 0.15s; user-select: none; border-radius: 2px; }
 .cal-day:hover { border-color: var(--muted); }
@@ -54,36 +45,35 @@ body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monosp
 .cal-day-name { font-size: 8px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
 .cal-day-num { font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--text); line-height: 1; }
 .cal-day.selected .cal-day-num { color: var(--gold); }
-.cal-day.selected .cal-day-name { color: var(--gold); opacity: 0.7; }
 .cal-hint { font-size: 14px; color: var(--muted); text-align: center; margin-bottom: 16px; }
 .cal-hint strong { color: var(--gold); }
 .btn-big { width: 100%; padding: 16px; font-size: 14px; background: var(--gold); color: var(--bg); border: none; cursor: pointer; font-family: 'DM Mono', monospace; font-weight: 500; transition: all 0.15s; letter-spacing: 0.5px; }
 .btn-big:hover { background: var(--gold-light); }
 .btn-big:disabled { opacity: 0.4; cursor: default; }
-.status-msg { padding: 14px 16px; margin-bottom: 16px; font-size: 15px; text-align: center; border: 1px solid; }
+.status-msg { padding: 14px 16px; margin-bottom: 16px; font-size: 14px; text-align: center; border: 1px solid; }
 .status-msg.success { background: rgba(76,175,125,0.1); border-color: rgba(76,175,125,0.3); color: var(--green); }
 .status-msg.error { background: rgba(224,112,96,0.1); border-color: rgba(224,112,96,0.3); color: var(--red); }
 .status-msg.info { background: rgba(201,168,76,0.08); border-color: rgba(201,168,76,0.2); color: var(--gold); }
 .confirm-box { text-align: center; padding: 32px 0; }
 .confirm-icon { font-size: 48px; margin-bottom: 12px; }
 .confirm-title { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--green); margin-bottom: 8px; }
-.confirm-days { background: var(--surface2); border: 1px solid var(--border); padding: 12px; margin: 16px 0; font-size: 15px; color: var(--muted); line-height: 1.9; text-align: left; }
-.confirm-days strong { color: var(--gold); display: block; margin-bottom: 4px; font-size: 16px; letter-spacing: 1px; text-transform: uppercase; }
+.confirm-days { background: var(--surface2); border: 1px solid var(--border); padding: 12px; margin: 16px 0; font-size: 14px; color: var(--muted); line-height: 1.9; text-align: left; }
+.confirm-days strong { color: var(--gold); display: block; margin-bottom: 4px; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; }
 #adminView { display: none; }
 header { border-bottom: 1px solid var(--border); padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: var(--bg); z-index: 100; }
 .header-logo { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--gold); }
-.header-logo span { font-family: 'DM Mono', monospace; font-size: 16px; color: var(--muted); display: block; letter-spacing: 1px; margin-bottom: 1px; }
+.header-logo span { font-family: 'DM Mono', monospace; font-size: 14px; color: var(--muted); display: block; letter-spacing: 1px; margin-bottom: 1px; }
 .header-actions { display: flex; gap: 8px; align-items: center; }
 .main { display: grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 65px); }
 .sidebar { border-right: 1px solid var(--border); padding: 18px 0; }
 .sidebar-section { padding: 0 14px 14px; border-bottom: 1px solid var(--border); margin-bottom: 14px; }
-.sidebar-label { font-size: 16px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
+.sidebar-label { font-size: 14px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
 .helper-list { display: flex; flex-direction: column; gap: 3px; }
 .helper-item { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border: 1px solid transparent; transition: all 0.15s; }
-.helper-avatar { width: 28px; height: 28px; background: var(--surface2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--gold); flex-shrink: 0; font-family: 'DM Serif Display', serif; }
-.helper-name { font-size: 15px; flex: 1; }
-.helper-pts { font-size: 16px; color: var(--gold); }
-.add-btn { width: 100%; padding: 8px; background: transparent; border: 1px dashed var(--border); color: var(--muted); cursor: pointer; font-family: 'DM Mono', monospace; font-size: 14px; transition: all 0.15s; margin-top: 6px; }
+.helper-avatar { width: 28px; height: 28px; background: var(--surface2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--gold); flex-shrink: 0; font-family: 'DM Serif Display', serif; }
+.helper-name { font-size: 14px; flex: 1; }
+.helper-pts { font-size: 14px; color: var(--gold); }
+.add-btn { width: 100%; padding: 8px; background: transparent; border: 1px dashed var(--border); color: var(--muted); cursor: pointer; font-family: 'DM Mono', monospace; font-size: 13px; transition: all 0.15s; margin-top: 6px; }
 .add-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--surface); }
 .content { padding: 22px 26px; }
 .tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 22px; }
@@ -91,42 +81,42 @@ header { border-bottom: 1px solid var(--border); padding: 18px 24px; display: fl
 .tab.active { color: var(--gold); border-bottom-color: var(--gold); }
 .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 20px; }
 .stat-card { background: var(--surface); border: 1px solid var(--border); padding: 14px; }
-.stat-label { font-size: 16px; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+.stat-label { font-size: 14px; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
 .stat-value { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--gold); line-height: 1; }
-.stat-sub { font-size: 16px; color: var(--muted); margin-top: 3px; }
+.stat-sub { font-size: 13px; color: var(--muted); margin-top: 3px; }
 .card { background: var(--surface); border: 1px solid var(--border); padding: 16px; margin-bottom: 16px; }
-.card-title { font-size: 16px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+.card-title { font-size: 14px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
 .pending-grid { display: flex; flex-direction: column; gap: 6px; }
 .pending-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: var(--surface2); border: 1px solid var(--border); }
-.pending-kuerzel { width: 34px; height: 34px; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3); display: flex; align-items: center; justify-content: center; font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--gold); flex-shrink: 0; }
+.pending-kuerzel { width: 34px; height: 34px; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3); display: flex; align-items: center; justify-content: center; font-family: 'DM Serif Display', serif; font-size: 14px; color: var(--gold); flex-shrink: 0; }
 .pending-info { flex: 1; }
-.pending-name { font-size: 16px; color: var(--text); }
-.pending-time { font-size: 16px; color: var(--muted); margin-top: 2px; }
+.pending-name { font-size: 14px; color: var(--text); }
+.pending-time { font-size: 13px; color: var(--muted); margin-top: 2px; }
 .pending-actions { display: flex; gap: 6px; }
-table { width: 100%; border-collapse: collapse; font-size: 15px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
 thead tr { border-bottom: 1px solid var(--border); }
-th { font-size: 16px; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; padding: 7px 10px; text-align: left; font-weight: 400; }
-td { padding: 8px 10px; border-bottom: 1px solid rgba(46,44,40,0.5); vertical-align: middle; }
+th { font-size: 13px; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; padding: 7px 10px; text-align: left; font-weight: 400; }
+td { padding: 8px 10px; border-bottom: 1px solid rgba(46,44,40,0.2); vertical-align: middle; }
 tr:hover td { background: var(--surface2); }
-.badge { display: inline-block; padding: 2px 8px; font-size: 16px; }
+.badge { display: inline-block; padding: 2px 8px; font-size: 13px; }
 .badge-einsatz { background: rgba(76,175,125,0.15); color: var(--green); border: 1px solid rgba(76,175,125,0.3); }
 .badge-frei { background: rgba(122,118,112,0.15); color: var(--muted); border: 1px solid var(--border); }
 .badge-bereit { background: rgba(201,168,76,0.12); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
 .badge-verfuegbar { background: rgba(106,163,200,0.12); color: var(--blue); border: 1px solid rgba(106,163,200,0.3); }
-.btn { padding: 7px 16px; border: none; cursor: pointer; font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; transition: all 0.15s; }
+.btn { padding: 7px 16px; border: none; cursor: pointer; font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; transition: all 0.15s; }
 .btn-primary { background: var(--gold); color: var(--bg); }
 .btn-primary:hover { background: var(--gold-light); }
-.btn-success { background: var(--green); color: var(--bg); font-size: 14px; padding: 5px 12px; }
+.btn-success { background: var(--green); color: var(--bg); font-size: 13px; padding: 5px 12px; }
 .btn-success:hover { opacity: 0.85; }
-.btn-danger-sm { background: transparent; border: 1px solid var(--border); color: var(--red); font-size: 16px; padding: 4px 10px; cursor: pointer; font-family: 'DM Mono', monospace; transition: all 0.15s; }
+.btn-danger-sm { background: transparent; border: 1px solid var(--border); color: var(--red); font-size: 13px; padding: 4px 10px; cursor: pointer; font-family: 'DM Mono', monospace; transition: all 0.15s; }
 .btn-danger-sm:hover { border-color: var(--red); background: rgba(224,112,96,0.08); }
 .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
 .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
-.btn-sm { padding: 5px 12px; font-size: 16px; }
+.btn-sm { padding: 5px 12px; font-size: 13px; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 8px; align-items: end; }
 .form-group { display: flex; flex-direction: column; gap: 5px; }
-.form-label { font-size: 16px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
-input, select { background: var(--bg); border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 15px; padding: 7px 10px; outline: none; transition: border-color 0.15s; }
+.form-label { font-size: 13px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+input, select { background: var(--bg); border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 14px; padding: 7px 10px; outline: none; transition: border-color 0.15s; }
 input:focus, select:focus { border-color: var(--gold); }
 select option { background: var(--bg); }
 .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; }
@@ -135,21 +125,21 @@ select option { background: var(--bg); }
 .modal-title { font-family: 'DM Serif Display', serif; font-size: 20px; margin-bottom: 16px; color: var(--gold); }
 .modal-actions { display: flex; gap: 8px; margin-top: 16px; justify-content: flex-end; }
 .period-tabs { display: flex; gap: 4px; margin-bottom: 18px; flex-wrap: wrap; }
-.period-tab { padding: 5px 12px; background: transparent; border: 1px solid var(--border); color: var(--muted); cursor: pointer; font-family: 'DM Mono', monospace; font-size: 14px; transition: all 0.15s; }
+.period-tab { padding: 5px 12px; background: transparent; border: 1px solid var(--border); color: var(--muted); cursor: pointer; font-family: 'DM Mono', monospace; font-size: 13px; transition: all 0.15s; }
 .period-tab.active { background: var(--surface2); border-color: var(--gold); color: var(--gold); }
 .verfueg-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; margin-bottom: 10px; }
 .verfueg-day { background: var(--surface2); border: 1px solid var(--border); padding: 4px; text-align: center; }
 .verfueg-day-name { font-size: 8px; color: var(--muted); text-transform: uppercase; }
-.verfueg-day-date { font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--text); }
-.verfueg-day-count { font-size: 16px; color: var(--green); margin-top: 2px; }
+.verfueg-day-date { font-family: 'DM Serif Display', serif; font-size: 15px; color: var(--text); }
+.verfueg-day-count { font-size: 13px; color: var(--green); margin-top: 2px; }
 .verfueg-day.has-entries { border-color: rgba(76,175,125,0.3); background: rgba(76,175,125,0.05); }
 .auswertung-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 12px; }
 .auswert-name { color: var(--gold); font-family: 'DM Serif Display', serif; font-size: 15px; margin-bottom: 8px; }
-.auswert-row { display: flex; justify-content: space-between; font-size: 14px; color: var(--muted); padding: 3px 0; border-bottom: 1px dotted var(--border); }
+.auswert-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); padding: 3px 0; border-bottom: 1px dotted var(--border); }
 .auswert-row span:last-child { color: var(--gold); }
-.empty-state { text-align: center; padding: 32px; color: var(--muted); font-size: 15px; }
+.empty-state { text-align: center; padding: 32px; color: var(--muted); font-size: 14px; }
 .divider { height: 1px; background: var(--border); margin: 12px 0; }
-.info-note { font-size: 16px; color: var(--muted); font-style: italic; margin-top: 6px; }
+.info-note { font-size: 13px; color: var(--muted); font-style: italic; margin-top: 6px; }
 .loader { display: inline-block; width: 12px; height: 12px; border: 2px solid var(--border); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.6s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 @media(max-width:800px) {
@@ -158,7 +148,6 @@ select option { background: var(--bg); }
   .stats-row { grid-template-columns: repeat(2,1fr); }
   .form-row { grid-template-columns: 1fr 1fr; }
   .auswertung-grid { grid-template-columns: 1fr 1fr; }
-  .verfueg-grid { grid-template-columns: repeat(7,1fr); }
 }
 </style>
 </head>
@@ -167,22 +156,13 @@ select option { background: var(--bg); }
 <div id="setupScreen">
   <div class="setup-box">
     <div class="setup-title">Einrichtung</div>
-    <div class="setup-sub">Einmalig deine Supabase-Zugangsdaten eintragen.</div>
-    <div class="setup-field">
-      <label class="setup-label">Supabase URL</label>
-      <input class="setup-input" id="cfgUrl" placeholder="https://xxxxxxxxxxxx.supabase.co">
-    </div>
-    <div class="setup-field">
-      <label class="setup-label">Supabase Anon Key</label>
-      <input class="setup-input" id="cfgKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6...">
-    </div>
-    <div class="setup-field">
-      <label class="setup-label">Admin-PIN (4-stellig)</label>
-      <input class="setup-input" id="cfgPin" placeholder="z.B. 1234" maxlength="4" type="password">
-    </div>
+    <div class="setup-sub">Einmalig Supabase-Zugangsdaten eintragen.</div>
+    <div class="setup-field"><label class="setup-label">Supabase URL</label><input class="setup-input" id="cfgUrl" placeholder="https://xxxxxxxxxxxx.supabase.co"></div>
+    <div class="setup-field"><label class="setup-label">Supabase Anon Key</label><input class="setup-input" id="cfgKey" placeholder="eyJ..."></div>
+    <div class="setup-field"><label class="setup-label">Admin-PIN (4-stellig)</label><input class="setup-input" id="cfgPin" placeholder="1234" maxlength="4" type="password"></div>
     <div class="setup-actions">
       <button class="btn btn-primary" onclick="saveConfig()">Speichern & starten</button>
-      <button class="btn btn-outline" onclick="showView('springer')" style="font-size:11px;">Nur Springer-Ansicht</button>
+      <button class="btn btn-outline" onclick="showView('springer')">Nur Springer-Ansicht</button>
     </div>
     <div id="setupError" style="color:var(--red);font-size:11px;margin-top:10px;display:none;"></div>
   </div>
@@ -204,9 +184,7 @@ select option { background: var(--bg); }
       <div id="step1Status" style="display:none;" class="status-msg"></div>
       <button class="btn-big" onclick="goToStep2()" style="margin-bottom:10px;">📅 Verfügbarkeit melden</button>
       <button class="btn-big" onclick="goToEinsatzBestaetigen()" style="background:var(--green);margin-bottom:10px;">✅ Heutigen Einsatz bestätigen</button>
-      <div style="margin-top:4px;">
-        <button class="btn btn-outline btn-sm" style="width:100%;" onclick="showAdminLogin()">Admin →</button>
-      </div>
+      <div style="margin-top:4px;"><button class="btn btn-outline btn-sm" style="width:100%;" onclick="showAdminLogin()">Admin →</button></div>
     </div>
     <div class="springer-card" id="step2" style="display:none;">
       <div class="springer-title">Verfügbarkeit</div>
@@ -214,7 +192,7 @@ select option { background: var(--bg); }
       <div class="cal-hint">Tippe auf die Tage an denen du <strong>einspringen kannst</strong></div>
       <div class="cal-header">Nächste 2 Wochen</div>
       <div class="cal-grid" id="calGrid"></div>
-      <div id="selectedCount" style="font-size:11px;color:var(--gold);text-align:center;margin-bottom:16px;min-height:18px;"></div>
+      <div id="selectedCount" style="font-size:13px;color:var(--gold);text-align:center;margin-bottom:16px;min-height:18px;"></div>
       <div id="step2Status" style="display:none;" class="status-msg"></div>
       <button class="btn-big" id="step2Btn" onclick="submitVerfuegbarkeit()">Verfügbarkeit speichern ✓</button>
       <button class="btn btn-outline btn-sm" style="width:100%;margin-top:8px;" onclick="backToStep1()">← Zurück</button>
@@ -223,15 +201,9 @@ select option { background: var(--bg); }
       <div class="confirm-box">
         <div class="confirm-icon">✅</div>
         <div class="confirm-title">Danke, <span id="confirmKuerzel"></span>!</div>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:12px;">Deine Verfügbarkeit wurde gespeichert.</div>
-        <div class="confirm-days">
-          <strong>Deine gemeldeten Tage</strong>
-          <div id="confirmDaysList"></div>
-        </div>
-        <div style="font-size:11px;color:var(--muted);margin-top:12px;line-height:1.7;">
-          Du wirst rechtzeitig informiert ob ein Einsatz kommt.<br>
-          Bis <strong style="color:var(--gold)">09:00 Uhr</strong> des jeweiligen Tages erfährst du Bescheid.
-        </div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:12px;">Deine Verfügbarkeit wurde gespeichert.</div>
+        <div class="confirm-days"><strong>Deine gemeldeten Tage</strong><div id="confirmDaysList"></div></div>
+        <div style="font-size:13px;color:var(--muted);margin-top:12px;line-height:1.7;">Du wirst rechtzeitig informiert ob ein Einsatz kommt.<br>Bis <strong style="color:var(--gold)">09:00 Uhr</strong> des jeweiligen Tages erfährst du Bescheid.</div>
         <button class="btn btn-outline btn-sm" style="margin-top:20px;width:100%;" onclick="springerReset()">Neue Meldung</button>
       </div>
     </div>
@@ -240,10 +212,9 @@ select option { background: var(--bg); }
       <div class="springer-sub" id="einsatzSub"></div>
       <div id="einsatzStatus" style="display:none;" class="status-msg"></div>
       <div id="einsatzForm">
-        <div style="background:var(--surface2);border:1px solid var(--border);padding:16px;margin-bottom:20px;font-size:15px;line-height:2;">
+        <div style="background:var(--surface2);border:1px solid var(--border);padding:16px;margin-bottom:20px;font-size:14px;line-height:2;">
           <div>📅 <strong style="color:var(--gold)">Datum:</strong> <span id="einsatzDatumAnzeige"></span></div>
           <div>👤 <strong style="color:var(--gold)">Kürzel:</strong> <span id="einsatzKuerzelAnzeige"></span></div>
-          <div>⏰ <strong style="color:var(--gold)">Status:</strong> Einsatz durchgeführt</div>
         </div>
         <button class="btn-big" onclick="submitEinsatzBestaetigen()" style="background:var(--green);margin-bottom:10px;">✅ Ja, Einsatz war heute</button>
         <button class="btn-big" onclick="submitEinsatzFrei()" style="background:var(--surface2);border:1px solid var(--border);color:var(--muted);margin-bottom:10px;">❌ Kein Einsatz heute</button>
@@ -261,12 +232,9 @@ select option { background: var(--bg); }
 
 <div id="adminView">
   <header>
-    <div class="header-logo">
-      <span>HOMECARE · Verwaltung</span>
-      Springer-Tracker
-    </div>
+    <div class="header-logo"><span>HOMECARE · Verwaltung</span>Springer-Tracker</div>
     <div class="header-actions">
-      <span id="adminHJBadge" style="font-size:10px;color:var(--gold);border:1px solid var(--border);padding:4px 10px;letter-spacing:1px;"></span>
+      <span id="adminHJBadge" style="font-size:11px;color:var(--gold);border:1px solid var(--border);padding:4px 10px;letter-spacing:1px;"></span>
       <button class="btn btn-outline btn-sm" onclick="openEinstellungen()" style="border-color:var(--gold);color:var(--gold);">⚙ Einstellungen</button>
       <button class="btn btn-outline btn-sm" onclick="showView('springer')">Springer-Ansicht</button>
       <button class="btn btn-outline btn-sm" onclick="logout()">Abmelden</button>
@@ -283,7 +251,6 @@ select option { background: var(--bg); }
         <div class="sidebar-label">Legende</div>
         <div style="display:flex;flex-direction:column;gap:4px;font-size:11px;margin-bottom:14px;">
           <div style="display:flex;gap:6px;align-items:center;"><span class="badge badge-verfuegbar">Verfügbar</span><span style="color:var(--muted)">Selbst gemeldet</span></div>
-          <div style="display:flex;gap:6px;align-items:center;"><span class="badge badge-bereit">Bereit</span><span style="color:var(--muted)">Tagesbereitschaft</span></div>
           <div style="display:flex;gap:6px;align-items:center;"><span class="badge badge-einsatz">Einsatz</span><span style="color:var(--muted)">+5P</span></div>
           <div style="display:flex;gap:6px;align-items:center;"><span class="badge badge-frei">Frei</span><span style="color:var(--muted)">Kein Einsatz</span></div>
         </div>
@@ -293,8 +260,8 @@ select option { background: var(--bg); }
           <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dotted var(--border);"><span style="color:#cd7f32;">🥉 Bronze</span><span style="color:var(--muted);">ab 10×</span></div>
           <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dotted var(--border);"><span style="color:#8a8a8a;">🥈 Silber</span><span style="color:var(--muted);">ab 15×</span></div>
           <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dotted var(--border);"><span style="color:var(--gold);">🥇 Gold</span><span style="color:var(--muted);">ab 20×</span></div>
-          <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dotted var(--border);"><span style="color:var(--blue);">💎 Diamant</span><span style="color:var(--muted);">ab 25×</span></div>
-          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span style="color:var(--red);">👑 Legende</span><span style="color:var(--muted);">ab 30×</span></div>
+          <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dotted var(--border);"><span style="color:#4fc3f7;">💎 Diamant</span><span style="color:var(--muted);">ab 25×</span></div>
+          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span style="color:#ff6b6b;">👑 Legende</span><span style="color:var(--muted);">ab 30×</span></div>
         </div>
         <div class="divider"></div>
         <div class="sidebar-label">Rangliste</div>
@@ -321,7 +288,7 @@ select option { background: var(--bg); }
         </div>
         <div class="card">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-            <span style="font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;">Bereitschaftsmeldungen heute</span>
+            <span style="font-size:11px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;">Bereitschaftsmeldungen heute</span>
             <button class="btn btn-outline btn-sm" onclick="loadData()">↻ Aktualisieren</button>
           </div>
           <div id="pendingList"><div class="empty-state"><div class="loader"></div></div></div>
@@ -347,10 +314,10 @@ select option { background: var(--bg); }
         </div>
         <div class="card">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-            <div style="font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;">Alle Einträge</div>
+            <div style="font-size:11px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;">Alle Einträge</div>
             <div style="display:flex;gap:6px;">
-              <select id="filterHelper" onchange="renderTable()" style="font-size:10px;padding:4px 8px;"><option value="">Alle</option></select>
-              <select id="filterHJ" onchange="renderTable()" style="font-size:10px;padding:4px 8px;">
+              <select id="filterHelper" onchange="renderTable()" style="font-size:11px;padding:4px 8px;"><option value="">Alle</option></select>
+              <select id="filterHJ" onchange="renderTable()" style="font-size:11px;padding:4px 8px;">
                 <option value="">Alle Zeiträume</option>
                 <option value="HJ1-2026">HJ 1 · 2026</option>
                 <option value="HJ2-2026">HJ 2 · 2026</option>
@@ -374,11 +341,11 @@ select option { background: var(--bg); }
           </div>
           <div class="card-title">🏆 Gewinnhürden</div>
           <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
-            <div style="background:var(--surface2);border:1px solid #cd7f32;padding:10px 16px;flex:1;min-width:120px;text-align:center;"><div style="font-size:11px;color:#cd7f32;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">🥉 Bronze</div><div style="font-family:'DM Serif Display',serif;font-size:24px;color:#cd7f32;">10×</div><div style="font-size:11px;color:var(--muted);">Einsätze</div></div>
-            <div style="background:var(--surface2);border:1px solid #c0c0c0;padding:10px 16px;flex:1;min-width:120px;text-align:center;"><div style="font-size:11px;color:#c0c0c0;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">🥈 Silber</div><div style="font-family:'DM Serif Display',serif;font-size:24px;color:#c0c0c0;">15×</div><div style="font-size:11px;color:var(--muted);">Einsätze</div></div>
-            <div style="background:var(--surface2);border:1px solid var(--gold);padding:10px 16px;flex:1;min-width:120px;text-align:center;"><div style="font-size:11px;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">🥇 Gold</div><div style="font-family:'DM Serif Display',serif;font-size:24px;color:var(--gold);">20×</div><div style="font-size:11px;color:var(--muted);">Einsätze</div></div>
-            <div style="background:var(--surface2);border:1px solid #4fc3f7;padding:10px 16px;flex:1;min-width:120px;text-align:center;"><div style="font-size:11px;color:#4fc3f7;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">💎 Diamant</div><div style="font-family:'DM Serif Display',serif;font-size:24px;color:#4fc3f7;">25×</div><div style="font-size:11px;color:var(--muted);">Einsätze</div></div>
-            <div style="background:var(--surface2);border:1px solid #ff6b6b;padding:10px 16px;flex:1;min-width:120px;text-align:center;"><div style="font-size:11px;color:#ff6b6b;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">👑 Legende</div><div style="font-family:'DM Serif Display',serif;font-size:24px;color:#ff6b6b;">30×</div><div style="font-size:11px;color:var(--muted);">Einsätze</div></div>
+            <div style="background:var(--surface2);border:1px solid #cd7f32;padding:10px 16px;flex:1;min-width:100px;text-align:center;"><div style="font-size:11px;color:#cd7f32;margin-bottom:4px;">🥉 BRONZE</div><div style="font-family:'DM Serif Display',serif;font-size:24px;color:#cd7f32;">10×</div></div>
+            <div style="background:var(--surface2);border:1px solid #c0c0c0;padding:10px 16px;flex:1;min-width:100px;text-align:center;"><div style="font-size:11px;color:#c0c0c0;margin-bottom:4px;">🥈 SILBER</div><div style="font-family:'DM Serif Display',serif;font-size:24px;color:#c0c0c0;">15×</div></div>
+            <div style="background:var(--surface2);border:1px solid var(--gold);padding:10px 16px;flex:1;min-width:100px;text-align:center;"><div style="font-size:11px;color:var(--gold);margin-bottom:4px;">🥇 GOLD</div><div style="font-family:'DM Serif Display',serif;font-size:24px;color:var(--gold);">20×</div></div>
+            <div style="background:var(--surface2);border:1px solid #4fc3f7;padding:10px 16px;flex:1;min-width:100px;text-align:center;"><div style="font-size:11px;color:#4fc3f7;margin-bottom:4px;">💎 DIAMANT</div><div style="font-family:'DM Serif Display',serif;font-size:24px;color:#4fc3f7;">25×</div></div>
+            <div style="background:var(--surface2);border:1px solid #ff6b6b;padding:10px 16px;flex:1;min-width:100px;text-align:center;"><div style="font-size:11px;color:#ff6b6b;margin-bottom:4px;">👑 LEGENDE</div><div style="font-family:'DM Serif Display',serif;font-size:24px;color:#ff6b6b;">30×</div></div>
           </div>
           <div id="gewinnerListe"></div>
         </div>
@@ -403,7 +370,7 @@ select option { background: var(--bg); }
       <label class="form-label">Handzeichen</label>
       <input type="text" id="newHelperKuerzel" placeholder="z.B. KM" maxlength="5" style="text-transform:uppercase;font-size:18px;letter-spacing:3px;text-align:center;">
     </div>
-    <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">Max. 5 Zeichen · automatisch Großbuchstaben</div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">Max. 5 Zeichen</div>
     <div class="modal-actions">
       <button class="btn btn-outline" onclick="closeModal('addHelperModal')">Abbrechen</button>
       <button class="btn btn-primary" onclick="saveHelper()">Speichern</button>
@@ -430,8 +397,8 @@ select option { background: var(--bg); }
   <div class="modal" style="width:420px;">
     <div class="modal-title">⚙ Einstellungen</div>
     <div class="setup-field"><label class="setup-label">Supabase URL</label><input class="setup-input" id="editUrl" placeholder="https://xxxxxxxxxxxx.supabase.co"></div>
-    <div class="setup-field"><label class="setup-label">Supabase Anon Key</label><input class="setup-input" id="editKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6..."></div>
-    <div class="setup-field"><label class="setup-label">Admin-PIN (4-stellig)</label><input class="setup-input" id="editPin" placeholder="z.B. 1234" maxlength="4" type="password"></div>
+    <div class="setup-field"><label class="setup-label">Supabase Anon Key</label><input class="setup-input" id="editKey" placeholder="eyJ..."></div>
+    <div class="setup-field"><label class="setup-label">Admin-PIN (4-stellig)</label><input class="setup-input" id="editPin" placeholder="1234" maxlength="4" type="password"></div>
     <div id="editError" style="color:var(--red);font-size:11px;margin-top:6px;display:none;"></div>
     <div class="modal-actions">
       <button class="btn btn-outline" onclick="closeModal('einstellungenModal')">Abbrechen</button>
@@ -441,84 +408,84 @@ select option { background: var(--bg); }
 </div>
 
 <script>
-const HARDCODED_URL = 'https://uijcgrgjskpdtktoarsw.supabase.co';
-const HARDCODED_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpamNncmdqc2twZHRrdG9hcnN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NTU2NTQsImV4cCI6MjA5MDUzMTY1NH0.j6KAGfjMGlqeTGldrJRYxAR5trXwIGVMoQOdaOBQLyU';
-let SUPABASE_URL = HARDCODED_URL;
-let SUPABASE_KEY = HARDCODED_KEY;
+const SB_URL = 'https://uijcgrgjskpdtktoarsw.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpamNncmdqc2twZHRrdG9hcnN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NTU2NTQsImV4cCI6MjA5MDUzMTY1NH0.j6KAGfjMGlqeTGldrJRYxAR5trXwIGVMoQOdaOBQLyU';
+let SUPABASE_URL = SB_URL;
+let SUPABASE_KEY = SB_KEY;
 let ADMIN_PIN = '1930';
 
 function loadConfig() {
-  SUPABASE_URL = HARDCODED_URL;
-  SUPABASE_KEY = HARDCODED_KEY;
-  const saved = localStorage.getItem('sb_pin');
-  if (saved) ADMIN_PIN = saved;
+  SUPABASE_URL = SB_URL;
+  SUPABASE_KEY = SB_KEY;
+  const p = localStorage.getItem('sb_pin');
+  if (p) ADMIN_PIN = p;
 }
 
 function saveConfig() {
-  const url = document.getElementById('cfgUrl').value.trim().replace(/\/$/, '');
+  const url = document.getElementById('cfgUrl').value.trim();
   const key = document.getElementById('cfgKey').value.trim();
   const pin = document.getElementById('cfgPin').value.trim();
-  const err = document.getElementById('setupError');
-  if (!url || !key) { err.textContent = 'URL und Key sind Pflichtfelder.'; err.style.display=''; return; }
-  localStorage.setItem('sb_url', url); localStorage.setItem('sb_key', key); localStorage.setItem('sb_pin', pin);
-  SUPABASE_URL = url; SUPABASE_KEY = key; ADMIN_PIN = pin;
-  err.style.display = 'none';
+  if (!url || !key) { document.getElementById('setupError').textContent='URL und Key pflicht.'; document.getElementById('setupError').style.display=''; return; }
+  localStorage.setItem('sb_pin', pin);
+  ADMIN_PIN = pin;
   showView('springer');
 }
 
-async function sbGet(table, filter='') {
-  const r = await fetch(SUPABASE_URL+'/rest/v1/'+table+'?'+filter+'&order=created_at.desc', {
-    headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer '+SUPABASE_KEY }
+async function sbGet(table, filter) {
+  filter = filter || '';
+  const r = await fetch(SUPABASE_URL + '/rest/v1/' + table + '?' + filter + '&order=created_at.desc', {
+    headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + SUPABASE_KEY }
   });
   return r.json();
 }
 async function sbPost(table, body) {
-  const r = await fetch(SUPABASE_URL+'/rest/v1/'+table, {
+  const r = await fetch(SUPABASE_URL + '/rest/v1/' + table, {
     method: 'POST',
-    headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer '+SUPABASE_KEY, 'Content-Type': 'application/json', Prefer: 'return=representation' },
+    headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', Prefer: 'return=representation' },
     body: JSON.stringify(body)
   });
   return r.json();
 }
 async function sbPatch(table, filter, body) {
-  const r = await fetch(SUPABASE_URL+'/rest/v1/'+table+'?'+filter, {
+  const r = await fetch(SUPABASE_URL + '/rest/v1/' + table + '?' + filter, {
     method: 'PATCH',
-    headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer '+SUPABASE_KEY, 'Content-Type': 'application/json', Prefer: 'return=representation' },
+    headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', Prefer: 'return=representation' },
     body: JSON.stringify(body)
   });
   return r.json();
 }
 async function sbDelete(table, filter) {
-  await fetch(SUPABASE_URL+'/rest/v1/'+table+'?'+filter, {
-    method: 'DELETE', headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer '+SUPABASE_KEY }
+  await fetch(SUPABASE_URL + '/rest/v1/' + table + '?' + filter, {
+    method: 'DELETE', headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + SUPABASE_KEY }
   });
 }
 
 let helpers = [], einsaetze = [];
+
 function todayStr() { return new Date().toISOString().split('T')[0]; }
-function getHJ(d) { const dt = new Date(d); return dt.getMonth() < 6 ? 'HJ1-'+dt.getFullYear() : 'HJ2-'+dt.getFullYear(); }
-function hjLabel(hj) { const p=hj.split('-')[0], y=hj.split('-')[1]; return (p==='HJ1'?'HJ 1':'HJ 2')+' · '+y; }
-function getCurrentHJ() { const n = new Date(); return n.getMonth() < 6 ? 'HJ1-'+n.getFullYear() : 'HJ2-'+n.getFullYear(); }
+function getHJ(d) { var dt = new Date(d); return dt.getMonth() < 6 ? 'HJ1-' + dt.getFullYear() : 'HJ2-' + dt.getFullYear(); }
+function hjLabel(hj) { var parts = hj.split('-'); return (parts[0] === 'HJ1' ? 'HJ 1' : 'HJ 2') + ' · ' + parts[1]; }
+function getCurrentHJ() { var n = new Date(); return n.getMonth() < 6 ? 'HJ1-' + n.getFullYear() : 'HJ2-' + n.getFullYear(); }
 function getHJList() {
-  const a = new Set(einsaetze.map(e => getHJ(e.datum)));
+  var a = new Set(einsaetze.map(function(e) { return getHJ(e.datum); }));
   a.add('HJ1-2026');
   a.add('HJ2-2026');
   a.add(getCurrentHJ());
   a.delete('HJ1-2025');
   a.delete('HJ2-2025');
-  return [...a].sort();
+  return Array.from(a).sort();
 }
-function formatDate(s) { const p=s.split('-'); return p[2]+'.'+p[1]+'.'+p[0]; }
-const WEEKDAYS = ['So','Mo','Di','Mi','Do','Fr','Sa'];
-const WEEKDAYS_LONG = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+function formatDate(s) { var p = s.split('-'); return p[2] + '.' + p[1] + '.' + p[0]; }
+var WEEKDAYS = ['So','Mo','Di','Mi','Do','Fr','Sa'];
+var WEEKDAYS_LONG = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
 
 function showView(v) {
   document.getElementById('setupScreen').style.display = 'none';
   document.getElementById('springerView').style.display = 'none';
   document.getElementById('adminView').style.display = 'none';
   if (v === 'setup') { document.getElementById('springerView').style.display = 'flex'; initCalendar(); }
-  if (v === 'springer') { document.getElementById('springerView').style.display = 'flex'; initCalendar(); }
-  if (v === 'admin') { document.getElementById('adminView').style.display = 'block'; loadData(); }
+  else if (v === 'springer') { document.getElementById('springerView').style.display = 'flex'; initCalendar(); }
+  else if (v === 'admin') { document.getElementById('adminView').style.display = 'block'; loadData(); }
 }
 function logout() { showView('springer'); }
 
@@ -528,56 +495,67 @@ function showAdminLogin() {
   document.getElementById('adminLoginModal').classList.add('open');
 }
 function checkAdminPin() {
-  if (document.getElementById('adminPinInput').value === ADMIN_PIN) { closeModal('adminLoginModal'); showView('admin'); }
-  else document.getElementById('pinError').style.display = '';
+  if (document.getElementById('adminPinInput').value === ADMIN_PIN) {
+    closeModal('adminLoginModal'); showView('admin');
+  } else {
+    document.getElementById('pinError').style.display = '';
+  }
 }
 
-let currentKuerzel = '';
+var currentKuerzel = '';
 function onKuerzelInput(inp) {
-  const v = inp.value.toUpperCase(); inp.value = v;
-  const c = document.getElementById('kuerzelCircle');
+  var v = inp.value.toUpperCase(); inp.value = v;
+  var c = document.getElementById('kuerzelCircle');
   c.textContent = v || '–'; c.classList.toggle('filled', v.length > 0);
 }
 
 async function goToStep2() {
-  const k = document.getElementById('springerKuerzel').value.trim().toUpperCase();
-  const st = document.getElementById('step1Status');
-  if (!k) { showMsg(st,'error','Bitte dein Kürzel eingeben.'); return; }
+  var k = document.getElementById('springerKuerzel').value.trim().toUpperCase();
+  var st = document.getElementById('step1Status');
+  if (!k) { showMsg(st, 'error', 'Bitte dein Kürzel eingeben.'); return; }
   try { helpers = await sbGet('helfer'); } catch(e) {}
-  if (!helpers.find(h => h.kuerzel === k)) { showMsg(st,'error','Kürzel "'+k+'" nicht gefunden. Bitte Admin kontaktieren.'); return; }
+  if (!helpers.find(function(h) { return h.kuerzel === k; })) {
+    showMsg(st, 'error', 'Kürzel nicht gefunden. Bitte Admin kontaktieren.'); return;
+  }
   currentKuerzel = k;
   st.style.display = 'none';
-  document.getElementById('step2Sub').textContent = 'Hallo '+k+' 👋 — wähle deine verfügbaren Tage';
+  document.getElementById('step2Sub').textContent = 'Hallo ' + k + ' 👋 — wähle deine verfügbaren Tage';
   document.getElementById('step1').style.display = 'none';
   document.getElementById('step2').style.display = '';
 }
-function backToStep1() { document.getElementById('step1').style.display = ''; document.getElementById('step2').style.display = 'none'; }
-function showMsg(el, type, text) { el.className = 'status-msg '+type; el.textContent = text; el.style.display = ''; }
+function backToStep1() {
+  document.getElementById('step1').style.display = '';
+  document.getElementById('step2').style.display = 'none';
+}
+function showMsg(el, type, text) { el.className = 'status-msg ' + type; el.textContent = text; el.style.display = ''; }
 
-let selectedDays = new Set();
+var selectedDays = new Set();
 function initCalendar() {
   selectedDays = new Set();
-  const grid = document.getElementById('calGrid');
+  var grid = document.getElementById('calGrid');
+  if (!grid) return;
   grid.innerHTML = '';
-  const today = new Date(); today.setHours(0,0,0,0);
-  ['Mo','Di','Mi','Do','Fr','Sa','So'].forEach(d => {
-    const h = document.createElement('div');
+  var today = new Date(); today.setHours(0,0,0,0);
+  ['Mo','Di','Mi','Do','Fr','Sa','So'].forEach(function(d) {
+    var h = document.createElement('div');
     h.style.cssText = 'text-align:center;font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;padding:2px 0;';
     h.textContent = d; grid.appendChild(h);
   });
-  const dow = today.getDay();
-  const offset = dow === 0 ? 6 : dow - 1;
-  for (let i = 0; i < offset; i++) { const ph = document.createElement('div'); ph.style.visibility='hidden'; grid.appendChild(ph); }
-  for (let i = 0; i < 14; i++) {
-    const d = new Date(today); d.setDate(today.getDate() + i);
-    const dateStr = d.toISOString().split('T')[0];
-    const isToday = d.getTime() === today.getTime();
-    const isPast = d < today && !isToday;
-    const dow2 = d.getDay();
-    const el = document.createElement('div');
-    el.className = 'cal-day' + (isPast?' past':'') + (isToday?' today':'');
-    el.innerHTML = '<div class="cal-day-name">'+WEEKDAYS[dow2]+'</div><div class="cal-day-num">'+d.getDate()+'</div>';
-    if (!isPast) el.onclick = () => toggleDay(dateStr, el);
+  var dow = today.getDay();
+  var offset = dow === 0 ? 6 : dow - 1;
+  for (var i = 0; i < offset; i++) {
+    var ph = document.createElement('div'); ph.style.visibility = 'hidden'; grid.appendChild(ph);
+  }
+  for (var i = 0; i < 14; i++) {
+    var d = new Date(today); d.setDate(today.getDate() + i);
+    var dateStr = d.toISOString().split('T')[0];
+    var isToday = d.getTime() === today.getTime();
+    var isPast = d < today && !isToday;
+    var dow2 = d.getDay();
+    var el = document.createElement('div');
+    el.className = 'cal-day' + (isPast ? ' past' : '') + (isToday ? ' today' : '');
+    el.innerHTML = '<div class="cal-day-name">' + WEEKDAYS[dow2] + '</div><div class="cal-day-num">' + d.getDate() + '</div>';
+    if (!isPast) { (function(ds, elem) { elem.onclick = function() { toggleDay(ds, elem); }; })(dateStr, el); }
     el.dataset.date = dateStr;
     grid.appendChild(el);
   }
@@ -589,30 +567,32 @@ function toggleDay(dateStr, el) {
   updateSelectedCount();
 }
 function updateSelectedCount() {
-  const c = document.getElementById('selectedCount');
-  const n = selectedDays.size;
-  c.textContent = n === 0 ? '' : n+' Tag'+(n>1?'e':'')+ ' ausgewählt ✓';
+  var c = document.getElementById('selectedCount');
+  var n = selectedDays.size;
+  c.textContent = n === 0 ? '' : n + ' Tag' + (n > 1 ? 'e' : '') + ' ausgewählt ✓';
 }
 
 async function submitVerfuegbarkeit() {
-  const st = document.getElementById('step2Status');
-  if (selectedDays.size === 0) { showMsg(st,'error','Bitte mindestens einen Tag auswählen.'); return; }
+  var st = document.getElementById('step2Status');
+  if (selectedDays.size === 0) { showMsg(st, 'error', 'Bitte mindestens einen Tag auswählen.'); return; }
   document.getElementById('step2Btn').disabled = true;
   document.getElementById('step2Btn').textContent = 'Speichere…';
   try {
-    for (const datum of [...selectedDays].sort()) {
-      const existing = await sbGet('einsaetze', 'kuerzel=eq.'+currentKuerzel+'&datum=eq.'+datum);
-      if (!existing || existing.length === 0) await sbPost('einsaetze', { kuerzel: currentKuerzel, datum, status: 'verfuegbar' });
+    var days = Array.from(selectedDays).sort();
+    for (var i = 0; i < days.length; i++) {
+      var datum = days[i];
+      var existing = await sbGet('einsaetze', 'kuerzel=eq.' + currentKuerzel + '&datum=eq.' + datum);
+      if (!existing || existing.length === 0) await sbPost('einsaetze', { kuerzel: currentKuerzel, datum: datum, status: 'verfuegbar' });
     }
     document.getElementById('confirmKuerzel').textContent = currentKuerzel;
-    document.getElementById('confirmDaysList').innerHTML = [...selectedDays].sort().map(d => {
-      const dt = new Date(d+'T00:00:00');
-      return '<div>'+WEEKDAYS_LONG[dt.getDay()]+', '+formatDate(d)+'</div>';
+    document.getElementById('confirmDaysList').innerHTML = days.map(function(d) {
+      var dt = new Date(d + 'T00:00:00');
+      return '<div>' + WEEKDAYS_LONG[dt.getDay()] + ', ' + formatDate(d) + '</div>';
     }).join('');
     document.getElementById('step2').style.display = 'none';
     document.getElementById('stepConfirm').style.display = '';
   } catch(e) {
-    showMsg(st,'error','Fehler beim Speichern.');
+    showMsg(st, 'error', 'Fehler beim Speichern.');
     document.getElementById('step2Btn').disabled = false;
     document.getElementById('step2Btn').textContent = 'Verfügbarkeit speichern ✓';
   }
@@ -634,297 +614,323 @@ function springerReset() {
 }
 
 async function loadData() {
-  try { helpers = await sbGet('helfer'); einsaetze = await sbGet('einsaetze'); renderAll(); }
-  catch(e) { console.error(e); }
+  try {
+    helpers = await sbGet('helfer');
+    einsaetze = await sbGet('einsaetze');
+    renderAll();
+  } catch(e) { console.error(e); }
 }
 
-function renderAll() {
-  renderSidebar(); renderHeute(); renderTable(); renderVerfuegbarkeit();
-  const curTab = document.querySelector('.tab.active')?.textContent?.trim();
-  if (curTab === 'Auswertung') renderAuswertung();
-}
-
-const MILESTONES = [
+var MILESTONES = [
   { count: 10, label: '🥉 Bronze', color: '#cd7f32' },
   { count: 15, label: '🥈 Silber', color: '#c0c0c0' },
   { count: 20, label: '🥇 Gold', color: '#8a6a1f' },
   { count: 25, label: '💎 Diamant', color: '#4fc3f7' },
-  { count: 30, label: '👑 Legende', color: '#ff6b6b' },
+  { count: 30, label: '👑 Legende', color: '#ff6b6b' }
 ];
-function getMilestone(anz) { let c=null; for(const m of MILESTONES){if(anz>=m.count)c=m;} return c; }
-function getNextMilestone(anz) { for(const m of MILESTONES){if(anz<m.count)return m;} return null; }
+function getMilestone(anz) { var c = null; for (var i = 0; i < MILESTONES.length; i++) { if (anz >= MILESTONES[i].count) c = MILESTONES[i]; } return c; }
+function getNextMilestone(anz) { for (var i = 0; i < MILESTONES.length; i++) { if (anz < MILESTONES[i].count) return MILESTONES[i]; } return null; }
+
+function renderAll() {
+  renderSidebar(); renderHeute(); renderTable(); renderVerfuegbarkeit();
+  var curTab = document.querySelector('.tab.active');
+  if (curTab && curTab.textContent.trim() === 'Auswertung') renderAuswertung();
+}
 
 function renderSidebar() {
-  const sorted = [...helpers].sort((a,b) => a.kuerzel.localeCompare(b.kuerzel));
-  const list = document.getElementById('helperList');
-  list.innerHTML = sorted.map(h => {
-    const anz = einsaetze.filter(e => e.kuerzel===h.kuerzel && e.status==='einsatz').length;
-    const pts = anz*5;
-    const ms = getMilestone(anz);
-    const badge = ms ? '<span style="font-size:11px;color:'+ms.color+';">'+ms.label.split(' ')[0]+'</span>' : '';
-    return '<div class="helper-item"><div class="helper-avatar">'+h.kuerzel+'</div><div class="helper-name">'+h.kuerzel+'</div>'+badge+'<div class="helper-pts">'+( pts>0?pts+'P':'')+'</div></div>';
+  var sorted = helpers.slice().sort(function(a,b) { return a.kuerzel.localeCompare(b.kuerzel); });
+  var list = document.getElementById('helperList');
+  list.innerHTML = sorted.map(function(h) {
+    var anz = einsaetze.filter(function(e) { return e.kuerzel === h.kuerzel && e.status === 'einsatz'; }).length;
+    var pts = anz * 5;
+    var ms = getMilestone(anz);
+    var badge = ms ? '<span style="font-size:11px;color:' + ms.color + ';">' + ms.label.split(' ')[0] + '</span>' : '';
+    return '<div class="helper-item"><div class="helper-avatar">' + h.kuerzel + '</div><div class="helper-name">' + h.kuerzel + '</div>' + badge + '<div class="helper-pts">' + (pts > 0 ? pts + 'P' : '') + '</div></div>';
   }).join('') || '<div style="font-size:11px;color:var(--muted);padding:8px 10px;">Keine Helfer.</div>';
 
-  const ranking = [...helpers].map(h => {
-    const anz = einsaetze.filter(e => e.kuerzel===h.kuerzel && e.status==='einsatz').length;
-    return { h, anz, pts: anz*5 };
-  }).sort((a,b) => b.pts!==a.pts ? b.pts-a.pts : a.h.kuerzel.localeCompare(b.h.kuerzel));
-  const rankEl = document.getElementById('sidebarRanking');
+  var ranking = helpers.slice().map(function(h) {
+    var anz = einsaetze.filter(function(e) { return e.kuerzel === h.kuerzel && e.status === 'einsatz'; }).length;
+    return { h: h, anz: anz, pts: anz * 5 };
+  }).sort(function(a,b) { return b.pts !== a.pts ? b.pts - a.pts : a.h.kuerzel.localeCompare(b.h.kuerzel); });
+  var rankEl = document.getElementById('sidebarRanking');
   if (rankEl) {
-    rankEl.innerHTML = ranking.map((r,i) => {
-      const ms = getMilestone(r.anz);
-      const medal = i===0&&r.pts>0?'🥇':i===1&&r.pts>0?'🥈':i===2&&r.pts>0?'🥉':(i+1)+'.';
-      const msIcon = ms ? ms.label.split(' ')[0] : '';
-      return '<div style="display:flex;align-items:center;gap:6px;padding:5px 8px;background:var(--surface2);border:1px solid var(--border);font-size:12px;"><span style="color:var(--muted);width:20px;flex-shrink:0;">'+medal+'</span><span style="flex:1;font-family:'DM Serif Display',serif;">'+r.h.kuerzel+'</span>'+(msIcon?'<span style="font-size:13px;">'+msIcon+'</span>':'')+'<span style="color:var(--gold);font-weight:500;">'+( r.pts>0?r.pts+'P':'—')+'</span></div>';
+    rankEl.innerHTML = ranking.map(function(r, i) {
+      var ms = getMilestone(r.anz);
+      var medal = (i === 0 && r.pts > 0) ? '🥇' : (i === 1 && r.pts > 0) ? '🥈' : (i === 2 && r.pts > 0) ? '🥉' : (i + 1) + '.';
+      var msIcon = ms ? ms.label.split(' ')[0] : '';
+      return '<div style="display:flex;align-items:center;gap:6px;padding:5px 8px;background:var(--surface2);border:1px solid var(--border);font-size:12px;"><span style="color:var(--muted);width:20px;flex-shrink:0;">' + medal + '</span><span style="flex:1;">' + r.h.kuerzel + '</span>' + (msIcon ? '<span style="font-size:13px;">' + msIcon + '</span>' : '') + '<span style="color:var(--gold);font-weight:500;">' + (r.pts > 0 ? r.pts + 'P' : '—') + '</span></div>';
     }).join('') || '<div style="font-size:11px;color:var(--muted);">Noch keine Punkte.</div>';
   }
-  ['einsatzHelper','filterHelper','spontanHelper'].forEach(id => {
-    const sel = document.getElementById(id); const cur = sel.value;
-    sel.innerHTML = id==='filterHelper'?'<option value="">Alle</option>':'<option value="">— Auswählen —</option>';
-    sorted.forEach(h => { const o=document.createElement('option'); o.value=h.kuerzel; o.textContent=h.kuerzel; sel.appendChild(o); });
+  ['einsatzHelper','filterHelper','spontanHelper'].forEach(function(id) {
+    var sel = document.getElementById(id);
+    if (!sel) return;
+    var cur = sel.value;
+    sel.innerHTML = id === 'filterHelper' ? '<option value="">Alle</option>' : '<option value="">— Auswählen —</option>';
+    sorted.forEach(function(h) { var o = document.createElement('option'); o.value = h.kuerzel; o.textContent = h.kuerzel; sel.appendChild(o); });
     sel.value = cur;
   });
 }
 
 function renderHeute() {
-  const today = todayStr();
-  const todayE = einsaetze.filter(e => e.datum===today);
-  const pending = todayE.filter(e => e.status==='bereit'||e.status==='verfuegbar');
-  const confirmed = todayE.filter(e => e.status==='einsatz'||e.status==='frei');
-  const hj = getCurrentHJ();
-  const hjE = einsaetze.filter(e => getHJ(e.datum)===hj && e.status==='einsatz');
-  const topSpringer = helpers.length>0 ? (()=>{
-    const counts = einsaetze.filter(e=>e.status==='einsatz').reduce((a,e)=>{a[e.kuerzel]=(a[e.kuerzel]||0)+1;return a;},{});
-    const entries = Object.entries(counts);
-    return entries.length>0 ? entries.sort((a,b)=>b[1]-a[1])[0][0] : '—';
-  })() : '—';
+  var today = todayStr();
+  var todayE = einsaetze.filter(function(e) { return e.datum === today; });
+  var pending = todayE.filter(function(e) { return e.status === 'bereit' || e.status === 'verfuegbar'; });
+  var confirmed = todayE.filter(function(e) { return e.status === 'einsatz' || e.status === 'frei'; });
+  var hj = getCurrentHJ();
+  var hjE = einsaetze.filter(function(e) { return getHJ(e.datum) === hj && e.status === 'einsatz'; });
+  var counts = {};
+  einsaetze.filter(function(e){return e.status==='einsatz';}).forEach(function(e){counts[e.kuerzel]=(counts[e.kuerzel]||0)+1;});
+  var topSpringer = '—';
+  var topCount = 0;
+  Object.keys(counts).forEach(function(k){if(counts[k]>topCount){topCount=counts[k];topSpringer=k;}});
   document.getElementById('statsRow').innerHTML =
-    '<div class="stat-card"><div class="stat-label">Verfügbar heute</div><div class="stat-value">'+pending.length+'</div><div class="stat-sub">Warten auf Bestätigung</div></div>'+
-    '<div class="stat-card"><div class="stat-label">Einsätze '+hjLabel(hj)+'</div><div class="stat-value">'+hjE.length+'</div><div class="stat-sub">Bestätigt</div></div>'+
-    '<div class="stat-card"><div class="stat-label">Value-Punkte</div><div class="stat-value">'+hjE.length*5+'</div><div class="stat-sub">Gesamt HJ</div></div>'+
-    '<div class="stat-card"><div class="stat-label">Top Springer</div><div class="stat-value">'+topSpringer+'</div><div class="stat-sub">Meiste Einsätze</div></div>';
-
-  const list = document.getElementById('pendingList');
-  if (todayE.length===0) { list.innerHTML='<div class="empty-state">📋 Noch keine Meldungen heute.</div>'; return; }
-  let html='';
-  if (pending.length>0) {
-    html+='<div style="font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;">Warten auf Bestätigung ('+pending.length+')</div><div class="pending-grid" style="margin-bottom:14px;">';
-    pending.forEach(e => {
-      const zeit = new Date(e.created_at).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
-      html+='<div class="pending-item"><div class="pending-kuerzel">'+e.kuerzel+'</div><div class="pending-info"><div class="pending-name">'+e.kuerzel+'</div><div class="pending-time">Gemeldet: '+zeit+' Uhr</div></div><div class="pending-actions"><button class="btn btn-success btn-sm" onclick="confirmEinsatz('+e.id+',''einsatz'')">✓ Einsatz</button><button class="btn btn-outline btn-sm" onclick="confirmEinsatz('+e.id+',''frei'')" style="font-size:10px;">× Frei</button></div></div>';
+    '<div class="stat-card"><div class="stat-label">Verfügbar heute</div><div class="stat-value">' + pending.length + '</div><div class="stat-sub">Warten auf Bestätigung</div></div>' +
+    '<div class="stat-card"><div class="stat-label">Einsätze ' + hjLabel(hj) + '</div><div class="stat-value">' + hjE.length + '</div><div class="stat-sub">Bestätigt</div></div>' +
+    '<div class="stat-card"><div class="stat-label">Value-Punkte</div><div class="stat-value">' + (hjE.length*5) + '</div><div class="stat-sub">Gesamt HJ</div></div>' +
+    '<div class="stat-card"><div class="stat-label">Top Springer</div><div class="stat-value">' + topSpringer + '</div><div class="stat-sub">Meiste Einsätze</div></div>';
+  var list = document.getElementById('pendingList');
+  if (todayE.length === 0) { list.innerHTML = '<div class="empty-state">📋 Noch keine Meldungen heute.</div>'; return; }
+  var html = '';
+  if (pending.length > 0) {
+    html += '<div style="font-size:11px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;">Warten auf Bestätigung (' + pending.length + ')</div><div class="pending-grid" style="margin-bottom:14px;">';
+    pending.forEach(function(e) {
+      var zeit = new Date(e.created_at).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
+      html += '<div class="pending-item"><div class="pending-kuerzel">' + e.kuerzel + '</div><div class="pending-info"><div class="pending-name">' + e.kuerzel + '</div><div class="pending-time">Gemeldet: ' + zeit + ' Uhr</div></div><div class="pending-actions"><button class="btn btn-success btn-sm" onclick="confirmEinsatz(' + e.id + ',\'einsatz\')">✓ Einsatz</button><button class="btn btn-outline btn-sm" onclick="confirmEinsatz(' + e.id + ',\'frei\')" style="font-size:11px;">× Frei</button></div></div>';
     });
-    html+='</div>';
+    html += '</div>';
   }
-  if (confirmed.length>0) {
-    html+='<div style="font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;">Bestätigt ('+confirmed.length+')</div><div class="pending-grid">';
-    confirmed.forEach(e => {
-      const badge = e.status==='einsatz'?'<span class="badge badge-einsatz">Einsatz +5P</span>':'<span class="badge badge-frei">Frei</span>';
-      html+='<div class="pending-item"><div class="pending-kuerzel" style="'+( e.status==='frei'?'opacity:0.4':'')+ '">'+e.kuerzel+'</div><div class="pending-info"><div class="pending-name">'+e.kuerzel+'</div><div class="pending-time">'+badge+'</div></div><button class="btn-danger-sm" onclick="deleteEinsatz('+e.id+')">×</button></div>';
+  if (confirmed.length > 0) {
+    html += '<div style="font-size:11px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;">Bestätigt (' + confirmed.length + ')</div><div class="pending-grid">';
+    confirmed.forEach(function(e) {
+      var badge = e.status === 'einsatz' ? '<span class="badge badge-einsatz">Einsatz +5P</span>' : '<span class="badge badge-frei">Frei</span>';
+      html += '<div class="pending-item"><div class="pending-kuerzel" style="' + (e.status==='frei'?'opacity:0.4':'') + '">' + e.kuerzel + '</div><div class="pending-info"><div class="pending-name">' + e.kuerzel + '</div><div class="pending-time">' + badge + '</div></div><button class="btn-danger-sm" onclick="deleteEinsatz(' + e.id + ')">×</button></div>';
     });
-    html+='</div>';
+    html += '</div>';
   }
   list.innerHTML = html;
 }
 
 function renderVerfuegbarkeit() {
-  const today = new Date(); today.setHours(0,0,0,0);
-  const grid = document.getElementById('verfuegGrid');
-  const detail = document.getElementById('verfuegDetail');
-  let html='';
-  ['Mo','Di','Mi','Do','Fr','Sa','So'].forEach(d => { html+='<div style="text-align:center;font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;padding:2px 0;">'+d+'</div>'; });
-  const dow = today.getDay();
-  const offset = dow===0?6:dow-1;
-  for(let i=0;i<offset;i++) html+='<div></div>';
-  let detailHtml='<div style="display:flex;flex-direction:column;gap:8px;">';
-  for(let i=0;i<14;i++) {
-    const d=new Date(today); d.setDate(today.getDate()+i);
-    const dateStr=d.toISOString().split('T')[0];
-    const entries=einsaetze.filter(e=>e.datum===dateStr&&(e.status==='verfuegbar'||e.status==='bereit'));
-    const isToday=i===0;
-    html+='<div class="verfueg-day '+( entries.length>0?'has-entries':'')+ ' '+( isToday?'today':'')+ '"><div class="verfueg-day-name">'+WEEKDAYS[d.getDay()]+'</div><div class="verfueg-day-date">'+d.getDate()+'</div><div class="verfueg-day-count">'+( entries.length>0?entries.length+'×':'')+'</div></div>';
-    if(entries.length>0) detailHtml+='<div style="display:flex;gap:8px;align-items:center;"><div style="font-size:11px;color:var(--muted);width:80px;flex-shrink:0;">'+WEEKDAYS_LONG[d.getDay()]+'<br>'+formatDate(dateStr)+'</div><div style="display:flex;gap:4px;flex-wrap:wrap;">'+entries.map(e=>'<span class="badge badge-verfuegbar">'+e.kuerzel+'</span>').join('')+'</div></div>';
+  var today = new Date(); today.setHours(0,0,0,0);
+  var grid = document.getElementById('verfuegGrid');
+  var detail = document.getElementById('verfuegDetail');
+  var html = '';
+  ['Mo','Di','Mi','Do','Fr','Sa','So'].forEach(function(d) { html += '<div style="text-align:center;font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;padding:2px 0;">' + d + '</div>'; });
+  var dow = today.getDay();
+  var offset = dow === 0 ? 6 : dow - 1;
+  for (var i = 0; i < offset; i++) html += '<div></div>';
+  var detailHtml = '<div style="display:flex;flex-direction:column;gap:8px;">';
+  for (var i = 0; i < 14; i++) {
+    var d = new Date(today); d.setDate(today.getDate() + i);
+    var dateStr = d.toISOString().split('T')[0];
+    var entries = einsaetze.filter(function(e) { return e.datum === dateStr && (e.status === 'verfuegbar' || e.status === 'bereit'); });
+    var isToday = i === 0;
+    html += '<div class="verfueg-day ' + (entries.length>0?'has-entries':'') + ' ' + (isToday?'today':'') + '"><div class="verfueg-day-name">' + WEEKDAYS[d.getDay()] + '</div><div class="verfueg-day-date">' + d.getDate() + '</div><div class="verfueg-day-count">' + (entries.length>0?entries.length+'×':'') + '</div></div>';
+    if (entries.length > 0) {
+      detailHtml += '<div style="display:flex;gap:8px;align-items:center;"><div style="font-size:11px;color:var(--muted);width:80px;flex-shrink:0;">' + WEEKDAYS_LONG[d.getDay()] + '<br>' + formatDate(dateStr) + '</div><div style="display:flex;gap:4px;flex-wrap:wrap;">' + entries.map(function(e){return '<span class="badge badge-verfuegbar">'+e.kuerzel+'</span>';}).join('') + '</div></div>';
+    }
   }
-  detailHtml+='</div>';
-  grid.innerHTML=html; detail.innerHTML=detailHtml;
+  detailHtml += '</div>';
+  grid.innerHTML = html; detail.innerHTML = detailHtml;
 }
 
-async function confirmEinsatz(id, status) { await sbPatch('einsaetze','id=eq.'+id,{status}); await loadData(); }
-async function deleteEinsatz(id) { await sbDelete('einsaetze','id=eq.'+id); await loadData(); }
+async function confirmEinsatz(id, status) { await sbPatch('einsaetze', 'id=eq.' + id, {status: status}); await loadData(); }
+async function deleteEinsatz(id) { await sbDelete('einsaetze', 'id=eq.' + id); await loadData(); }
 
 function renderTable() {
-  const fH=document.getElementById('filterHelper').value;
-  const fP=document.getElementById('filterHJ').value;
-  let rows=[...einsaetze].sort((a,b)=>b.datum.localeCompare(a.datum));
-  if(fH) rows=rows.filter(e=>e.kuerzel===fH);
-  if(fP) rows=rows.filter(e=>getHJ(e.datum)===fP);
-  const tbody=document.getElementById('einsatzTable');
-  const empty=document.getElementById('emptyTable');
-  if(rows.length===0){tbody.innerHTML='';empty.style.display='';return;}
-  empty.style.display='none';
-  tbody.innerHTML=rows.map(e=>{
-    const badge=e.status==='einsatz'?'<span class="badge badge-einsatz">Einsatz</span>':e.status==='frei'?'<span class="badge badge-frei">Frei</span>':e.status==='verfuegbar'?'<span class="badge badge-verfuegbar">Verfügbar</span>':'<span class="badge badge-bereit">Bereit</span>';
-    return '<tr><td>'+formatDate(e.datum)+'</td><td>'+e.kuerzel+'</td><td>'+badge+'</td><td style="color:var(--gold)">'+( e.status==='einsatz'?'+5':'—')+'</td><td style="color:var(--muted);font-size:10px;">'+hjLabel(getHJ(e.datum))+'</td><td><button class="btn-danger-sm" onclick="deleteEinsatz('+e.id+')">×</button></td></tr>';
+  var fH = document.getElementById('filterHelper').value;
+  var fP = document.getElementById('filterHJ').value;
+  var rows = einsaetze.slice().sort(function(a,b){return b.datum.localeCompare(a.datum);});
+  if (fH) rows = rows.filter(function(e){return e.kuerzel===fH;});
+  if (fP) rows = rows.filter(function(e){return getHJ(e.datum)===fP;});
+  var tbody = document.getElementById('einsatzTable');
+  var empty = document.getElementById('emptyTable');
+  if (rows.length === 0) { tbody.innerHTML = ''; empty.style.display = ''; return; }
+  empty.style.display = 'none';
+  tbody.innerHTML = rows.map(function(e) {
+    var badge = e.status==='einsatz' ? '<span class="badge badge-einsatz">Einsatz</span>' : e.status==='frei' ? '<span class="badge badge-frei">Frei</span>' : e.status==='verfuegbar' ? '<span class="badge badge-verfuegbar">Verfügbar</span>' : '<span class="badge badge-bereit">Bereit</span>';
+    return '<tr><td>' + formatDate(e.datum) + '</td><td>' + e.kuerzel + '</td><td>' + badge + '</td><td style="color:var(--gold)">' + (e.status==='einsatz'?'+5':'—') + '</td><td style="color:var(--muted);font-size:11px;">' + hjLabel(getHJ(e.datum)) + '</td><td><button class="btn-danger-sm" onclick="deleteEinsatz(' + e.id + ')">×</button></td></tr>';
   }).join('');
 }
 
 async function addEinsatzManual() {
-  const kuerzel=document.getElementById('einsatzHelper').value;
-  const datum=document.getElementById('einsatzDate').value;
-  const status=document.getElementById('einsatzStatus').value;
-  if(!kuerzel||!datum){alert('Bitte Helfer und Datum auswählen.');return;}
-  if(einsaetze.find(e=>e.kuerzel===kuerzel&&e.datum===datum)){alert('Bereits eingetragen.');return;}
-  await sbPost('einsaetze',{kuerzel,datum,status}); await loadData();
-}
-
-async function goToEinsatzBestaetigen() {
-  const k=document.getElementById('springerKuerzel').value.trim().toUpperCase();
-  const st=document.getElementById('step1Status');
-  if(!k){showMsg(st,'error','Bitte zuerst dein Kürzel eingeben.');return;}
-  try{helpers=await sbGet('helfer');}catch(e){}
-  if(!helpers.find(h=>h.kuerzel===k)){showMsg(st,'error','Kürzel "'+k+'" nicht gefunden.');return;}
-  currentKuerzel=k;
-  const today=todayStr();
-  const dt=new Date(today+'T00:00:00');
-  document.getElementById('einsatzSub').textContent='Kürzel: '+k;
-  document.getElementById('einsatzDatumAnzeige').textContent=dt.toLocaleDateString('de-DE',{weekday:'long',day:'2-digit',month:'long'});
-  document.getElementById('einsatzKuerzelAnzeige').textContent=k;
-  document.getElementById('einsatzStatus').style.display='none';
-  document.getElementById('einsatzForm').style.display='';
-  document.getElementById('einsatzConfirm').style.display='none';
-  document.getElementById('step1').style.display='none';
-  document.getElementById('stepEinsatz').style.display='';
-  st.style.display='none';
-}
-
-async function submitEinsatzBestaetigen() {
-  const datum=todayStr(); const st=document.getElementById('einsatzStatus');
-  try {
-    const existing=await sbGet('einsaetze','kuerzel=eq.'+currentKuerzel+'&datum=eq.'+datum);
-    if(existing&&existing.length>0) await sbPatch('einsaetze','id=eq.'+existing[0].id,{status:'einsatz'});
-    else await sbPost('einsaetze',{kuerzel:currentKuerzel,datum,status:'einsatz'});
-    document.getElementById('einsatzForm').style.display='none';
-    document.getElementById('einsatzConfirmText').innerHTML='<strong style="color:var(--green)">'+currentKuerzel+'</strong> – Einsatz heute gespeichert. +5 Value-Punkte 🎉';
-    document.getElementById('einsatzConfirm').style.display='';
-  } catch(e){showMsg(st,'error','Fehler beim Speichern.');}
-}
-
-async function submitEinsatzFrei() {
-  const datum=todayStr(); const st=document.getElementById('einsatzStatus');
-  try {
-    const existing=await sbGet('einsaetze','kuerzel=eq.'+currentKuerzel+'&datum=eq.'+datum);
-    if(existing&&existing.length>0) await sbPatch('einsaetze','id=eq.'+existing[0].id,{status:'frei'});
-    else await sbPost('einsaetze',{kuerzel:currentKuerzel,datum,status:'frei'});
-    document.getElementById('einsatzForm').style.display='none';
-    document.getElementById('einsatzConfirmText').innerHTML='Verstanden – kein Einsatz heute für <strong style="color:var(--gold)">'+currentKuerzel+'</strong>.';
-    document.getElementById('einsatzConfirm').style.display='';
-  } catch(e){showMsg(st,'error','Fehler beim Speichern.');}
-}
-
-async function addSpontanEinsatz() {
-  const kuerzel=document.getElementById('spontanHelper').value;
-  const status=document.getElementById('spontanStatus').value;
-  const datum=todayStr();
-  if(!kuerzel){alert('Bitte Helfer auswählen.');return;}
-  const existing=einsaetze.find(e=>e.kuerzel===kuerzel&&e.datum===datum);
-  if(existing) await sbPatch('einsaetze','id=eq.'+existing.id,{status});
-  else await sbPost('einsaetze',{kuerzel,datum,status});
+  var kuerzel = document.getElementById('einsatzHelper').value;
+  var datum = document.getElementById('einsatzDate').value;
+  var status = document.getElementById('einsatzStatus').value;
+  if (!kuerzel || !datum) { alert('Bitte Helfer und Datum auswählen.'); return; }
+  if (einsaetze.find(function(e){return e.kuerzel===kuerzel&&e.datum===datum;})) { alert('Bereits eingetragen.'); return; }
+  await sbPost('einsaetze', {kuerzel:kuerzel,datum:datum,status:status});
   await loadData();
 }
 
-let activeHJ = null;
+async function goToEinsatzBestaetigen() {
+  var k = document.getElementById('springerKuerzel').value.trim().toUpperCase();
+  var st = document.getElementById('step1Status');
+  if (!k) { showMsg(st, 'error', 'Bitte zuerst dein Kürzel eingeben.'); return; }
+  try { helpers = await sbGet('helfer'); } catch(e) {}
+  if (!helpers.find(function(h){return h.kuerzel===k;})) { showMsg(st,'error','Kürzel nicht gefunden.'); return; }
+  currentKuerzel = k;
+  var today = todayStr();
+  var dt = new Date(today + 'T00:00:00');
+  document.getElementById('einsatzSub').textContent = 'Kürzel: ' + k;
+  document.getElementById('einsatzDatumAnzeige').textContent = dt.toLocaleDateString('de-DE',{weekday:'long',day:'2-digit',month:'long'});
+  document.getElementById('einsatzKuerzelAnzeige').textContent = k;
+  document.getElementById('einsatzStatus').style.display = 'none';
+  document.getElementById('einsatzForm').style.display = '';
+  document.getElementById('einsatzConfirm').style.display = 'none';
+  document.getElementById('step1').style.display = 'none';
+  document.getElementById('stepEinsatz').style.display = '';
+  st.style.display = 'none';
+}
+
+async function submitEinsatzBestaetigen() {
+  var datum = todayStr();
+  var st = document.getElementById('einsatzStatus');
+  try {
+    var existing = await sbGet('einsaetze', 'kuerzel=eq.' + currentKuerzel + '&datum=eq.' + datum);
+    if (existing && existing.length > 0) await sbPatch('einsaetze', 'id=eq.' + existing[0].id, {status:'einsatz'});
+    else await sbPost('einsaetze', {kuerzel:currentKuerzel,datum:datum,status:'einsatz'});
+    document.getElementById('einsatzForm').style.display = 'none';
+    document.getElementById('einsatzConfirmText').innerHTML = '<strong style="color:var(--green)">' + currentKuerzel + '</strong> – Einsatz gespeichert. +5 Value-Punkte 🎉';
+    document.getElementById('einsatzConfirm').style.display = '';
+  } catch(e) { showMsg(st,'error','Fehler beim Speichern.'); }
+}
+
+async function submitEinsatzFrei() {
+  var datum = todayStr();
+  var st = document.getElementById('einsatzStatus');
+  try {
+    var existing = await sbGet('einsaetze', 'kuerzel=eq.' + currentKuerzel + '&datum=eq.' + datum);
+    if (existing && existing.length > 0) await sbPatch('einsaetze', 'id=eq.' + existing[0].id, {status:'frei'});
+    else await sbPost('einsaetze', {kuerzel:currentKuerzel,datum:datum,status:'frei'});
+    document.getElementById('einsatzForm').style.display = 'none';
+    document.getElementById('einsatzConfirmText').innerHTML = 'Kein Einsatz heute für <strong style="color:var(--gold)">' + currentKuerzel + '</strong>.';
+    document.getElementById('einsatzConfirm').style.display = '';
+  } catch(e) { showMsg(st,'error','Fehler beim Speichern.'); }
+}
+
+async function addSpontanEinsatz() {
+  var kuerzel = document.getElementById('spontanHelper').value;
+  var status = document.getElementById('spontanStatus').value;
+  var datum = todayStr();
+  if (!kuerzel) { alert('Bitte Helfer auswählen.'); return; }
+  var existing = einsaetze.find(function(e){return e.kuerzel===kuerzel&&e.datum===datum;});
+  if (existing) await sbPatch('einsaetze', 'id=eq.' + existing.id, {status:status});
+  else await sbPost('einsaetze', {kuerzel:kuerzel,datum:datum,status:status});
+  await loadData();
+}
+
+var activeHJ = null;
+
 function renderAuswertung() {
-  const hjs = getHJList();
-  if(!activeHJ||!hjs.includes(activeHJ)) activeHJ=hjs[hjs.length-1];
-  document.getElementById('adminHJBadge').textContent=hjLabel(activeHJ);
-  document.getElementById('hjTabs').innerHTML=hjs.map(hj=>'<button class="period-tab '+( hj===activeHJ?'active':'')+'" onclick="switchHJ(''''+hj+'''')">'+hjLabel(hj)+'</button>').join('');
-  const allE=einsaetze.filter(e=>e.status==='einsatz');
-  const gewinner=helpers.filter(h=>getMilestone(allE.filter(e=>e.kuerzel===h.kuerzel).length)!==null);
-  const gewinnerEl=document.getElementById('gewinnerListe');
-  if(gewinner.length===0) gewinnerEl.innerHTML='<div style="font-size:13px;color:var(--muted);text-align:center;padding:12px;">Noch niemand hat eine Gewinnhürde erreicht. Weiter so! 💪</div>';
-  else gewinnerEl.innerHTML='<div style="display:flex;gap:8px;flex-wrap:wrap;">'+gewinner.map(h=>{const anz=allE.filter(e=>e.kuerzel===h.kuerzel).length;const ms=getMilestone(anz);return '<div style="background:var(--surface2);border:1px solid '+ms.color+';padding:8px 14px;display:flex;align-items:center;gap:8px;"><span style="font-family:'DM Serif Display',serif;font-size:16px;color:'+ms.color+';"> '+h.kuerzel+'</span><span style="font-size:12px;color:'+ms.color+';"> '+ms.label+'</span></div>';}).join('')+'</div>';
-  const ranking=helpers.map(h=>{const anz=allE.filter(e=>e.kuerzel===h.kuerzel).length;return{h,anz,pts:anz*5,ms:getMilestone(anz),next:getNextMilestone(anz)};}).sort((a,b)=>b.pts!==a.pts?b.pts-a.pts:a.h.kuerzel.localeCompare(b.h.kuerzel));
-  document.getElementById('rankingTable').innerHTML=ranking.map((r,i)=>{
-    const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1)+'.';
-    const statusBadge=r.ms?'<span style="color:'+r.ms.color+';font-size:12px;">'+r.ms.label+'</span>':'<span style="color:var(--muted);font-size:12px;">—</span>';
-    const nextBadge=r.next?'<div style="font-size:11px;color:var(--muted);">'+r.next.label+' bei '+r.next.count+'×<div style="height:4px;background:var(--surface2);border:1px solid var(--border);margin-top:3px;width:100px;"><div style="height:100%;background:'+r.next.color+';width:'+Math.min((r.anz/r.next.count)*100,100)+'%;"></div></div></div>':'<span style="color:var(--gold);font-size:12px;">👑 Max erreicht!</span>';
-    return '<tr><td style="font-size:16px;">'+medal+'</td><td style="font-family:'DM Serif Display',serif;font-size:16px;">'+r.h.kuerzel+'</td><td style="color:var(--gold);font-weight:500;">'+r.anz+'×</td><td style="color:var(--gold);">'+r.pts+' P</td><td>'+statusBadge+'</td><td>'+nextBadge+'</td></tr>';
+  var hjs = getHJList();
+  if (!activeHJ || hjs.indexOf(activeHJ) === -1) activeHJ = hjs[hjs.length-1];
+  document.getElementById('adminHJBadge').textContent = hjLabel(activeHJ);
+  document.getElementById('hjTabs').innerHTML = hjs.map(function(hj) {
+    return '<button class="period-tab ' + (hj===activeHJ?'active':'') + '" onclick="switchHJ(\'' + hj + '\')">' + hjLabel(hj) + '</button>';
   }).join('');
-  const entries=einsaetze.filter(e=>getHJ(e.datum)===activeHJ);
-  if(document.getElementById('hjTabsSub')) document.getElementById('hjTabsSub').innerHTML=hjs.map(hj=>'<button class="period-tab '+( hj===activeHJ?'active':'')+'" onclick="switchHJ(''''+hj+'''')">'+hjLabel(hj)+'</button>').join('');
-  document.getElementById('auswertungGrid').innerHTML=helpers.map(h=>{
-    const hE=entries.filter(e=>e.kuerzel===h.kuerzel);
-    const anz=hE.filter(e=>e.status==='einsatz').length;
-    const frei=hE.filter(e=>e.status==='frei').length;
-    const verf=hE.filter(e=>e.status==='verfuegbar').length;
-    const total=hE.length;
-    const quote=total>0?Math.round(anz/total*100):0;
-    return '<div class="auswert-item"><div class="auswert-name">'+h.kuerzel+'</div><div class="auswert-row"><span>Verfügbar gemeldet</span><span>'+verf+'</span></div><div class="auswert-row"><span>→ Einsatz</span><span>'+anz+'</span></div><div class="auswert-row"><span>→ Frei</span><span>'+frei+'</span></div><div class="auswert-row"><span>Value-Punkte</span><span>'+anz*5+'</span></div><div class="auswert-row"><span>Einsatzquote</span><span>'+quote+'%</span></div></div>';
+  var allE = einsaetze.filter(function(e){return e.status==='einsatz';});
+  var gewinner = helpers.filter(function(h){return getMilestone(allE.filter(function(e){return e.kuerzel===h.kuerzel;}).length)!==null;});
+  var gewinnerEl = document.getElementById('gewinnerListe');
+  if (gewinner.length === 0) {
+    gewinnerEl.innerHTML = '<div style="font-size:13px;color:var(--muted);text-align:center;padding:12px;">Noch niemand hat eine Gewinnhürde erreicht. Weiter so! 💪</div>';
+  } else {
+    gewinnerEl.innerHTML = '<div style="display:flex;gap:8px;flex-wrap:wrap;">' + gewinner.map(function(h) {
+      var anz = allE.filter(function(e){return e.kuerzel===h.kuerzel;}).length;
+      var ms = getMilestone(anz);
+      return '<div style="background:var(--surface2);border:1px solid ' + ms.color + ';padding:8px 14px;display:flex;align-items:center;gap:8px;"><span style="font-size:16px;color:' + ms.color + ';">' + h.kuerzel + '</span><span style="font-size:12px;color:' + ms.color + ';">' + ms.label + '</span></div>';
+    }).join('') + '</div>';
+  }
+  var ranking = helpers.slice().map(function(h) {
+    var anz = allE.filter(function(e){return e.kuerzel===h.kuerzel;}).length;
+    return { h:h, anz:anz, pts:anz*5, ms:getMilestone(anz), next:getNextMilestone(anz) };
+  }).sort(function(a,b){ return b.pts!==a.pts ? b.pts-a.pts : a.h.kuerzel.localeCompare(b.h.kuerzel); });
+  document.getElementById('rankingTable').innerHTML = ranking.map(function(r,i) {
+    var medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1)+'.';
+    var statusBadge = r.ms ? '<span style="color:'+r.ms.color+';font-size:12px;">'+r.ms.label+'</span>' : '<span style="color:var(--muted);font-size:12px;">—</span>';
+    var nextBadge = r.next ? '<div style="font-size:11px;color:var(--muted);">'+r.next.label+' bei '+r.next.count+'×<div style="height:4px;background:var(--surface2);border:1px solid var(--border);margin-top:3px;width:80px;"><div style="height:100%;background:'+r.next.color+';width:'+Math.min((r.anz/r.next.count)*100,100)+'%;"></div></div></div>' : '<span style="color:var(--gold);font-size:12px;">👑 Max!</span>';
+    return '<tr><td style="font-size:16px;">'+medal+'</td><td>'+r.h.kuerzel+'</td><td style="color:var(--gold);font-weight:500;">'+r.anz+'×</td><td style="color:var(--gold);">'+r.pts+' P</td><td>'+statusBadge+'</td><td>'+nextBadge+'</td></tr>';
+  }).join('');
+  var entries = einsaetze.filter(function(e){return getHJ(e.datum)===activeHJ;});
+  var hjTabsSub = document.getElementById('hjTabsSub');
+  if (hjTabsSub) hjTabsSub.innerHTML = hjs.map(function(hj) {
+    return '<button class="period-tab ' + (hj===activeHJ?'active':'') + '" onclick="switchHJ(\'' + hj + '\')">' + hjLabel(hj) + '</button>';
+  }).join('');
+  document.getElementById('auswertungGrid').innerHTML = helpers.map(function(h) {
+    var hE = entries.filter(function(e){return e.kuerzel===h.kuerzel;});
+    var anz = hE.filter(function(e){return e.status==='einsatz';}).length;
+    var frei = hE.filter(function(e){return e.status==='frei';}).length;
+    var verf = hE.filter(function(e){return e.status==='verfuegbar';}).length;
+    var total = hE.length;
+    var quote = total>0?Math.round(anz/total*100):0;
+    return '<div class="auswert-item"><div class="auswert-name">'+h.kuerzel+'</div><div class="auswert-row"><span>Verfügbar gemeldet</span><span>'+verf+'</span></div><div class="auswert-row"><span>→ Einsatz</span><span>'+anz+'</span></div><div class="auswert-row"><span>→ Frei</span><span>'+frei+'</span></div><div class="auswert-row"><span>Value-Punkte</span><span>'+(anz*5)+'</span></div><div class="auswert-row"><span>Einsatzquote</span><span>'+quote+'%</span></div></div>';
   }).join('');
 }
-function switchHJ(hj){activeHJ=hj;renderAuswertung();}
+
+function switchHJ(hj) { activeHJ = hj; renderAuswertung(); }
 
 function exportExcel() {
-  const allE=einsaetze.filter(e=>e.status==='einsatz');
-  const entries=einsaetze.filter(e=>getHJ(e.datum)===activeHJ);
-  let csv='RANGLISTE\n';
-  csv+='Platz,Kuerzel,Einsaetze,Punkte,Status\n';
-  const ranking=helpers.map(h=>{const anz=allE.filter(e=>e.kuerzel===h.kuerzel).length;return{h,anz,pts:anz*5,ms:getMilestone(anz)};}).sort((a,b)=>b.pts!==a.pts?b.pts-a.pts:a.h.kuerzel.localeCompare(b.h.kuerzel));
-  ranking.forEach((r,i)=>{csv+=(i+1)+','+r.h.kuerzel+','+r.anz+','+r.pts+','+(r.ms?r.ms.label:'-')+'\n';});
-  csv+='\nHALBJAHRES-AUSWERTUNG '+hjLabel(activeHJ)+'\n';
-  csv+='Kuerzel,Verfuegbar,Einsaetze,Frei,Value-Punkte,Einsatzquote\n';
-  helpers.forEach(h=>{
-    const hE=entries.filter(e=>e.kuerzel===h.kuerzel);
-    const anz=hE.filter(e=>e.status==='einsatz').length;
-    const frei=hE.filter(e=>e.status==='frei').length;
-    const verf=hE.filter(e=>e.status==='verfuegbar').length;
-    const total=hE.length;
-    const quote=total>0?Math.round(anz/total*100):0;
-    csv+=h.kuerzel+','+verf+','+anz+','+frei+','+( anz*5)+','+quote+'%\n';
+  var allE = einsaetze.filter(function(e){return e.status==='einsatz';});
+  var entries = einsaetze.filter(function(e){return getHJ(e.datum)===activeHJ;});
+  var csv = 'RANGLISTE\n';
+  csv += 'Platz,Kuerzel,Einsaetze,Punkte,Status\n';
+  var ranking = helpers.slice().map(function(h){var anz=allE.filter(function(e){return e.kuerzel===h.kuerzel;}).length;return{h:h,anz:anz,pts:anz*5,ms:getMilestone(anz)};}).sort(function(a,b){return b.pts!==a.pts?b.pts-a.pts:a.h.kuerzel.localeCompare(b.h.kuerzel);});
+  ranking.forEach(function(r,i){csv+=(i+1)+','+r.h.kuerzel+','+r.anz+','+r.pts+','+(r.ms?r.ms.label:'-')+'\n';});
+  csv += '\nHALBJAHRES-AUSWERTUNG ' + hjLabel(activeHJ) + '\n';
+  csv += 'Kuerzel,Verfuegbar,Einsaetze,Frei,Value-Punkte,Einsatzquote\n';
+  helpers.forEach(function(h){
+    var hE=entries.filter(function(e){return e.kuerzel===h.kuerzel;});
+    var anz=hE.filter(function(e){return e.status==='einsatz';}).length;
+    var frei=hE.filter(function(e){return e.status==='frei';}).length;
+    var verf=hE.filter(function(e){return e.status==='verfuegbar';}).length;
+    var total=hE.length;
+    var quote=total>0?Math.round(anz/total*100):0;
+    csv+=h.kuerzel+','+verf+','+anz+','+frei+','+(anz*5)+','+quote+'%\n';
   });
-  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url; a.download='Springer-Auswertung-'+activeHJ+'.csv'; a.click();
+  var blob = new Blob(['\uFEFF' + csv], {type:'text/csv;charset=utf-8;'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = 'Springer-Auswertung-' + activeHJ + '.csv'; a.click();
   URL.revokeObjectURL(url);
 }
 
-function openAddHelper(){var m=document.getElementById('addHelperModal');if(m){m.classList.add('open');document.getElementById('newHelperKuerzel').value='';document.getElementById('newHelperKuerzel').focus();}}
-function closeModal(id){document.getElementById(id).classList.remove('open');}
-async function saveHelper(){
-  const k=document.getElementById('newHelperKuerzel').value.trim().toUpperCase();
-  if(!k){alert('Bitte Kürzel eingeben.');return;}
-  if(helpers.find(h=>h.kuerzel===k)){alert('Kürzel existiert bereits.');return;}
-  await sbPost('helfer',{kuerzel:k});
-  document.getElementById('newHelperKuerzel').value='';
-  closeModal('addHelperModal'); await loadData();
+function openAddHelper() {
+  var m = document.getElementById('addHelperModal');
+  if (m) { m.classList.add('open'); document.getElementById('newHelperKuerzel').value=''; document.getElementById('newHelperKuerzel').focus(); }
+}
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+async function saveHelper() {
+  var k = document.getElementById('newHelperKuerzel').value.trim().toUpperCase();
+  if (!k) { alert('Bitte Kürzel eingeben.'); return; }
+  if (helpers.find(function(h){return h.kuerzel===k;})) { alert('Kürzel existiert bereits.'); return; }
+  await sbPost('helfer', {kuerzel:k});
+  document.getElementById('newHelperKuerzel').value = '';
+  closeModal('addHelperModal');
+  await loadData();
 }
 
-function switchTab(name,el){
-  ['heute','verfuegbar','erfassung','auswertung'].forEach(t=>{document.getElementById('tab-'+t).style.display=t===name?'':'none';});
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+function switchTab(name, el) {
+  ['heute','verfuegbar','erfassung','auswertung'].forEach(function(t) {
+    document.getElementById('tab-' + t).style.display = t === name ? '' : 'none';
+  });
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
   el.classList.add('active');
-  if(name==='auswertung') renderAuswertung();
-  if(name==='verfuegbar') renderVerfuegbarkeit();
+  if (name === 'auswertung') renderAuswertung();
+  if (name === 'verfuegbar') renderVerfuegbarkeit();
 }
 
-function openEinstellungen(){
-  document.getElementById('editUrl').value=SUPABASE_URL||''
-  document.getElementById('editKey').value=SUPABASE_KEY||''
-  document.getElementById('editPin').value=''
-  document.getElementById('editError').style.display='none'
-  document.getElementById('einstellungenModal').classList.add('open')
+function openEinstellungen() {
+  document.getElementById('editUrl').value = SUPABASE_URL || '';
+  document.getElementById('editKey').value = SUPABASE_KEY || '';
+  document.getElementById('editPin').value = '';
+  document.getElementById('editError').style.display = 'none';
+  document.getElementById('einstellungenModal').classList.add('open');
 }
-function saveEinstellungen(){
-  const url=document.getElementById('editUrl').value.trim().replace(/\/$/, '');
-  const key=document.getElementById('editKey').value.trim();
-  const pin=document.getElementById('editPin').value.trim();
-  const err=document.getElementById('editError');
-  if(!url||!key){err.textContent='URL und Key sind Pflichtfelder.';err.style.display='';return;}
-  if(pin&&(pin.length!==4||isNaN(pin))){err.textContent='PIN muss 4 Ziffern haben.';err.style.display='';return;}
-  localStorage.setItem('sb_url',url); localStorage.setItem('sb_key',key);
-  if(pin){localStorage.setItem('sb_pin',pin); ADMIN_PIN=pin;}
-  SUPABASE_URL=url; SUPABASE_KEY=key;
-  closeModal('einstellungenModal'); loadData();
+function saveEinstellungen() {
+  var pin = document.getElementById('editPin').value.trim();
+  if (pin) { localStorage.setItem('sb_pin', pin); ADMIN_PIN = pin; }
+  closeModal('einstellungenModal');
+  loadData();
 }
 
 loadConfig();
