@@ -404,7 +404,7 @@ select option { background: var(--bg); }
             <div class="form-group">
               <label class="form-label">Status</label>
               <select id="spontanStatus">
-                <option value="einsatz">Einsatz ✓ (+5P +1/52)</option>
+                <option value="einsatz">Einsatz ✓ (+5P +)</option>
                 <option value="frei">Frei (angerufen, kein Einsatz)</option>
               </select>
             </div>
@@ -452,7 +452,7 @@ select option { background: var(--bg); }
             </div>
             <button class="btn btn-primary" onclick="addEinsatzManual()">Eintragen</button>
           </div>
-          <div class="info-note">* Einsatz = +5 Value-Punkte + 1/52 Urlaubstag automatisch.</div>
+          <div class="info-note">* Einsatz = +5 Value-Punkte </div>
         </div>
         <div class="card">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
@@ -470,7 +470,7 @@ select option { background: var(--bg); }
           </div>
           <div style="overflow-x:auto;">
             <table>
-              <thead><tr><th>Datum</th><th>Helfer</th><th>Status</th><th>Punkte</th><th>Urlaub</th><th>HJ</th><th></th></tr></thead>
+              <thead><tr><th>Datum</th><th>Helfer</th><th>Status</th><th>Punkte</th><th>HJ</th><th></th></tr></thead>
               <tbody id="einsatzTable"></tbody>
             </table>
             <div id="emptyTable" class="empty-state" style="display:none;">Keine Einträge</div>
@@ -991,7 +991,7 @@ function renderTable() {
       : '<span class="badge badge-bereit">Bereit</span>';
     return `<tr><td>${formatDate(e.datum)}</td><td>${e.kuerzel}</td><td>${badge}</td>
       <td style="color:var(--gold)">${e.status==='einsatz'?'+5':'—'}</td>
-      <td style="color:var(--muted)">${e.status==='einsatz'?'1/52':'—'}</td>
+      <td style="color:var(--muted)">${e.status==='einsatz'?'':'—'}</td>
       <td style="color:var(--muted);font-size:10px;">${hjLabel(getHJ(e.datum))}</td>
       <td><button class="btn-danger-sm" onclick="deleteEinsatz(${e.id})">×</button></td></tr>`;
   }).join('');
@@ -1046,7 +1046,7 @@ async function submitEinsatzBestaetigen() {
       await sbPost('einsaetze', { kuerzel: currentKuerzel, datum, status: 'einsatz' });
     }
     document.getElementById('einsatzForm').style.display = 'none';
-    document.getElementById('einsatzConfirmText').innerHTML = `<strong style="color:var(--green)">${currentKuerzel}</strong> – Einsatz heute wurde gespeichert.<br>+5 Value-Punkte & 1/52 Urlaubstag gutgeschrieben. 🎉`;
+    document.getElementById('einsatzConfirmText').innerHTML = `<strong style="color:var(--green)">${currentKuerzel}</strong> – Einsatz heute wurde gespeichert.<br>+5 Value-Punkte &  Urlaubstag gutgeschrieben. 🎉`;
     document.getElementById('einsatzConfirm').style.display = '';
   } catch(e) {
     showMsg(st,'error','Fehler beim Speichern. Bitte erneut versuchen.');
