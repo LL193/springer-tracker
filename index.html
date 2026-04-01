@@ -644,7 +644,7 @@ function logout() { showView('springer'); }
 
 function showAdminLogin() {
   if (!SUPABASE_URL) { showView('setup'); return; }
-  if (!ADMIN_PIN) { showView('admin'); return; }
+  if (!ADMIN_PIN) { ADMIN_PIN = '1930'; }
   document.getElementById('adminPinInput').value = '';
   document.getElementById('pinError').style.display = 'none';
   document.getElementById('adminLoginModal').classList.add('open');
