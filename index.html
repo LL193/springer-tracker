@@ -362,13 +362,24 @@ select option { background: var(--bg); }
       </div>
       <div style="padding:0 14px;">
         <div class="sidebar-label">Legende</div>
-        <div style="display:flex;flex-direction:column;gap:5px;font-size:10px;">
+        <div style="display:flex;flex-direction:column;gap:4px;font-size:11px;margin-bottom:14px;">
           <div style="display:flex;gap:6px;align-items:center;"><span class="badge badge-verfuegbar">Verfügbar</span><span style="color:var(--muted)">Selbst gemeldet</span></div>
           <div style="display:flex;gap:6px;align-items:center;"><span class="badge badge-bereit">Bereit</span><span style="color:var(--muted)">Tagesbereitschaft</span></div>
-          <div style="display:flex;gap:6px;align-items:center;"><span class="badge badge-einsatz">Einsatz</span><span style="color:var(--muted)">+5P + 1/52 Urlaub</span></div>
+          <div style="display:flex;gap:6px;align-items:center;"><span class="badge badge-einsatz">Einsatz</span><span style="color:var(--muted)">+5P</span></div>
           <div style="display:flex;gap:6px;align-items:center;"><span class="badge badge-frei">Frei</span><span style="color:var(--muted)">Kein Einsatz</span></div>
         </div>
-
+        <div class="divider"></div>
+        <div class="sidebar-label">Gewinnhürden</div>
+        <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:14px;font-size:12px;">
+          <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dotted var(--border);"><span style="color:#cd7f32;">🥉 Bronze</span><span style="color:var(--muted);">ab 10×</span></div>
+          <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dotted var(--border);"><span style="color:#8a8a8a;">🥈 Silber</span><span style="color:var(--muted);">ab 15×</span></div>
+          <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dotted var(--border);"><span style="color:var(--gold);">🥇 Gold</span><span style="color:var(--muted);">ab 20×</span></div>
+          <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dotted var(--border);"><span style="color:var(--blue);">💎 Diamant</span><span style="color:var(--muted);">ab 25×</span></div>
+          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span style="color:var(--red);">👑 Legende</span><span style="color:var(--muted);">ab 30×</span></div>
+        </div>
+        <div class="divider"></div>
+        <div class="sidebar-label">Rangliste</div>
+        <div id="sidebarRanking" style="display:flex;flex-direction:column;gap:3px;"></div>
       </div>
     </div>
 
@@ -820,20 +831,48 @@ function renderAll() {
 }
 
 function renderSidebar() {
+  // Alphabetisch sortiert
+  const sorted = [...helpers].sort((a,b) => a.kuerzel.localeCompare(b.kuerzel));
+
   const list = document.getElementById('helperList');
-  list.innerHTML = helpers.map(h => {
-    const pts = einsaetze.filter(e => e.kuerzel === h.kuerzel && e.status === 'einsatz').length * 5;
+  list.innerHTML = sorted.map(h => {
+    const anz = einsaetze.filter(e => e.kuerzel === h.kuerzel && e.status === 'einsatz').length;
+    const pts = anz * 5;
+    const ms = getMilestone(anz);
+    const badge = ms ? `<span style="font-size:11px;color:${ms.color};">${ms.label.split(' ')[0]}</span>` : '';
     return `<div class="helper-item">
       <div class="helper-avatar">${h.kuerzel}</div>
       <div class="helper-name">${h.kuerzel}</div>
-      <div class="helper-pts">${pts}P</div>
+      ${badge}
+      <div class="helper-pts">${pts > 0 ? pts+'P' : ''}</div>
     </div>`;
   }).join('') || '<div style="font-size:11px;color:var(--muted);padding:8px 10px;">Keine Helfer.</div>';
+
+  // Sidebar Rangliste – nach Punkten, bei Gleichstand alphabetisch
+  const ranking = [...helpers].map(h => {
+    const anz = einsaetze.filter(e => e.kuerzel === h.kuerzel && e.status === 'einsatz').length;
+    return { h, anz, pts: anz * 5 };
+  }).sort((a,b) => b.pts !== a.pts ? b.pts - a.pts : a.h.kuerzel.localeCompare(b.h.kuerzel));
+
+  const rankEl = document.getElementById('sidebarRanking');
+  if (rankEl) {
+    rankEl.innerHTML = ranking.map((r, i) => {
+      const ms = getMilestone(r.anz);
+      const medal = i === 0 && r.pts > 0 ? '🥇' : i === 1 && r.pts > 0 ? '🥈' : i === 2 && r.pts > 0 ? '🥉' : `${i+1}.`;
+      const msIcon = ms ? ms.label.split(' ')[0] : '';
+      return `<div style="display:flex;align-items:center;gap:6px;padding:5px 8px;background:var(--surface2);border:1px solid var(--border);font-size:12px;">
+        <span style="color:var(--muted);width:20px;flex-shrink:0;">${medal}</span>
+        <span style="flex:1;font-family:'DM Serif Display',serif;">${r.h.kuerzel}</span>
+        ${msIcon ? `<span style="font-size:13px;">${msIcon}</span>` : ''}
+        <span style="color:var(--gold);font-weight:500;">${r.pts > 0 ? r.pts+'P' : '—'}</span>
+      </div>`;
+    }).join('') || '<div style="font-size:11px;color:var(--muted);">Noch keine Punkte.</div>';
+  }
 
   ['einsatzHelper','filterHelper','spontanHelper'].forEach(id => {
     const sel = document.getElementById(id); const cur = sel.value;
     sel.innerHTML = id === 'filterHelper' ? '<option value="">Alle</option>' : '<option value="">— Auswählen —</option>';
-    helpers.forEach(h => { const o = document.createElement('option'); o.value = h.kuerzel; o.textContent = h.kuerzel; sel.appendChild(o); });
+    sorted.forEach(h => { const o = document.createElement('option'); o.value = h.kuerzel; o.textContent = h.kuerzel; sel.appendChild(o); });
     sel.value = cur;
   });
 }
