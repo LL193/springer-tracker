@@ -625,7 +625,7 @@ function todayStr() { return new Date().toISOString().split('T')[0]; }
 function getHJ(d) { const dt = new Date(d); return dt.getMonth() < 6 ? `HJ1-${dt.getFullYear()}` : `HJ2-${dt.getFullYear()}`; }
 function hjLabel(hj) { const [p,y] = hj.split('-'); return `${p==='HJ1'?'HJ 1':'HJ 2'} · ${y}`; }
 function getCurrentHJ() { const n = new Date(); return n.getMonth() < 6 ? `HJ1-${n.getFullYear()}` : `HJ2-${n.getFullYear()}`; }
-function getHJList() {   const a = new Set(einsaetze.map(e => getHJ(e.datum)));   a.add('HJ1-2026');   a.add('HJ2-2026');   a.add(getCurrentHJ());   return [...a].sort(); }
+function function getHJList() {   const a = new Set(einsaetze.map(e => getHJ(e.datum)));   a.add('HJ1-2026');   a.add('HJ2-2026');   a.add(getCurrentHJ());   // 2025 entfernen   a.delete('HJ1-2025');   a.delete('HJ2-2025');   return [...a].sort(); }() {   const a = new Set(einsaetze.map(e => getHJ(e.datum)));   a.add('HJ1-2026');   a.add('HJ2-2026');   a.add(getCurrentHJ());   return [...a].sort(); }
 function formatDate(s) { const [y,m,d] = s.split('-'); return `${d}.${m}.${y}`; }
 const WEEKDAYS = ['So','Mo','Di','Mi','Do','Fr','Sa'];
 const WEEKDAYS_LONG = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
@@ -1110,7 +1110,7 @@ function getNextMilestone(anz) {
 }
 
 function renderAuswertung() {
-  const hjs = getHJList();
+  const hjs = function getHJList() {   const a = new Set(einsaetze.map(e => getHJ(e.datum)));   a.add('HJ1-2026');   a.add('HJ2-2026');   a.add(getCurrentHJ());   // 2025 entfernen   a.delete('HJ1-2025');   a.delete('HJ2-2025');   return [...a].sort(); }();
   if (!activeHJ || !hjs.includes(activeHJ)) activeHJ = hjs[hjs.length-1];
   document.getElementById('adminHJBadge').textContent = hjLabel(activeHJ);
 
