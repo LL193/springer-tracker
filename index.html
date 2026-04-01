@@ -368,9 +368,7 @@ select option { background: var(--bg); }
           <div style="display:flex;gap:6px;align-items:center;"><span class="badge badge-einsatz">Einsatz</span><span style="color:var(--muted)">+5P + 1/52 Urlaub</span></div>
           <div style="display:flex;gap:6px;align-items:center;"><span class="badge badge-frei">Frei</span><span style="color:var(--muted)">Kein Einsatz</span></div>
         </div>
-        <div class="divider"></div>
-        <div class="sidebar-label">Urlaubs-Übersicht</div>
-        <div id="urlaubsBars" style="display:flex;flex-direction:column;gap:8px;"></div>
+
       </div>
     </div>
 
@@ -473,22 +471,47 @@ select option { background: var(--bg); }
       <div id="tab-auswertung" style="display:none;">
         <div class="period-tabs" id="hjTabs"></div>
 
-        <!-- URLAUBS-DASHBOARD -->
+        <!-- GEWINNHÜRDEN -->
+        <div class="card" style="border-color:rgba(201,168,76,0.3);">
+          <div class="card-title">🏆 Gewinnhürden</div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+            <div style="background:var(--surface2);border:1px solid #cd7f32;padding:10px 16px;flex:1;min-width:120px;text-align:center;">
+              <div style="font-size:11px;color:#cd7f32;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">🥉 Bronze</div>
+              <div style="font-family:'DM Serif Display',serif;font-size:24px;color:#cd7f32;">10×</div>
+              <div style="font-size:11px;color:var(--muted);">Einsätze</div>
+            </div>
+            <div style="background:var(--surface2);border:1px solid #c0c0c0;padding:10px 16px;flex:1;min-width:120px;text-align:center;">
+              <div style="font-size:11px;color:#c0c0c0;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">🥈 Silber</div>
+              <div style="font-family:'DM Serif Display',serif;font-size:24px;color:#c0c0c0;">15×</div>
+              <div style="font-size:11px;color:var(--muted);">Einsätze</div>
+            </div>
+            <div style="background:var(--surface2);border:1px solid var(--gold);padding:10px 16px;flex:1;min-width:120px;text-align:center;">
+              <div style="font-size:11px;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">🥇 Gold</div>
+              <div style="font-family:'DM Serif Display',serif;font-size:24px;color:var(--gold);">20×</div>
+              <div style="font-size:11px;color:var(--muted);">Einsätze</div>
+            </div>
+            <div style="background:var(--surface2);border:1px solid #b9f2ff;padding:10px 16px;flex:1;min-width:120px;text-align:center;">
+              <div style="font-size:11px;color:#b9f2ff;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">💎 Diamant</div>
+              <div style="font-family:'DM Serif Display',serif;font-size:24px;color:#b9f2ff;">25×</div>
+              <div style="font-size:11px;color:var(--muted);">Einsätze</div>
+            </div>
+          </div>
+          <div id="gewinnerListe"></div>
+        </div>
+
+        <!-- RANGLISTE -->
         <div class="card">
-          <div class="card-title">Urlaubsanspruch Dashboard</div>
-          <div id="urlaubsDashboard"></div>
+          <div class="card-title">Rangliste</div>
+          <table>
+            <thead><tr><th>#</th><th>Helfer</th><th>Einsätze</th><th>Punkte</th><th>Status</th><th>Nächste Hürde</th></tr></thead>
+            <tbody id="rankingTable"></tbody>
+          </table>
         </div>
 
         <div class="card">
           <div class="card-title">Halbjahres-Auswertung</div>
+          <div class="period-tabs" id="hjTabsSub" style="margin-bottom:12px;"></div>
           <div class="auswertung-grid" id="auswertungGrid"></div>
-        </div>
-        <div class="card">
-          <div class="card-title">Ranking</div>
-          <table>
-            <thead><tr><th>#</th><th>Helfer</th><th>Einsätze</th><th>Punkte</th><th>Urlaubstage</th><th>Quote</th></tr></thead>
-            <tbody id="rankingTable"></tbody>
-          </table>
         </div>
       </div>
     </div>
@@ -694,6 +717,7 @@ function initCalendar() {
     const d = new Date(today); d.setDate(today.getDate() + i);
     const dateStr = d.toISOString().split('T')[0];
     const isToday = d.getTime() === today.getTime();
+    const isToday = d.getTime() === today.getTime();
     const isPast = d < today && !isToday;
     const dow2 = d.getDay();
     const isWeekend = dow2 === 0 || dow2 === 6;
@@ -814,23 +838,7 @@ function renderSidebar() {
   });
 }
 
-function renderUrlaubsBars() {
-  const hj = getCurrentHJ();
-  const container = document.getElementById('urlaubsBars');
-  const JAHRESURLAUB = 30; // Angenommener Jahresurlaub in Tagen
-  container.innerHTML = helpers.map(h => {
-    const anz = einsaetze.filter(e => e.kuerzel === h.kuerzel && e.status === 'einsatz').length;
-    const tage = anz / 52;
-    const pct = Math.min((tage / JAHRESURLAUB) * 100, 100);
-    return `<div class="urlaub-bar-wrap">
-      <div class="urlaub-bar-top">
-        <span class="urlaub-bar-name">${h.kuerzel}</span>
-        <span class="urlaub-bar-val">${tage.toFixed(2)}d</span>
-      </div>
-      <div class="urlaub-bar-bg"><div class="urlaub-bar-fill" style="width:${pct}%"></div></div>
-    </div>`;
-  }).join('') || '<div style="font-size:10px;color:var(--muted);">Keine Daten.</div>';
-}
+function renderUrlaubsBars() { /* entfernt */ }
 
 function renderHeute() {
   const today = todayStr();
@@ -844,7 +852,7 @@ function renderHeute() {
     <div class="stat-card"><div class="stat-label">Verfügbar heute</div><div class="stat-value">${pending.length}</div><div class="stat-sub">Warten auf Bestätigung</div></div>
     <div class="stat-card"><div class="stat-label">Einsätze ${hjLabel(hj)}</div><div class="stat-value">${hjE.length}</div><div class="stat-sub">Bestätigt</div></div>
     <div class="stat-card"><div class="stat-label">Value-Punkte</div><div class="stat-value">${hjE.length*5}</div><div class="stat-sub">Gesamt HJ</div></div>
-    <div class="stat-card"><div class="stat-label">Urlaubstage</div><div class="stat-value">${(hjE.length/52).toFixed(2)}</div><div class="stat-sub">Angesammelt HJ</div></div>`;
+    <div class="stat-card"><div class="stat-label">Top Springer</div><div class="stat-value">${helpers.length > 0 ? (einsaetze.filter(e=>e.status==='einsatz').reduce((a,e)=>{a[e.kuerzel]=(a[e.kuerzel]||0)+1;return a;},{}) ? Object.entries(einsaetze.filter(e=>e.status==='einsatz').reduce((a,e)=>{a[e.kuerzel]=(a[e.kuerzel]||0)+1;return a;},{})).sort((a,b)=>b[1]-a[1])[0]?.[0] || '—' : '—') : '—'}</div><div class="stat-sub">Meiste Einsätze</div></div>`;
 
   const list = document.getElementById('pendingList');
   if (todayE.length === 0) { list.innerHTML = '<div class="empty-state">📋 Noch keine Meldungen heute.</div>'; return; }
@@ -1040,41 +1048,100 @@ async function addSpontanEinsatz() {
   await loadData();
 }
 
-// ══ AUSWERTUNG MIT URLAUBS-DASHBOARD ══
+// ══ AUSWERTUNG MIT RANKING & GEWINNHÜRDEN ══
 let activeHJ = null;
+
+const MILESTONES = [
+  { count: 10, label: '🥉 Bronze', color: '#cd7f32' },
+  { count: 15, label: '🥈 Silber', color: '#c0c0c0' },
+  { count: 20, label: '🥇 Gold',   color: '#c9a84c' },
+  { count: 25, label: '💎 Diamant', color: '#b9f2ff' },
+  { count: 30, label: '👑 Legende', color: '#ff6b6b' },
+];
+
+function getMilestone(anz) {
+  let current = null;
+  for (const m of MILESTONES) { if (anz >= m.count) current = m; }
+  return current;
+}
+
+function getNextMilestone(anz) {
+  for (const m of MILESTONES) { if (anz < m.count) return m; }
+  return null;
+}
 
 function renderAuswertung() {
   const hjs = getHJList();
   if (!activeHJ || !hjs.includes(activeHJ)) activeHJ = hjs[hjs.length-1];
   document.getElementById('adminHJBadge').textContent = hjLabel(activeHJ);
+
   document.getElementById('hjTabs').innerHTML = hjs.map(hj =>
     `<button class="period-tab ${hj===activeHJ?'active':''}" onclick="switchHJ('${hj}')">${hjLabel(hj)}</button>`
   ).join('');
 
+  // Gesamteinsätze pro Helfer (nicht nur HJ)
+  const allEinsaetze = einsaetze.filter(e => e.status === 'einsatz');
+
+  // Gewinner-Liste
+  const gewinner = helpers.filter(h => {
+    const anz = allEinsaetze.filter(e => e.kuerzel === h.kuerzel).length;
+    return getMilestone(anz) !== null;
+  });
+  const gewinnerEl = document.getElementById('gewinnerListe');
+  if (gewinner.length === 0) {
+    gewinnerEl.innerHTML = '<div style="font-size:13px;color:var(--muted);text-align:center;padding:12px;">Noch niemand hat eine Gewinnhürde erreicht. Weiter so! 💪</div>';
+  } else {
+    gewinnerEl.innerHTML = '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
+      gewinner.map(h => {
+        const anz = allEinsaetze.filter(e => e.kuerzel === h.kuerzel).length;
+        const ms = getMilestone(anz);
+        return `<div style="background:var(--surface2);border:1px solid ${ms.color};padding:8px 14px;display:flex;align-items:center;gap:8px;">
+          <span style="font-family:'DM Serif Display',serif;font-size:16px;color:${ms.color};">${h.kuerzel}</span>
+          <span style="font-size:12px;color:${ms.color};">${ms.label}</span>
+        </div>`;
+      }).join('') + '</div>';
+  }
+
+  // Rangliste – erst alphabetisch, dann nach Punkten sortiert (Punkte primär, Alpha sekundär)
+  const ranking = helpers.map(h => {
+    const anz = allEinsaetze.filter(e => e.kuerzel === h.kuerzel).length;
+    const ms = getMilestone(anz);
+    const next = getNextMilestone(anz);
+    return { h, anz, pts: anz * 5, ms, next };
+  }).sort((a, b) => {
+    if (b.pts !== a.pts) return b.pts - a.pts; // erst nach Punkten
+    return a.h.kuerzel.localeCompare(b.h.kuerzel); // dann alphabetisch
+  });
+
+  document.getElementById('rankingTable').innerHTML = ranking.map((r, i) => {
+    const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i+1}.`;
+    const statusBadge = r.ms
+      ? `<span style="color:${r.ms.color};font-size:12px;">${r.ms.label}</span>`
+      : '<span style="color:var(--muted);font-size:12px;">—</span>';
+    const nextBadge = r.next
+      ? `<div style="font-size:11px;color:var(--muted);">${r.next.label} bei ${r.next.count}×
+          <div style="height:4px;background:var(--surface2);border:1px solid var(--border);margin-top:3px;width:100px;">
+            <div style="height:100%;background:${r.next.color};width:${Math.min((r.anz/r.next.count)*100,100)}%;"></div>
+          </div>
+        </div>`
+      : '<span style="color:var(--gold);font-size:12px;">👑 Max erreicht!</span>';
+    return `<tr>
+      <td style="font-size:16px;">${medal}</td>
+      <td style="font-family:'DM Serif Display',serif;font-size:16px;">${r.h.kuerzel}</td>
+      <td style="color:var(--gold);font-weight:500;">${r.anz}×</td>
+      <td style="color:var(--gold);">${r.pts} P</td>
+      <td>${statusBadge}</td>
+      <td>${nextBadge}</td>
+    </tr>`;
+  }).join('');
+
+  // HJ-Auswertung
   const entries = einsaetze.filter(e => getHJ(e.datum) === activeHJ);
-  const JAHRESURLAUB = 30;
-
-  // Urlaubs-Dashboard
-  const dash = document.getElementById('urlaubsDashboard');
-  dash.innerHTML = `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;">` +
-    helpers.map(h => {
-      const anz = entries.filter(e => e.kuerzel===h.kuerzel && e.status==='einsatz').length;
-      const tage = anz / 52;
-      const pct = Math.min((tage / JAHRESURLAUB) * 100, 100);
-      const color = pct > 10 ? 'var(--green)' : pct > 5 ? 'var(--gold)' : 'var(--muted)';
-      return `<div style="background:var(--surface2);border:1px solid var(--border);padding:14px;">
-        <div style="display:flex;justify-content:space-between;margin-bottom:10px;">
-          <span style="font-family:'DM Serif Display',serif;font-size:18px;color:var(--gold);">${h.kuerzel}</span>
-          <span style="font-size:22px;font-family:'DM Serif Display',serif;color:${color};">${pct.toFixed(1)}%</span>
-        </div>
-        <div style="height:8px;background:var(--bg);border:1px solid var(--border);margin-bottom:8px;">
-          <div style="height:100%;background:${color};width:${pct}%;transition:width 0.4s;"></div>
-        </div>
-        <div style="font-size:10px;color:var(--muted);">${tage.toFixed(3)} von ${JAHRESURLAUB} Tagen · ${anz} Einsätze</div>
-      </div>`;
-    }).join('') + '</div>';
-
-  // Halbjahres-Grid
+  if (document.getElementById('hjTabsSub')) {
+    document.getElementById('hjTabsSub').innerHTML = hjs.map(hj =>
+      `<button class="period-tab ${hj===activeHJ?'active':''}" onclick="switchHJ('${hj}')">${hjLabel(hj)}</button>`
+    ).join('');
+  }
   document.getElementById('auswertungGrid').innerHTML = helpers.map(h => {
     const hE = entries.filter(e => e.kuerzel===h.kuerzel);
     const anz = hE.filter(e => e.status==='einsatz').length;
@@ -1089,25 +1156,8 @@ function renderAuswertung() {
       <div class="auswert-row"><span>→ Frei</span><span>${frei}</span></div>
       <div class="auswert-row"><span>Value-Punkte</span><span>${anz*5}</span></div>
       <div class="auswert-row"><span>Einsatzquote</span><span>${quote}%</span></div>
-      <div class="divider" style="margin:6px 0;"></div>
-      <div class="auswert-total"><span>Urlaubsanspruch</span><span>+${(anz/52).toFixed(3)} Tage</span></div>
     </div>`;
   }).join('');
-
-  // Ranking
-  const ranking = helpers.map(h => {
-    const hE = entries.filter(e => e.kuerzel===h.kuerzel);
-    const anz = hE.filter(e => e.status==='einsatz').length;
-    const total = hE.length;
-    return { h, anz, total, pts:anz*5, urlaub:anz/52, quote:total>0?Math.round(anz/total*100):0 };
-  }).sort((a,b) => b.anz-a.anz);
-  document.getElementById('rankingTable').innerHTML = ranking.map((r,i) =>
-    `<tr><td style="color:var(--muted)">${i+1}</td><td>${r.h.kuerzel}</td>
-    <td>${r.anz} / ${r.total}</td>
-    <td style="color:var(--gold)">${r.pts}</td>
-    <td style="color:var(--green)">${r.urlaub.toFixed(3)}</td>
-    <td>${r.quote}%</td></tr>`
-  ).join('');
 }
 
 function switchHJ(hj) { activeHJ = hj; renderAuswertung(); }
