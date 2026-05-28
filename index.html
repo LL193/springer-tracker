@@ -462,7 +462,13 @@ async function sbDelete(table, filter) {
 
 let helpers = [], einsaetze = [];
 
-function todayStr() { return new Date().toISOString().split('T')[0]; }
+function localDateStr(d) {
+  var y = d.getFullYear();
+  var m = String(d.getMonth() + 1).padStart(2, '0');
+  var day = String(d.getDate()).padStart(2, '0');
+  return y + '-' + m + '-' + day;
+}
+function todayStr() { return localDateStr(new Date()); }
 function getHJ(d) { var dt = new Date(d); return dt.getMonth() < 6 ? 'HJ1-' + dt.getFullYear() : 'HJ2-' + dt.getFullYear(); }
 function hjLabel(hj) { var parts = hj.split('-'); return (parts[0] === 'HJ1' ? 'HJ 1' : 'HJ 2') + ' · ' + parts[1]; }
 function getCurrentHJ() { var n = new Date(); return n.getMonth() < 6 ? 'HJ1-' + n.getFullYear() : 'HJ2-' + n.getFullYear(); }
@@ -515,7 +521,8 @@ async function goToStep2() {
   if (!k) { showMsg(st, 'error', 'Bitte dein Kürzel eingeben.'); return; }
   try { helpers = await sbGet('helfer'); } catch(e) {}
   if (!helpers.find(function(h) { return h.kuerzel === k; })) {
-    showMsg(st, 'error', 'Kürzel nicht gefunden. Bitte Admin kontaktieren.'); return;
+    try { await sbPost('helfer', { kuerzel: k }); helpers = await sbGet('helfer'); }
+    catch(e) { showMsg(st, 'error', 'Fehler beim Anlegen des Kürzels.'); return; }
   }
   currentKuerzel = k;
   st.style.display = 'none';
@@ -548,7 +555,7 @@ function initCalendar() {
   }
   for (var i = 0; i < 14; i++) {
     var d = new Date(today); d.setDate(today.getDate() + i);
-    var dateStr = d.toISOString().split('T')[0];
+    var dateStr = localDateStr(d);
     var isToday = d.getTime() === today.getTime();
     var isPast = d < today && !isToday;
     var dow2 = d.getDay();
@@ -722,7 +729,7 @@ function renderVerfuegbarkeit() {
   var detailHtml = '<div style="display:flex;flex-direction:column;gap:8px;">';
   for (var i = 0; i < 14; i++) {
     var d = new Date(today); d.setDate(today.getDate() + i);
-    var dateStr = d.toISOString().split('T')[0];
+    var dateStr = localDateStr(d);
     var entries = einsaetze.filter(function(e) { return e.datum === dateStr && (e.status === 'verfuegbar' || e.status === 'bereit'); });
     var isToday = i === 0;
     html += '<div class="verfueg-day ' + (entries.length>0?'has-entries':'') + ' ' + (isToday?'today':'') + '"><div class="verfueg-day-name">' + WEEKDAYS[d.getDay()] + '</div><div class="verfueg-day-date">' + d.getDate() + '</div><div class="verfueg-day-count">' + (entries.length>0?entries.length+'×':'') + '</div></div>';
@@ -768,7 +775,10 @@ async function goToEinsatzBestaetigen() {
   var st = document.getElementById('step1Status');
   if (!k) { showMsg(st, 'error', 'Bitte zuerst dein Kürzel eingeben.'); return; }
   try { helpers = await sbGet('helfer'); } catch(e) {}
-  if (!helpers.find(function(h){return h.kuerzel===k;})) { showMsg(st,'error','Kürzel nicht gefunden.'); return; }
+  if (!helpers.find(function(h){return h.kuerzel===k;})) {
+    try { await sbPost('helfer', { kuerzel: k }); helpers = await sbGet('helfer'); }
+    catch(e) { showMsg(st,'error','Fehler beim Anlegen des Kürzels.'); return; }
+  }
   currentKuerzel = k;
   var today = todayStr();
   var dt = new Date(today + 'T00:00:00');
