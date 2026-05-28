@@ -414,6 +414,11 @@ let SUPABASE_URL = SB_URL;
 let SUPABASE_KEY = SB_KEY;
 let ADMIN_PIN = '1930';
 
+async function deleteHelper(id, kuerzel) {
+  if (!confirm('Kürzel "' + kuerzel + '" wirklich löschen? Alle zugehörigen Einträge bleiben erhalten.')) return;
+  await sbDelete('helfer', 'id=eq.' + id);
+  await loadData();
+}
 function loadConfig() {
   SUPABASE_URL = SB_URL;
   SUPABASE_KEY = SB_KEY;
@@ -652,7 +657,7 @@ function renderSidebar() {
     var pts = anz * 5;
     var ms = getMilestone(anz);
     var badge = ms ? '<span style="font-size:11px;color:' + ms.color + ';">' + ms.label.split(' ')[0] + '</span>' : '';
-    return '<div class="helper-item"><div class="helper-avatar">' + h.kuerzel + '</div><div class="helper-name">' + h.kuerzel + '</div>' + badge + '<div class="helper-pts">' + (pts > 0 ? pts + 'P' : '') + '</div></div>';
+    return '<div class="helper-item"><div class="helper-avatar">' + h.kuerzel + '</div><div class="helper-name">' + h.kuerzel + '</div>' + badge + '<div class="helper-pts">' + (pts > 0 ? pts + 'P' : '') + '</div><button class="btn-danger-sm" style="padding:2px 7px;font-size:11px;" onclick="deleteHelper(' + h.id + ',&quot;' + h.kuerzel + '&quot;)">×</button></div>';
   }).join('') || '<div style="font-size:11px;color:var(--muted);padding:8px 10px;">Keine Helfer.</div>';
 
   var ranking = helpers.slice().map(function(h) {
