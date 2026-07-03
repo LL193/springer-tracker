@@ -1,16 +1,21 @@
 name: Supabase Keep Alive
 on:
   schedule:
-    - cron: '0 8 */5 * *'
+    - cron: '0 8 */4 * *'  # alle 4 statt 5 Tage
   workflow_dispatch:
-
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
       - name: Ping Supabase
         run: |
-          curl -s "https://uijcgrgjskpdtktoarsw.supabase.co/rest/v1/helfer?select=count" \
-          -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpamNncmdqc2twZHRrdG9hcnN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NTU2NTQsImV4cCI6MjA5MDUzMTY1NH0.j6KAGfjMGlqeTGldrJRYxAR5trXwIGVMoQOdaOBQLyU" \
-          -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpamNncmdqc2twZHRrdG9hcnN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NTU2NTQsImV4cCI6MjA5MDUzMTY1NH0.j6KAGfjMGlqeTGldrJRYxAR5trXwIGVMoQOdaOBQLyU"
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" \
+            "https://uijcgrgjskpdtktoarsw.supabase.co/rest/v1/helfer?select=count" \
+            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}")
+          echo "HTTP Status: $RESPONSE"
+          if [ "$RESPONSE" != "200" ]; then
+            echo "FEHLER: Ping fehlgeschlagen mit Status $RESPONSE"
+            exit 1
+          fi
           echo "Supabase Ping OK"
